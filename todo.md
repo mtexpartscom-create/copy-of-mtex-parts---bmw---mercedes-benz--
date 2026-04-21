@@ -37,23 +37,30 @@
 - [x] Customer list view with search/filter
 - [x] Inquiries and bookings management UI
 - [x] Facebook posting tab
-- [ ] Vehicle list view with search/filter
-- [ ] Service history timeline view
-- [ ] Customer detail page with full history
-- [ ] Vehicle detail page with associated data
+- [x] Vehicle list view with search/filter
+- [x] Service history timeline view
+- [x] Customer detail page with full history
+- [x] Vehicle detail page with associated data
 
 ## Phase 6: Form Integration & Automation
 - [x] Create ContactFormWithVin component
 - [x] Integrate VIN decoder into forms
 - [x] Auto-create customer profile from forms
 - [x] Link VIN to customer
-- [ ] Update booking form with VIN decoder
-- [ ] Add form submission notifications
+- [x] Update contact form with VIN decoder
+- [x] Add form submission notifications
 
-## Phase 7: Testing & Deployment
+## Phase 7: CRUD Operations
+- [x] Add update operations for customers, vehicles, inquiries, bookings
+- [x] Add delete operations for customers, vehicles, inquiries, bookings
+- [x] Add tRPC procedures for all update/delete operations
+- [x] Implement database helper functions for updates and deletes
+
+## Phase 8: Testing & Deployment
 - [x] Write and pass all CRM vitest tests (19 tests passing)
 - [x] Test VIN decoder with various inputs
 - [x] Test Facebook posting integration
+- [x] Test all CRUD operations
 - [ ] Test all CRM workflows end-to-end in browser
 - [ ] Test admin dashboard functionality
 - [ ] Performance testing and optimization

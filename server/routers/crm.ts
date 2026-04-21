@@ -12,6 +12,58 @@ import { postToFacebook, generateFacebookCaption } from "../services/facebookSer
 export const crmRouter = router({
   // ============ CUSTOMERS ============
   customers: router({
+    update: publicProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          name: z.string().optional(),
+          phone: z.string().optional(),
+          email: z.string().email().optional(),
+          address: z.string().optional(),
+          city: z.string().optional(),
+          notes: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          const customer = await db.updateCustomer(input.id, input);
+          if (!customer) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Customer not found",
+            });
+          }
+          return customer;
+        } catch (error) {
+          console.error("[CRM] Error updating customer:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to update customer",
+          });
+        }
+      }),
+
+    delete: publicProcedure
+      .input(z.number())
+      .mutation(async ({ input }) => {
+        try {
+          const success = await db.deleteCustomer(input);
+          if (!success) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Customer not found",
+            });
+          }
+          return { success: true };
+        } catch (error) {
+          console.error("[CRM] Error deleting customer:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to delete customer",
+          });
+        }
+      }),
+
     create: publicProcedure
       .input(
         z.object({
@@ -198,6 +250,54 @@ export const crmRouter = router({
     list: publicProcedure.query(async () => {
       return await db.getAllPartsInquiries();
     }),
+
+    update: publicProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          status: z.enum(["pending", "quoted", "ordered", "completed", "cancelled"]).optional(),
+          notes: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          const inquiry = await db.updatePartsInquiry(input.id, input);
+          if (!inquiry) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Inquiry not found",
+            });
+          }
+          return inquiry;
+        } catch (error) {
+          console.error("[CRM] Error updating inquiry:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to update inquiry",
+          });
+        }
+      }),
+
+    delete: publicProcedure
+      .input(z.number())
+      .mutation(async ({ input }) => {
+        try {
+          const success = await db.deletePartsInquiry(input);
+          if (!success) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Inquiry not found",
+            });
+          }
+          return { success: true };
+        } catch (error) {
+          console.error("[CRM] Error deleting inquiry:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to delete inquiry",
+          });
+        }
+      }),
   }),
 
   // ============ BOOKINGS ============
@@ -242,6 +342,54 @@ export const crmRouter = router({
     list: publicProcedure.query(async () => {
       return await db.getAllBookings();
     }),
+
+    update: publicProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          status: z.enum(["pending", "confirmed", "completed", "cancelled"]).optional(),
+          notes: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          const booking = await db.updateBooking(input.id, input);
+          if (!booking) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Booking not found",
+            });
+          }
+          return booking;
+        } catch (error) {
+          console.error("[CRM] Error updating booking:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to update booking",
+          });
+        }
+      }),
+
+    delete: publicProcedure
+      .input(z.number())
+      .mutation(async ({ input }) => {
+        try {
+          const success = await db.deleteBooking(input);
+          if (!success) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Booking not found",
+            });
+          }
+          return { success: true };
+        } catch (error) {
+          console.error("[CRM] Error deleting booking:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to delete booking",
+          });
+        }
+      }),
   }),
 
   // ============ SERVICE HISTORY ============

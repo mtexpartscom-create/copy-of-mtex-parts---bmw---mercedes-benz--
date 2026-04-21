@@ -6,6 +6,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Phone, Mail, MapPin, Facebook, Send, CheckCircle2, Clock, Truck } from "lucide-react";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
+import VinDecoderInput from "./VinDecoderInput";
 
 const CONTACT_ITEMS = [
   {
@@ -65,7 +68,7 @@ const CAR_OPTIONS = [
 
 export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [form, setForm] = useState({ name: "", phone: "", email: "", car: "", message: "" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", car: "", message: "", vin: "", make: "", model: "", year: "", engine: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -83,13 +86,66 @@ export default function ContactSection() {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const createCustomerMutation = trpc.crm.customers.create.useMutation();
+  const createVehicleMutation = trpc.crm.vehicles.create.useMutation();
+  const createInquiryMutation = trpc.crm.inquiries.create.useMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!form.name || !form.email) {
+      toast.error("Име и имейл са задължителни");
+      return;
+    }
+
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
+    try {
+      // Create or get customer
+      const customer = await createCustomerMutation.mutateAsync({
+        name: form.name,
+        phone: form.phone,
+        email: form.email,
+      });
+
+      // If VIN is provided, create vehicle
+      let vehicleId: number | undefined;
+      if (form.vin && customer) {
+        try {
+          const vehicle = await createVehicleMutation.mutateAsync({
+            customerId: customer.id,
+            vin: form.vin,
+            make: form.make || undefined,
+            model: form.model || undefined,
+            year: form.year ? parseInt(form.year) : undefined,
+            engine: form.engine || undefined,
+          });
+          vehicleId = vehicle.id;
+        } catch (error) {
+          console.log("Vehicle might already exist, continuing...");
+        }
+      }
+
+      // Create parts inquiry
+      if (form.message && customer) {
+        await createInquiryMutation.mutateAsync({
+          customerId: customer.id,
+          vehicleId,
+          partName: form.message.split("\n")[0] || "General Inquiry",
+          vin: form.vin || undefined,
+          notes: form.message,
+          status: "pending",
+        });
+      }
+
+      toast.success("Заявката е изпратена успешно! Ще се свържем с вас скоро.");
       setSubmitted(true);
-    }, 1200);
+      setForm({ name: "", phone: "", email: "", car: "", message: "", vin: "", make: "", model: "", year: "", engine: "" });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Грешка при изпращане на заявката");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputStyle: React.CSSProperties = {
@@ -376,12 +432,12 @@ export default function ContactSection() {
                           onChange={(e) => setForm({ ...form, name: e.target.value })}
                           style={inputStyle}
                           onFocus={(e) => {
-                            e.target.style.borderColor = "rgba(28,105,212,0.5)";
-                            e.target.style.boxShadow = "0 0 0 3px rgba(28,105,212,0.1)";
+                            (e.target as HTMLInputElement).style.borderColor = "rgba(28,105,212,0.5)";
+                            (e.target as HTMLInputElement).style.boxShadow = "0 0 0 3px rgba(28,105,212,0.1)";
                           }}
                           onBlur={(e) => {
-                            e.target.style.borderColor = "rgba(255,255,255,0.1)";
-                            e.target.style.boxShadow = "none";
+                            (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.1)";
+                            (e.target as HTMLInputElement).style.boxShadow = "none";
                           }}
                         />
                       </div>
@@ -394,12 +450,12 @@ export default function ContactSection() {
                           onChange={(e) => setForm({ ...form, phone: e.target.value })}
                           style={inputStyle}
                           onFocus={(e) => {
-                            e.target.style.borderColor = "rgba(28,105,212,0.5)";
-                            e.target.style.boxShadow = "0 0 0 3px rgba(28,105,212,0.1)";
+                            (e.target as HTMLInputElement).style.borderColor = "rgba(28,105,212,0.5)";
+                            (e.target as HTMLInputElement).style.boxShadow = "0 0 0 3px rgba(28,105,212,0.1)";
                           }}
                           onBlur={(e) => {
-                            e.target.style.borderColor = "rgba(255,255,255,0.1)";
-                            e.target.style.boxShadow = "none";
+                            (e.target as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.1)";
+                            (e.target as HTMLInputElement).style.boxShadow = "none";
                           }}
                         />
                       </div>
@@ -415,13 +471,27 @@ export default function ContactSection() {
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         style={inputStyle}
                         onFocus={(e) => {
-                          e.target.style.borderColor = "rgba(28,105,212,0.5)";
-                          e.target.style.boxShadow = "0 0 0 3px rgba(28,105,212,0.1)";
+                          (e.target as HTMLInputElement).style.borderColor = "rgba(28,105,212,0.5)";
+                          (e.target as HTMLInputElement).style.boxShadow = "0 0 0 3px rgba(28,105,212,0.1)";
                         }}
                         onBlur={(e) => {
                           e.target.style.borderColor = "rgba(255,255,255,0.1)";
                           e.target.style.boxShadow = "none";
                         }}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>VIN номер (опционално)</label>
+                      <VinDecoderInput 
+                        onVinDecoded={(data) => setForm({ 
+                          ...form, 
+                          vin: data.vin,
+                          make: data.make,
+                          model: data.model,
+                          year: data.year.toString(),
+                          engine: data.engine
+                        })}
                       />
                     </div>
 
@@ -578,7 +648,7 @@ export default function ContactSection() {
                     </a>
                   </p>
                   <button
-                    onClick={() => { setSubmitted(false); setForm({ name: "", phone: "", email: "", car: "", message: "" }); }}
+                    onClick={() => { setSubmitted(false); setForm({ name: "", phone: "", email: "", car: "", message: "", vin: "", make: "", model: "", year: "", engine: "" }); }}
                     style={{
                       padding: "0.75rem 1.5rem",
                       background: "rgba(255,255,255,0.06)",

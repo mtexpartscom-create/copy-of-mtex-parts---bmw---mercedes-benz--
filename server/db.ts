@@ -370,3 +370,142 @@ export async function getFacebookPostsByVehicleId(
     .where(eq(facebookPosts.vehicleId, vehicleId))
     .orderBy(desc(facebookPosts.createdAt));
 }
+
+// Update customer
+export async function updateCustomer(
+  id: number,
+  data: Partial<InsertCustomer>
+): Promise<Customer | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    await db.update(customers).set(data).where(eq(customers.id, id));
+    return await getCustomerById(id);
+  } catch (error) {
+    console.error("[Database] Failed to update customer:", error);
+    throw error;
+  }
+}
+
+// Delete customer
+export async function deleteCustomer(id: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db.delete(customers).where(eq(customers.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete customer:", error);
+    throw error;
+  }
+}
+
+// Update vehicle
+export async function updateVehicle(
+  id: number,
+  data: Partial<InsertVehicle>
+): Promise<Vehicle | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    await db.update(vehicles).set(data).where(eq(vehicles.id, id));
+    const result = await db
+      .select()
+      .from(vehicles)
+      .where(eq(vehicles.id, id))
+      .limit(1);
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to update vehicle:", error);
+    throw error;
+  }
+}
+
+// Delete vehicle
+export async function deleteVehicle(id: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db.delete(vehicles).where(eq(vehicles.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete vehicle:", error);
+    throw error;
+  }
+}
+
+// Update inquiry
+export async function updatePartsInquiry(
+  id: number,
+  data: Partial<InsertPartsInquiry>
+): Promise<PartsInquiry | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    await db.update(partsInquiries).set(data).where(eq(partsInquiries.id, id));
+    const result = await db
+      .select()
+      .from(partsInquiries)
+      .where(eq(partsInquiries.id, id))
+      .limit(1);
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to update inquiry:", error);
+    throw error;
+  }
+}
+
+// Delete inquiry
+export async function deletePartsInquiry(id: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db.delete(partsInquiries).where(eq(partsInquiries.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete inquiry:", error);
+    throw error;
+  }
+}
+
+// Update booking
+export async function updateBooking(
+  id: number,
+  data: Partial<InsertBooking>
+): Promise<Booking | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    await db.update(bookings).set(data).where(eq(bookings.id, id));
+    const result = await db
+      .select()
+      .from(bookings)
+      .where(eq(bookings.id, id))
+      .limit(1);
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to update booking:", error);
+    throw error;
+  }
+}
+
+// Delete booking
+export async function deleteBooking(id: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db.delete(bookings).where(eq(bookings.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete booking:", error);
+    throw error;
+  }
+}
