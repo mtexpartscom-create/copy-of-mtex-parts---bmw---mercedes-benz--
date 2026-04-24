@@ -56,7 +56,20 @@
 - [x] Add tRPC procedures for all update/delete operations
 - [x] Implement database helper functions for updates and deletes
 
-## Phase 8: Testing & Deployment
+## Phase 8: Detail Pages & Navigation
+- [x] Create customer detail page with full history
+- [x] Create vehicle detail page with service history
+- [x] Add routes to App.tsx for detail pages
+- [x] Add getById and list procedures for vehicles
+- [x] Add getByVehicleId procedure for service history
+- [x] Add database helper functions for vehicle and service history queries
+
+## Phase 9: Owner Notifications
+- [x] Add owner notification on new inquiry submission
+- [x] Integrate notifyOwner mutation in contact form
+- [x] Handle notification errors gracefully
+
+## Phase 10: Testing & Deployment
 - [x] Write and pass all CRM vitest tests (19 tests passing)
 - [x] Test VIN decoder with various inputs
 - [x] Test Facebook posting integration
@@ -64,4 +77,4 @@
 - [ ] Test all CRM workflows end-to-end in browser
 - [ ] Test admin dashboard functionality
 - [ ] Performance testing and optimization
-- [ ] Create checkpoint for deployment
+- [ ] Create final checkpoint for deployment

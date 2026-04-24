@@ -214,6 +214,25 @@ export async function getVehiclesByCustomerId(
     .orderBy(desc(vehicles.createdAt));
 }
 
+export async function getVehicleById(id: number): Promise<Vehicle | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db
+    .select()
+    .from(vehicles)
+    .where(eq(vehicles.id, id))
+    .limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getAllVehicles(): Promise<Vehicle[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db.select().from(vehicles).orderBy(desc(vehicles.createdAt));
+}
+
 // CRM Queries - Service History
 export async function createServiceHistory(
   data: InsertServiceHistory
@@ -246,6 +265,19 @@ export async function getServiceHistoryByCustomerId(
     .select()
     .from(serviceHistory)
     .where(eq(serviceHistory.customerId, customerId))
+    .orderBy(desc(serviceHistory.serviceDate));
+}
+
+export async function getServiceHistoryByVehicleId(
+  vehicleId: number
+): Promise<ServiceHistory[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db
+    .select()
+    .from(serviceHistory)
+    .where(eq(serviceHistory.vehicleId, vehicleId))
     .orderBy(desc(serviceHistory.serviceDate));
 }
 

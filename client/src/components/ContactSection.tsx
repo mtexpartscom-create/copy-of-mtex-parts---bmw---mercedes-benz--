@@ -89,6 +89,7 @@ export default function ContactSection() {
   const createCustomerMutation = trpc.crm.customers.create.useMutation();
   const createVehicleMutation = trpc.crm.vehicles.create.useMutation();
   const createInquiryMutation = trpc.crm.inquiries.create.useMutation();
+  const notifyOwnerMutation = trpc.system.notifyOwner.useMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,7 +128,7 @@ export default function ContactSection() {
 
       // Create parts inquiry
       if (form.message && customer) {
-        await createInquiryMutation.mutateAsync({
+        const inquiry = await createInquiryMutation.mutateAsync({
           customerId: customer.id,
           vehicleId,
           partName: form.message.split("\n")[0] || "General Inquiry",
@@ -135,6 +136,20 @@ export default function ContactSection() {
           notes: form.message,
           status: "pending",
         });
+
+        // Notify owner about new inquiry
+        try {
+          const partText = form.message.split("\n")[0] || "General Inquiry";
+          const phoneText = form.phone || "Not provided";
+          const vinText = form.vin || "Not provided";
+          
+          await notifyOwnerMutation.mutateAsync({
+            title: "New Parts Inquiry",
+            content: `New inquiry from ${form.name} (${form.email})\n\nPart: ${partText}\nPhone: ${phoneText}\nVIN: ${vinText}`,
+          });
+        } catch (notifyError) {
+          console.log("Failed to notify owner, but inquiry was created", notifyError);
+        }
       }
 
       toast.success("Заявката е изпратена успешно! Ще се свържем с вас скоро.");

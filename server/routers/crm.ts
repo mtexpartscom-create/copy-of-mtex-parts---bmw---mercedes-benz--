@@ -180,6 +180,23 @@ export const crmRouter = router({
         }
         return vehicle;
       }),
+
+    getById: publicProcedure
+      .input(z.number())
+      .query(async ({ input }) => {
+        const vehicle = await db.getVehicleById(input);
+        if (!vehicle) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Vehicle not found",
+          });
+        }
+        return vehicle;
+      }),
+
+    list: publicProcedure.query(async () => {
+      return await db.getAllVehicles();
+    }),
   }),
 
   // ============ VIN DECODER ============
@@ -429,6 +446,12 @@ export const crmRouter = router({
       .input(z.number())
       .query(async ({ input }) => {
         return await db.getServiceHistoryByCustomerId(input);
+      }),
+
+    getByVehicleId: publicProcedure
+      .input(z.number())
+      .query(async ({ input }) => {
+        return await db.getServiceHistoryByVehicleId(input);
       }),
   }),
 
