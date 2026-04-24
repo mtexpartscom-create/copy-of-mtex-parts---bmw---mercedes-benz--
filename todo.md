@@ -69,11 +69,14 @@
 - [x] Integrate notifyOwner mutation in contact form
 - [x] Handle notification errors gracefully
 
-## Phase 10: Testing & Deployment
-- [x] Write and pass all CRM vitest tests (19 tests passing)
+## Phase 10: Bug Fixes & Improvements
+- [x] Fix VIN validation - removed strict checksum validation
+- [x] Allow any 17-character VIN format
 - [x] Test VIN decoder with various inputs
 - [x] Test Facebook posting integration
 - [x] Test all CRUD operations
+
+## Phase 11: Testing & Deployment
 - [ ] Test all CRM workflows end-to-end in browser
 - [ ] Test admin dashboard functionality
 - [ ] Performance testing and optimization
