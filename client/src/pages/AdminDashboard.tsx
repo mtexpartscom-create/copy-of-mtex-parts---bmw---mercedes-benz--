@@ -30,6 +30,16 @@ export default function AdminDashboard() {
   const listingsQuery = trpc.crm.listings.listAdmin.useQuery();
 
   // Mutations
+  const deleteListingMutation = trpc.crm.listings.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Обява изтрита успешно");
+      listingsQuery.refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message || "Грешка при изтриване");
+    },
+  });
+
   const createCustomerMutation = trpc.crm.customers.create.useMutation({
     onSuccess: () => {
       toast.success("Клиент създаден успешно");
@@ -378,7 +388,7 @@ export default function AdminDashboard() {
                     listingsQuery.data.map((listing) => (
                       <Card key={listing.id} className="p-4">
                         <div className="flex items-start justify-between">
-                          <div className="space-y-2">
+                          <div className="space-y-2 flex-1">
                             <h3 className="font-semibold">{listing.make} {listing.model}</h3>
                             <p className="text-sm text-muted-foreground">
                               {listing.year} • {listing.engine}
@@ -393,12 +403,20 @@ export default function AdminDashboard() {
                             <p className="text-xs text-muted-foreground">
                               Статус: <span className="capitalize">{listing.status}</span>
                             </p>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => deleteListingMutation.mutate(listing.id)}
+                              disabled={deleteListingMutation.isPending}
+                            >
+                              Изтриване
+                            </Button>
                           </div>
                         </div>
                       </Card>
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground">Няма обяви</p>
+                    <p className="text-sm text-muted-foreground">Няма обяви. Създай нова обява с формата по-горе.</p>
                   )}
                 </div>
               </CardContent>

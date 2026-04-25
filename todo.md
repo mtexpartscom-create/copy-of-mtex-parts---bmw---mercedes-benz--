@@ -85,10 +85,20 @@
 ## Phase 12: Vehicle Listings Management
 - [x] Add vehicle_listings table to database schema
 - [x] Create backend API for listings CRUD
-- [x] Create admin UI form for creating/editing/deleting listings
+- [x] Create admin UI form for creating listings
 - [x] Add image upload functionality
 - [x] Add listings gallery to main website
+- [x] Add delete controls in admin UI
 - [ ] Implement backend file upload to S3 storage
 - [ ] Add multi-image upload functionality
 - [ ] Test listings creation and display
 - [ ] Test image upload and display
+
+## Phase 13: Final Testing & Deployment
+- [ ] Test VIN decoder functionality
+- [ ] Test admin dashboard all tabs
+- [ ] Test listings creation and deletion
+- [ ] Test contact form with VIN
+- [ ] Test gallery display on main site
+- [ ] Performance optimization
+- [ ] Create final checkpoint
