@@ -138,3 +138,27 @@ export const facebookPosts = mysqlTable("facebookPosts", {
 
 export type FacebookPost = typeof facebookPosts.$inferSelect;
 export type InsertFacebookPost = typeof facebookPosts.$inferInsert;
+
+/**
+ * Vehicle Listings table - stores vehicle listings with images for gallery
+ */
+export const vehicleListings = mysqlTable("vehicleListings", {
+  id: int("id").autoincrement().primaryKey(),
+  make: varchar("make", { length: 100 }).notNull(),
+  model: varchar("model", { length: 100 }).notNull(),
+  year: int("year"),
+  engine: varchar("engine", { length: 100 }),
+  transmission: varchar("transmission", { length: 50 }),
+  mileage: int("mileage"),
+  price: varchar("price", { length: 50 }),
+  description: text("description"),
+  features: text("features"), // JSON array of features
+  imageUrls: text("imageUrls"), // JSON array of image URLs
+  primaryImageUrl: text("primaryImageUrl"), // Main image for gallery
+  status: mysqlEnum("status", ["active", "sold", "archived"]).default("active").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type VehicleListing = typeof vehicleListings.$inferSelect;
+export type InsertVehicleListing = typeof vehicleListings.$inferInsert;

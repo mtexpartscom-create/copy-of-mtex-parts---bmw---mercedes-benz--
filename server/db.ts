@@ -9,18 +9,21 @@ import {
   partsInquiries,
   bookings,
   facebookPosts,
+  vehicleListings,
   Customer,
   Vehicle,
   ServiceHistory,
   PartsInquiry,
   Booking,
   FacebookPost,
+  VehicleListing,
   InsertCustomer,
   InsertVehicle,
   InsertServiceHistory,
   InsertPartsInquiry,
   InsertBooking,
   InsertFacebookPost,
+  InsertVehicleListing,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -538,6 +541,91 @@ export async function deleteBooking(id: number): Promise<boolean> {
     return true;
   } catch (error) {
     console.error("[Database] Failed to delete booking:", error);
+    throw error;
+  }
+}
+
+
+// Vehicle Listings
+export async function createVehicleListing(
+  data: InsertVehicleListing
+): Promise<VehicleListing | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const result = await db.insert(vehicleListings).values(data);
+    const listingId = (result[0] as any).insertId;
+    const listing = await db
+      .select()
+      .from(vehicleListings)
+      .where(eq(vehicleListings.id, listingId as number))
+      .limit(1);
+    return listing.length > 0 ? listing[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to create vehicle listing:", error);
+    throw error;
+  }
+}
+
+export async function getVehicleListingById(id: number): Promise<VehicleListing | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const listing = await db
+    .select()
+    .from(vehicleListings)
+    .where(eq(vehicleListings.id, id))
+    .limit(1);
+  return listing.length > 0 ? listing[0] : null;
+}
+
+export async function getAllVehicleListings(): Promise<VehicleListing[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db
+    .select()
+    .from(vehicleListings)
+    .where(eq(vehicleListings.status, "active"))
+    .orderBy(desc(vehicleListings.createdAt));
+}
+
+export async function getVehicleListingsAdmin(): Promise<VehicleListing[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db
+    .select()
+    .from(vehicleListings)
+    .orderBy(desc(vehicleListings.createdAt));
+}
+
+export async function updateVehicleListing(
+  id: number,
+  data: Partial<InsertVehicleListing>
+): Promise<VehicleListing | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    await db.update(vehicleListings).set(data).where(eq(vehicleListings.id, id));
+    return await getVehicleListingById(id);
+  } catch (error) {
+    console.error("[Database] Failed to update vehicle listing:", error);
+    throw error;
+  }
+}
+
+export async function deleteVehicleListing(id: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db.delete(vehicleListings).where(eq(vehicleListings.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete vehicle listing:", error);
     throw error;
   }
 }

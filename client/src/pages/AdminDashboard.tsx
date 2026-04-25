@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Users, Car, FileText, Calendar, Facebook, Plus, Search } from "lucide-react";
+import ListingForm from "@/components/ListingForm";
 
 export default function AdminDashboard() {
   const { user, isAuthenticated } = useAuth();
@@ -26,6 +27,7 @@ export default function AdminDashboard() {
   const customersQuery = trpc.crm.customers.list.useQuery();
   const inquiriesQuery = trpc.crm.inquiries.list.useQuery();
   const bookingsQuery = trpc.crm.bookings.list.useQuery();
+  const listingsQuery = trpc.crm.listings.listAdmin.useQuery();
 
   // Mutations
   const createCustomerMutation = trpc.crm.customers.create.useMutation({
@@ -136,10 +138,11 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="customers">Клиенти</TabsTrigger>
             <TabsTrigger value="inquiries">Заявки</TabsTrigger>
             <TabsTrigger value="bookings">Резервации</TabsTrigger>
+            <TabsTrigger value="listings">Обяви</TabsTrigger>
             <TabsTrigger value="facebook">Facebook</TabsTrigger>
           </TabsList>
 
@@ -354,6 +357,50 @@ export default function AdminDashboard() {
                 <Button variant="outline" disabled>
                   Публикуване на автомобил
                 </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Listings Tab */}
+          <TabsContent value="listings" className="space-y-4">
+            {/* Create Listing Form */}
+            <ListingForm onSuccess={() => listingsQuery.refetch()} />
+
+            {/* Listings List */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Управление на обяви</CardTitle>
+                <CardDescription>Качване и управление на обяви на автомобили за продажба</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid gap-4">
+                  {listingsQuery.data && listingsQuery.data.length > 0 ? (
+                    listingsQuery.data.map((listing) => (
+                      <Card key={listing.id} className="p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="space-y-2">
+                            <h3 className="font-semibold">{listing.make} {listing.model}</h3>
+                            <p className="text-sm text-muted-foreground">
+                              {listing.year} • {listing.engine}
+                            </p>
+                            <p className="text-sm">{listing.description}</p>
+                            {listing.primaryImageUrl && (
+                              <img src={listing.primaryImageUrl} alt="Vehicle" className="w-32 h-24 object-cover rounded" />
+                            )}
+                          </div>
+                          <div className="text-right space-y-2">
+                            <p className="font-semibold">{listing.price}</p>
+                            <p className="text-xs text-muted-foreground">
+                              Статус: <span className="capitalize">{listing.status}</span>
+                            </p>
+                          </div>
+                        </div>
+                      </Card>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground">Няма обяви</p>
+                  )}
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

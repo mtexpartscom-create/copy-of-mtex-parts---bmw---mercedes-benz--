@@ -455,6 +455,125 @@ export const crmRouter = router({
       }),
   }),
 
+  // ============ VEHICLE LISTINGS ============
+  listings: router({
+    create: publicProcedure
+      .input(
+        z.object({
+          make: z.string().min(1, "Make is required"),
+          model: z.string().min(1, "Model is required"),
+          year: z.number().optional(),
+          engine: z.string().optional(),
+          transmission: z.string().optional(),
+          mileage: z.number().optional(),
+          price: z.string().optional(),
+          description: z.string().optional(),
+          features: z.array(z.string()).optional(),
+          imageUrls: z.array(z.string()).optional(),
+          primaryImageUrl: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          const listing = await db.createVehicleListing({
+            ...input,
+            features: input.features ? JSON.stringify(input.features) : undefined,
+            imageUrls: input.imageUrls ? JSON.stringify(input.imageUrls) : undefined,
+          });
+          if (!listing) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: "Failed to create listing",
+            });
+          }
+          return listing;
+        } catch (error) {
+          console.error("[CRM] Error creating listing:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to create listing",
+          });
+        }
+      }),
+
+    list: publicProcedure.query(async () => {
+      return await db.getAllVehicleListings();
+    }),
+
+    listAdmin: publicProcedure.query(async () => {
+      return await db.getVehicleListingsAdmin();
+    }),
+
+    getById: publicProcedure
+      .input(z.number())
+      .query(async ({ input }) => {
+        return await db.getVehicleListingById(input);
+      }),
+
+    update: publicProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          make: z.string().optional(),
+          model: z.string().optional(),
+          year: z.number().optional(),
+          engine: z.string().optional(),
+          transmission: z.string().optional(),
+          mileage: z.number().optional(),
+          price: z.string().optional(),
+          description: z.string().optional(),
+          features: z.array(z.string()).optional(),
+          imageUrls: z.array(z.string()).optional(),
+          primaryImageUrl: z.string().optional(),
+          status: z.enum(["active", "sold", "archived"]).optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          const { id, ...data } = input;
+          const listing = await db.updateVehicleListing(id, {
+            ...data,
+            features: data.features ? JSON.stringify(data.features) : undefined,
+            imageUrls: data.imageUrls ? JSON.stringify(data.imageUrls) : undefined,
+          });
+          if (!listing) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Listing not found",
+            });
+          }
+          return listing;
+        } catch (error) {
+          console.error("[CRM] Error updating listing:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to update listing",
+          });
+        }
+      }),
+
+    delete: publicProcedure
+      .input(z.number())
+      .mutation(async ({ input }) => {
+        try {
+          const success = await db.deleteVehicleListing(input);
+          if (!success) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Listing not found",
+            });
+          }
+          return { success: true };
+        } catch (error) {
+          console.error("[CRM] Error deleting listing:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to delete listing",
+          });
+        }
+      }),
+  }),
+
   // ============ FACEBOOK POSTING ============
   facebook: router({
     generateCaption: publicProcedure

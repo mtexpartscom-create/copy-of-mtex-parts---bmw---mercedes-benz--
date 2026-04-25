@@ -81,3 +81,14 @@
 - [ ] Test admin dashboard functionality
 - [ ] Performance testing and optimization
 - [ ] Create final checkpoint for deployment
+
+## Phase 12: Vehicle Listings Management
+- [x] Add vehicle_listings table to database schema
+- [x] Create backend API for listings CRUD
+- [x] Create admin UI form for creating/editing/deleting listings
+- [x] Add image upload functionality
+- [ ] Implement backend file upload to S3 storage
+- [ ] Add multi-image upload functionality
+- [ ] Add listings gallery to main website
+- [ ] Test listings creation and display
+- [ ] Test image upload and display
