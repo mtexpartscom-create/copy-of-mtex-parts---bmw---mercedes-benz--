@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { ExternalLink, ArrowRight, Facebook } from "lucide-react";
+import VehicleGallery from "./VehicleGallery";
 
 const CARS = [
   {
@@ -232,6 +233,27 @@ export default function InventorySection() {
             </button>
           ))}
         </div>
+
+        {/* New Listings Gallery */}
+        <div className="fade-up" style={{ marginBottom: "3rem" }}>
+          <h3 style={{
+            fontFamily: "'Syne', sans-serif",
+            fontWeight: 700,
+            fontSize: "1.5rem",
+            color: "#f0f0ee",
+            marginBottom: "1.5rem",
+            textAlign: "center",
+          }}>
+            Нови Обяви
+          </h3>
+          <VehicleGallery />
+        </div>
+
+        <div style={{
+          margin: "2rem 0",
+          height: 1,
+          background: "linear-gradient(90deg, transparent, rgba(28,105,212,0.2), transparent)",
+        }} />
 
         {/* Cars grid */}
         <div style={{

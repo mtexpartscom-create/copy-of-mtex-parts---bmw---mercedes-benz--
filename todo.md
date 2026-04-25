@@ -87,8 +87,8 @@
 - [x] Create backend API for listings CRUD
 - [x] Create admin UI form for creating/editing/deleting listings
 - [x] Add image upload functionality
+- [x] Add listings gallery to main website
 - [ ] Implement backend file upload to S3 storage
 - [ ] Add multi-image upload functionality
-- [ ] Add listings gallery to main website
 - [ ] Test listings creation and display
 - [ ] Test image upload and display
