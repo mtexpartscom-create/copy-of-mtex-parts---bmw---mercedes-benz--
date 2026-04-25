@@ -84,12 +84,23 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
     setIsLoading(true);
 
     try {
+      // Validate and convert numeric fields
+      const year = parseInt(String(formData.year)) || new Date().getFullYear();
+      const mileage = parseInt(String(formData.mileage)) || 0;
+
+      if (isNaN(year) || isNaN(mileage)) {
+        toast.error("Година и пробег трябва да бъдат числа");
+        setIsLoading(false);
+        return;
+      }
+
       // For now, use image preview as URL
       // In production, upload to storage and get URL
       createListingMutation.mutate({
         ...formData,
+        year,
+        mileage,
         primaryImageUrl: imagePreview || undefined,
-        imageUrls: imagePreview ? [imagePreview] : undefined,
       });
     } catch (error) {
       toast.error("Грешка при обработка на снимката");
