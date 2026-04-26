@@ -3,10 +3,13 @@
  * Показване на обява в админ панел с поддръжка на множество снимки
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { trpc } from "@/lib/trpc";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, Image as ImageIcon, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+
 interface ListingCardProps {
   listing: any;
   onDelete: () => void;
@@ -15,11 +18,56 @@ interface ListingCardProps {
 
 export default function ListingCard({ listing, onDelete, isDeleting }: ListingCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [images, setImages] = useState<any[]>([]);
+  const [isLoadingImages, setIsLoadingImages] = useState(true);
 
-  // For now, we only have the primary image
-  // When backend returns multiple images, this will work with all of them
-  const images = listing.primaryImageUrl ? [listing.primaryImageUrl] : [];
-  const hasMultipleImages = images.length > 1;
+  // Fetch images for this listing
+  const { data: fetchedImages } = trpc.crm.listingImages.getByListingId.useQuery(listing.id);
+
+  const deleteImageMutation = trpc.crm.listingImages.delete.useMutation({
+    onSuccess: () => {
+      toast.success("Снимка изтрита");
+      // Refetch images
+      if (fetchedImages) {
+        setImages(fetchedImages.filter((_, i) => i !== currentImageIndex));
+        if (currentImageIndex > 0) {
+          setCurrentImageIndex(currentImageIndex - 1);
+        }
+      }
+    },
+    onError: () => {
+      toast.error("Грешка при изтриване на снимка");
+    },
+  });
+
+  const setPrimaryImageMutation = trpc.crm.listingImages.update.useMutation({
+    onSuccess: () => {
+      toast.success("Главна снимка обновена");
+      if (fetchedImages) {
+        setImages(
+          fetchedImages.map((img, i) => ({
+            ...img,
+            isPrimary: i === currentImageIndex ? 1 : 0,
+          }))
+        );
+      }
+    },
+    onError: () => {
+      toast.error("Грешка при обновяване");
+    },
+  });
+
+  useEffect(() => {
+    if (fetchedImages && fetchedImages.length > 0) {
+      setImages(fetchedImages.sort((a, b) => a.displayOrder - b.displayOrder));
+      setIsLoadingImages(false);
+    } else if (listing.primaryImageUrl) {
+      setImages([{ id: 0, imageUrl: listing.primaryImageUrl, displayOrder: 0, isPrimary: 1 }]);
+      setIsLoadingImages(false);
+    } else {
+      setIsLoadingImages(false);
+    }
+  }, [fetchedImages, listing.primaryImageUrl]);
 
   const handleNextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
@@ -29,14 +77,32 @@ export default function ListingCard({ listing, onDelete, isDeleting }: ListingCa
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  const handleDeleteImage = () => {
+    if (images[currentImageIndex]?.id > 0) {
+      deleteImageMutation.mutate(images[currentImageIndex].id);
+    }
+  };
+
+  const handleSetPrimary = () => {
+    if (images[currentImageIndex]?.id > 0) {
+      setPrimaryImageMutation.mutate({
+        id: images[currentImageIndex].id,
+        isPrimary: 1,
+      });
+    }
+  };
+
+  const hasMultipleImages = images.length > 1;
+  const currentImage = images[currentImageIndex];
+
   return (
     <Card className="p-4">
       <div className="flex items-start justify-between gap-4">
         {/* Image Section */}
-        {images.length > 0 && (
+        {currentImage && !isLoadingImages && (
           <div className="relative w-32 h-24 flex-shrink-0 bg-muted rounded overflow-hidden group">
             <img
-              src={images[currentImageIndex]}
+              src={currentImage.imageUrl}
               alt={`${listing.make} ${listing.model}`}
               className="w-full h-full object-cover"
             />
@@ -66,6 +132,13 @@ export default function ListingCard({ listing, onDelete, isDeleting }: ListingCa
                   <ChevronRight className="w-3 h-3" />
                 </Button>
               </>
+            )}
+
+            {/* Primary Badge */}
+            {currentImage.isPrimary === 1 && (
+              <div className="absolute top-1 left-1 bg-primary text-primary-foreground px-2 py-0.5 rounded text-xs font-medium">
+                Главна
+              </div>
             )}
           </div>
         )}
@@ -101,12 +174,40 @@ export default function ListingCard({ listing, onDelete, isDeleting }: ListingCa
           <p className="text-xs text-muted-foreground">
             Статус: <span className="capitalize font-medium">{listing.status}</span>
           </p>
-          {images.length > 1 && (
+          {hasMultipleImages && (
             <p className="text-xs text-muted-foreground">
               <ImageIcon className="w-3 h-3 inline mr-1" />
               {images.length} снимки
             </p>
           )}
+
+          {/* Image Management Buttons */}
+          {currentImage && hasMultipleImages && (
+            <div className="space-y-1">
+              {currentImage.isPrimary !== 1 && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleSetPrimary}
+                  disabled={setPrimaryImageMutation.isPending}
+                  className="w-full text-xs"
+                >
+                  Главна
+                </Button>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleDeleteImage}
+                disabled={deleteImageMutation.isPending}
+                className="w-full text-xs"
+              >
+                <Trash2 className="w-3 h-3 mr-1" />
+                Изтрий
+              </Button>
+            </div>
+          )}
+
           <Button
             variant="destructive"
             size="sm"
@@ -114,7 +215,7 @@ export default function ListingCard({ listing, onDelete, isDeleting }: ListingCa
             disabled={isDeleting}
             className="w-full"
           >
-            {isDeleting ? "Изтриване..." : "Изтриване"}
+            {isDeleting ? "Изтриване..." : "Изтрий обява"}
           </Button>
         </div>
       </div>

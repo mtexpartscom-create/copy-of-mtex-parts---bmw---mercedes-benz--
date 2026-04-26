@@ -1,6 +1,6 @@
 /**
  * Vehicle Gallery Component
- * Показване на обяви на автомобили в галерия с поддръжка на множество снимки
+ * Показване на обяви на автомобили в галерия
  */
 
 import { useState } from "react";
@@ -11,20 +11,10 @@ import { Button } from "@/components/ui/button";
 
 export default function VehicleGallery() {
   const { data: listings, isLoading } = trpc.crm.listings.list.useQuery();
-  const { data: allImages } = trpc.crm.listingImages.getByListingId.useQuery(
-    0, // Will be overridden per listing
-    { enabled: false }
-  );
-
   const [currentImageIndex, setCurrentImageIndex] = useState<{ [key: number]: number }>({});
 
-  const getListingImages = (listingId: number) => {
-    // This would ideally be fetched per listing, but for now we'll use the primary image
-    // In a real implementation, you'd fetch images for each listing
-    return [];
-  };
-
   const handleNextImage = (listingId: number, totalImages: number) => {
+    if (!totalImages || totalImages <= 1) return;
     setCurrentImageIndex((prev) => ({
       ...prev,
       [listingId]: ((prev[listingId] || 0) + 1) % totalImages,
@@ -32,6 +22,7 @@ export default function VehicleGallery() {
   };
 
   const handlePrevImage = (listingId: number, totalImages: number) => {
+    if (!totalImages || totalImages <= 1) return;
     setCurrentImageIndex((prev) => ({
       ...prev,
       [listingId]: ((prev[listingId] || 0) - 1 + totalImages) % totalImages,
@@ -57,17 +48,17 @@ export default function VehicleGallery() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {listings.map((listing) => {
-        // For now, show primary image with carousel placeholder
-        // When backend returns images, this will display all of them
+        // For now, display primary image
+        // Multi-image support will be added with backend integration
         const currentIndex = currentImageIndex[listing.id] || 0;
-        const hasMultipleImages = false; // Will be true when images are fetched
+        const hasImage = listing.primaryImageUrl;
 
         return (
           <Card key={listing.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-            {listing.primaryImageUrl && (
+            {hasImage && (
               <div className="relative w-full h-48 overflow-hidden bg-muted group">
                 <img
-                  src={listing.primaryImageUrl}
+                  src={listing.primaryImageUrl || ""}
                   alt={`${listing.make} ${listing.model}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform"
                 />
@@ -76,28 +67,6 @@ export default function VehicleGallery() {
                 <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-xs font-medium">
                   1/1
                 </div>
-
-                {/* Navigation Arrows (shown when multiple images) */}
-                {hasMultipleImages && (
-                  <>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white opacity-0 group-hover:opacity-100 transition"
-                      onClick={() => handlePrevImage(listing.id, 1)}
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white opacity-0 group-hover:opacity-100 transition"
-                      onClick={() => handleNextImage(listing.id, 1)}
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </Button>
-                  </>
-                )}
               </div>
             )}
 
@@ -117,7 +86,7 @@ export default function VehicleGallery() {
                 </p>
               )}
 
-              {listing.mileage !== null && (
+              {listing.mileage !== null && listing.mileage !== undefined && (
                 <p className="text-sm">
                   <span className="text-muted-foreground">Пробег:</span> {listing.mileage.toLocaleString()} км
                 </p>

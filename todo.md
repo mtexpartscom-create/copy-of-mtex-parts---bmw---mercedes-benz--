@@ -91,7 +91,7 @@
 - [x] Add listings gallery to main website
 - [x] Add delete controls in admin UI
 - [ ] Implement backend file upload to S3 storage (storagePut)
-- [ ] Add multi-image upload functionality
+- [x] Add multi-image upload functionality
 - [ ] Test listings creation and display in browser
 - [ ] Test image upload and display in gallery
 
@@ -125,4 +125,4 @@
 - [x] Implement image gallery display in listing detail
 - [x] Add image reordering and deletion functionality
 - [x] Write vitest tests for multi-image operations (10 new tests passing)
-- [ ] Test multi-image upload and display in browser
+- [x] Test multi-image upload and display in browser
