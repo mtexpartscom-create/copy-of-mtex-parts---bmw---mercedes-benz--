@@ -14,13 +14,13 @@
 - [x] Write vitest tests for VIN decoder
 
 ## Phase 3: Facebook Auto-Posting Integration
-- [x] Set up Meta Graph API integration service
+- [x] Set up Meta Graph API integration service (mock)
 - [x] Create Facebook posting tRPC procedure
 - [x] Auto-generate posts when vehicle is added
 - [x] Include vehicle model, engine, available parts, contact phone
 - [x] Write vitest tests for Facebook integration
-- [ ] Add image upload capability
-- [ ] Allow manual edit before publishing
+- [ ] Add real image upload capability to Facebook posts
+- [ ] Add admin UI to review/edit posts before publishing
 
 ## Phase 4: CRM Database & Core Features
 - [x] Customer management (create, read, update, delete)
@@ -77,22 +77,29 @@
 - [x] Test all CRUD operations
 
 ## Phase 11: Testing & Deployment
-- [ ] Test all CRM workflows end-to-end in browser
-- [ ] Test admin dashboard functionality
+- [x] Unit tests: 22 vitest tests passing
+- [ ] End-to-end browser testing for CRM workflows
+- [ ] Admin dashboard functionality testing
 - [ ] Performance testing and optimization
-- [ ] Create final checkpoint for deployment
+- [x] Create checkpoint for deployment
 
 ## Phase 12: Vehicle Listings Management
 - [x] Add vehicle_listings table to database schema
 - [x] Create backend API for listings CRUD
 - [x] Create admin UI form for creating listings
-- [x] Add image upload functionality
+- [x] Add image upload functionality (local preview)
 - [x] Add listings gallery to main website
 - [x] Add delete controls in admin UI
-- [ ] Implement backend file upload to S3 storage
+- [ ] Implement backend file upload to S3 storage (storagePut)
 - [ ] Add multi-image upload functionality
-- [ ] Test listings creation and display
-- [ ] Test image upload and display
+- [ ] Test listings creation and display in browser
+- [ ] Test image upload and display in gallery
+
+## Phase 15: UI Updates & Final Polish
+- [x] Update hero statistics (631+, 12.4K+)
+- [x] Update hero labels (ДОСТАВЕНИ АВТОЧАСТИ, СЕРВИЗНИ РЕМОНТИ)
+- [x] Apply visual editor changes
+- [x] Verify all components compile and work
 
 ## Phase 13: Bug Fixes & Error Handling
 - [x] Fix mileage NaN validation error
