@@ -13,7 +13,7 @@ const SERVICES = [
     icon: <Settings size={28} strokeWidth={1.5} />,
     iconColor: "#1c69d4",
     iconBg: "rgba(28,105,212,0.12)",
-    title: "АВТОЧАСТИ",
+    title: "АВТОМОРГА",
     subtitle: "OEM Употребявани Части",
     image: "/manus-storage/photo_engine_1a1b2ff3.webp",
     description: "Широк асортимент от употребявани OEM авточасти за BMW и Mercedes-Benz. Двигатели, скоростни кутии, ходова, електроника и каросерия.",
@@ -25,7 +25,7 @@ const SERVICES = [
       "Каросерийни части",
       "Интериор и екстериор",
     ],
-    cta: { label: "Запитване за части", href: "#contact" },
+    cta: { label: "Каталог с автомобили за части", href: "#contact" },
     featured: false,
   },
   {
@@ -45,7 +45,7 @@ const SERVICES = [
       "Спирачна система",
       "Електрически системи",
     ],
-    cta: { label: "Запитване за сервиз", href: "#contact" },
+    cta: { label: "Разбери повече", href: "#contact" },
     featured: true,
   },
   {
