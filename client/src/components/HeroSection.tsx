@@ -8,8 +8,8 @@ import { useEffect, useRef, useState } from "react";
 import { Phone, ChevronDown, ArrowRight } from "lucide-react";
 
 const STATS = [
-  { num: 12, suffix: "+", label: "Автомобила на части" },
-  { num: 3000, suffix: "+", label: "Доволни клиенти" },
+  { num: 631, suffix: "+", label: "ДОСТАВЕНИ АВТОЧАСТИ" },
+  { num: 12351, suffix: "+", label: "СЕРВИЗНИ РЕМОНТИ" },
   { num: 10, suffix: "+", label: "Години опит" },
 ];
 
