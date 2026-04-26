@@ -1,6 +1,6 @@
 /**
  * Listing Form Component
- * Форма за създаване и редактиране на обяви на автомобили
+ * Форма за създаване и редактиране на обяви на автомобили с поддръжка на множество снимки
  */
 
 import { useState } from "react";
@@ -11,7 +11,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Upload, X } from "lucide-react";
+import { Upload, X, GripVertical } from "lucide-react";
+
+interface ListingImage {
+  id?: number;
+  file?: File;
+  preview: string;
+  displayOrder: number;
+  isPrimary: boolean;
+}
 
 interface ListingFormProps {
   onSuccess?: () => void;
@@ -41,12 +49,23 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
     description: initialData?.description || "",
   });
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string>(initialData?.primaryImageUrl || "");
+  const [images, setImages] = useState<ListingImage[]>(
+    initialData?.primaryImageUrl
+      ? [
+          {
+            preview: initialData.primaryImageUrl,
+            displayOrder: 0,
+            isPrimary: true,
+          },
+        ]
+      : []
+  );
+
   const [isLoading, setIsLoading] = useState(false);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   const createListingMutation = trpc.crm.listings.create.useMutation({
-    onSuccess: () => {
+    onSuccess: (listing) => {
       toast.success("Обява създадена успешно");
       setFormData({
         make: "",
@@ -58,8 +77,7 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
         price: "",
         description: "",
       });
-      setImageFile(null);
-      setImagePreview("");
+      setImages([]);
       onSuccess?.();
     },
     onError: (error) => {
@@ -67,16 +85,77 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
     },
   });
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
+  const createImageMutation = trpc.crm.listingImages.create.useMutation({
+    onError: (error) => {
+      toast.error(error.message || "Грешка при качване на снимка");
+    },
+  });
+
+  const handleMultipleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+
+    files.forEach((file) => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result as string);
+        const newImage: ListingImage = {
+          file,
+          preview: reader.result as string,
+          displayOrder: images.length,
+          isPrimary: images.length === 0, // First image is primary
+        };
+        setImages((prev) => [...prev, newImage]);
       };
       reader.readAsDataURL(file);
+    });
+  };
+
+  const removeImage = (index: number) => {
+    const newImages = images.filter((_, i) => i !== index);
+
+    // If removed image was primary, make first remaining primary
+    if (images[index].isPrimary && newImages.length > 0) {
+      newImages[0].isPrimary = true;
     }
+
+    // Update display order
+    newImages.forEach((img, i) => {
+      img.displayOrder = i;
+    });
+
+    setImages(newImages);
+  };
+
+  const setPrimaryImage = (index: number) => {
+    const newImages = images.map((img, i) => ({
+      ...img,
+      isPrimary: i === index,
+    }));
+    setImages(newImages);
+  };
+
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (index: number) => {
+    if (draggedIndex === null || draggedIndex === index) return;
+
+    const newImages = [...images];
+    const draggedImage = newImages[draggedIndex];
+    newImages.splice(draggedIndex, 1);
+    newImages.splice(index, 0, draggedImage);
+
+    // Update display order
+    newImages.forEach((img, i) => {
+      img.displayOrder = i;
+    });
+
+    setImages(newImages);
+    setDraggedIndex(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -84,6 +163,12 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
     setIsLoading(true);
 
     try {
+      if (images.length === 0) {
+        toast.error("Добавете поне една снимка");
+        setIsLoading(false);
+        return;
+      }
+
       // Validate and convert numeric fields
       const year = parseInt(String(formData.year)) || new Date().getFullYear();
       const mileage = parseInt(String(formData.mileage)) || 0;
@@ -94,16 +179,32 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
         return;
       }
 
-      // For now, use image preview as URL
-      // In production, upload to storage and get URL
-      createListingMutation.mutate({
+      // Get primary image
+      const primaryImage = images.find((img) => img.isPrimary);
+      const primaryImageUrl = primaryImage?.preview || images[0].preview;
+
+      // Create listing first
+      const listing = await createListingMutation.mutateAsync({
         ...formData,
         year,
         mileage,
-        primaryImageUrl: imagePreview || undefined,
+        primaryImageUrl,
       });
+
+      // Then create image records for all images
+      for (const image of images) {
+        await createImageMutation.mutateAsync({
+          listingId: listing.id,
+          imageUrl: image.preview,
+          displayOrder: image.displayOrder,
+          isPrimary: image.isPrimary ? 1 : 0,
+        });
+      }
+
+      toast.success("Обява и снимки създадени успешно");
     } catch (error) {
-      toast.error("Грешка при обработка на снимката");
+      console.error("Error creating listing:", error);
+      toast.error("Грешка при обработка на обявата");
     } finally {
       setIsLoading(false);
     }
@@ -197,35 +298,90 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
             />
           </div>
 
-          {/* Image Upload */}
+          {/* Multi-Image Upload */}
           <div>
-            <Label>Снимка</Label>
+            <Label>Снимки ({images.length})</Label>
             <div className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary transition">
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange}
+                multiple
+                onChange={handleMultipleImageChange}
                 className="hidden"
                 id="image-input"
               />
-              <label htmlFor="image-input" className="cursor-pointer">
-                {imagePreview ? (
-                  <div className="space-y-2">
-                    <img src={imagePreview} alt="Preview" className="w-32 h-32 object-cover mx-auto rounded" />
-                    <p className="text-sm text-muted-foreground">Кликни за смяна</p>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    <Upload className="w-8 h-8 mx-auto text-muted-foreground" />
-                    <p className="text-sm">Кликни или пусни снимка</p>
-                  </div>
-                )}
+              <label htmlFor="image-input" className="cursor-pointer block">
+                <div className="space-y-2">
+                  <Upload className="w-8 h-8 mx-auto text-muted-foreground" />
+                  <p className="text-sm">Кликни или пусни снимки (можеш да добавиш няколко)</p>
+                </div>
               </label>
             </div>
+
+            {/* Image Gallery */}
+            {images.length > 0 && (
+              <div className="mt-4 space-y-3">
+                <p className="text-sm font-medium">Твои снимки (Драг за преместване):</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {images.map((image, index) => (
+                    <div
+                      key={index}
+                      draggable
+                      onDragStart={() => handleDragStart(index)}
+                      onDragOver={handleDragOver}
+                      onDrop={() => handleDrop(index)}
+                      className={`relative group cursor-move rounded-lg overflow-hidden border-2 ${
+                        draggedIndex === index ? "opacity-50" : ""
+                      } ${image.isPrimary ? "border-primary" : "border-border"}`}
+                    >
+                      <img
+                        src={image.preview}
+                        alt={`Preview ${index + 1}`}
+                        className="w-full h-32 object-cover"
+                      />
+
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setPrimaryImage(index)}
+                          className={`px-2 py-1 rounded text-xs font-medium ${
+                            image.isPrimary
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground"
+                          }`}
+                        >
+                          {image.isPrimary ? "Главна" : "Направи главна"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="p-1 bg-destructive text-destructive-foreground rounded hover:bg-destructive/90"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      {/* Drag Handle */}
+                      <div className="absolute top-1 left-1 bg-black/50 p-1 rounded opacity-0 group-hover:opacity-100 transition">
+                        <GripVertical className="w-4 h-4 text-white" />
+                      </div>
+
+                      {/* Primary Badge */}
+                      {image.isPrimary && (
+                        <div className="absolute top-1 right-1 bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-medium">
+                          Главна
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Submit */}
-          <Button type="submit" disabled={isLoading} className="w-full">
+          <Button type="submit" disabled={isLoading || images.length === 0} className="w-full">
             {isLoading ? "Обработка..." : initialData ? "Актуализиране" : "Създаване"}
           </Button>
         </form>

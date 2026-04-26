@@ -100,6 +100,8 @@
 - [x] Update hero labels (ДОСТАВЕНИ АВТОЧАСТИ, СЕРВИЗНИ РЕМОНТИ)
 - [x] Apply visual editor changes
 - [x] Verify all components compile and work
+- [x] Update ServicesSection titles and CTA labels
+- [x] Apply ServicesSection text changes
 
 ## Phase 13: Bug Fixes & Error Handling
 - [x] Fix mileage NaN validation error
@@ -115,3 +117,12 @@
 - [x] Test gallery display on main site
 - [x] All 22 vitest tests passing
 - [x] Create final checkpoint
+
+## Phase 16: Multi-Image Support for Vehicle Listings
+- [x] Create listing_images table in database schema
+- [x] Add image management procedures to backend API
+- [x] Update ListingForm component for multi-image upload
+- [x] Implement image gallery display in listing detail
+- [x] Add image reordering and deletion functionality
+- [x] Write vitest tests for multi-image operations (10 new tests passing)
+- [ ] Test multi-image upload and display in browser

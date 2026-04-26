@@ -574,6 +574,142 @@ export const crmRouter = router({
       }),
   }),
 
+  // ============ LISTING IMAGES ============
+  listingImages: router({
+    create: publicProcedure
+      .input(
+        z.object({
+          listingId: z.number(),
+          imageUrl: z.string(),
+          displayOrder: z.number().default(0),
+          isPrimary: z.number().default(0),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          const image = await db.createListingImage(input);
+          if (!image) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: "Failed to create listing image",
+            });
+          }
+          return image;
+        } catch (error) {
+          console.error("[CRM] Error creating listing image:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to create listing image",
+          });
+        }
+      }),
+
+    getByListingId: publicProcedure
+      .input(z.number())
+      .query(async ({ input }) => {
+        return await db.getListingImagesByListingId(input);
+      }),
+
+    update: publicProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          displayOrder: z.number().optional(),
+          isPrimary: z.number().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          const { id, ...data } = input;
+          const image = await db.updateListingImage(id, data);
+          if (!image) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Image not found",
+            });
+          }
+          return image;
+        } catch (error) {
+          console.error("[CRM] Error updating listing image:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to update listing image",
+          });
+        }
+      }),
+
+    delete: publicProcedure
+      .input(z.number())
+      .mutation(async ({ input }) => {
+        try {
+          const success = await db.deleteListingImage(input);
+          if (!success) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Image not found",
+            });
+          }
+          return { success: true };
+        } catch (error) {
+          console.error("[CRM] Error deleting listing image:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to delete listing image",
+          });
+        }
+      }),
+
+    deleteByListingId: publicProcedure
+      .input(z.number())
+      .mutation(async ({ input }) => {
+        try {
+          const success = await db.deleteListingImagesByListingId(input);
+          if (!success) {
+            throw new TRPCError({
+              code: "NOT_FOUND",
+              message: "Listing not found",
+            });
+          }
+          return { success: true };
+        } catch (error) {
+          console.error("[CRM] Error deleting listing images:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to delete listing images",
+          });
+        }
+      }),
+
+    reorder: publicProcedure
+      .input(
+        z.object({
+          listingId: z.number(),
+          imageIds: z.array(z.number()),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          const success = await db.updateListingImageOrder(
+            input.listingId,
+            input.imageIds
+          );
+          if (!success) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: "Failed to reorder images",
+            });
+          }
+          return { success: true };
+        } catch (error) {
+          console.error("[CRM] Error reordering listing images:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to reorder images",
+          });
+        }
+      }),
+  }),
+
   // ============ FACEBOOK POSTING ============
   facebook: router({
     generateCaption: publicProcedure
@@ -614,3 +750,4 @@ export const crmRouter = router({
       }),
   }),
 });
+

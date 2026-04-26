@@ -10,6 +10,7 @@ import {
   bookings,
   facebookPosts,
   vehicleListings,
+  listingImages,
   Customer,
   Vehicle,
   ServiceHistory,
@@ -17,6 +18,7 @@ import {
   Booking,
   FacebookPost,
   VehicleListing,
+  ListingImage,
   InsertCustomer,
   InsertVehicle,
   InsertServiceHistory,
@@ -24,6 +26,7 @@ import {
   InsertBooking,
   InsertFacebookPost,
   InsertVehicleListing,
+  InsertListingImage,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -626,6 +629,117 @@ export async function deleteVehicleListing(id: number): Promise<boolean> {
     return true;
   } catch (error) {
     console.error("[Database] Failed to delete vehicle listing:", error);
+    throw error;
+  }
+}
+
+// ============ LISTING IMAGES ============
+
+export async function createListingImage(
+  data: InsertListingImage
+): Promise<ListingImage | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const result = await db.insert(listingImages).values(data);
+    const imageId = (result[0] as any).insertId;
+    const image = await db
+      .select()
+      .from(listingImages)
+      .where(eq(listingImages.id, imageId as number))
+      .limit(1);
+    return image.length > 0 ? image[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to create listing image:", error);
+    throw error;
+  }
+}
+
+export async function getListingImagesByListingId(
+  listingId: number
+): Promise<ListingImage[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  try {
+    return await db
+      .select()
+      .from(listingImages)
+      .where(eq(listingImages.listingId, listingId))
+      .orderBy(listingImages.displayOrder);
+  } catch (error) {
+    console.error("[Database] Failed to get listing images:", error);
+    return [];
+  }
+}
+
+export async function updateListingImage(
+  id: number,
+  data: Partial<InsertListingImage>
+): Promise<ListingImage | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    await db.update(listingImages).set(data).where(eq(listingImages.id, id));
+    const image = await db
+      .select()
+      .from(listingImages)
+      .where(eq(listingImages.id, id))
+      .limit(1);
+    return image.length > 0 ? image[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to update listing image:", error);
+    throw error;
+  }
+}
+
+export async function deleteListingImage(id: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db.delete(listingImages).where(eq(listingImages.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete listing image:", error);
+    throw error;
+  }
+}
+
+export async function deleteListingImagesByListingId(
+  listingId: number
+): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db.delete(listingImages).where(eq(listingImages.listingId, listingId));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete listing images:", error);
+    throw error;
+  }
+}
+
+export async function updateListingImageOrder(
+  listingId: number,
+  imageIds: number[]
+): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    for (let i = 0; i < imageIds.length; i++) {
+      await db
+        .update(listingImages)
+        .set({ displayOrder: i })
+        .where(eq(listingImages.id, imageIds[i]));
+    }
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to update listing image order:", error);
     throw error;
   }
 }

@@ -162,3 +162,18 @@ export const vehicleListings = mysqlTable("vehicleListings", {
 
 export type VehicleListing = typeof vehicleListings.$inferSelect;
 export type InsertVehicleListing = typeof vehicleListings.$inferInsert;
+
+/**
+ * Listing Images table - stores multiple images for each vehicle listing
+ */
+export const listingImages = mysqlTable("listingImages", {
+  id: int("id").autoincrement().primaryKey(),
+  listingId: int("listingId").notNull(),
+  imageUrl: text("imageUrl").notNull(),
+  displayOrder: int("displayOrder").default(0).notNull(), // Order for image carousel
+  isPrimary: int("isPrimary").default(0).notNull(), // 1 if this is the primary image
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ListingImage = typeof listingImages.$inferSelect;
+export type InsertListingImage = typeof listingImages.$inferInsert;

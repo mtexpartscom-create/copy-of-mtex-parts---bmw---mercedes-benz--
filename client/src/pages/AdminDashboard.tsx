@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Users, Car, FileText, Calendar, Facebook, Plus, Search } from "lucide-react";
 import ListingForm from "@/components/ListingForm";
+import ListingCard from "@/components/ListingCard";
 
 export default function AdminDashboard() {
   const { user, isAuthenticated } = useAuth();
@@ -386,34 +387,12 @@ export default function AdminDashboard() {
                 <div className="grid gap-4">
                   {listingsQuery.data && listingsQuery.data.length > 0 ? (
                     listingsQuery.data.map((listing) => (
-                      <Card key={listing.id} className="p-4">
-                        <div className="flex items-start justify-between">
-                          <div className="space-y-2 flex-1">
-                            <h3 className="font-semibold">{listing.make} {listing.model}</h3>
-                            <p className="text-sm text-muted-foreground">
-                              {listing.year} • {listing.engine}
-                            </p>
-                            <p className="text-sm">{listing.description}</p>
-                            {listing.primaryImageUrl && (
-                              <img src={listing.primaryImageUrl} alt="Vehicle" className="w-32 h-24 object-cover rounded" />
-                            )}
-                          </div>
-                          <div className="text-right space-y-2">
-                            <p className="font-semibold">{listing.price}</p>
-                            <p className="text-xs text-muted-foreground">
-                              Статус: <span className="capitalize">{listing.status}</span>
-                            </p>
-                            <Button
-                              variant="destructive"
-                              size="sm"
-                              onClick={() => deleteListingMutation.mutate(listing.id)}
-                              disabled={deleteListingMutation.isPending}
-                            >
-                              Изтриване
-                            </Button>
-                          </div>
-                        </div>
-                      </Card>
+                      <ListingCard
+                        key={listing.id}
+                        listing={listing}
+                        onDelete={() => deleteListingMutation.mutate(listing.id)}
+                        isDeleting={deleteListingMutation.isPending}
+                      />
                     ))
                   ) : (
                     <p className="text-sm text-muted-foreground">Няма обяви. Създай нова обява с формата по-горе.</p>

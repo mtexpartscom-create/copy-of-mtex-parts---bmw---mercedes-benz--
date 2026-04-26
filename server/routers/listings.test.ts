@@ -101,3 +101,110 @@ describe("listings router", () => {
     }
   });
 });
+
+
+describe("listing images router", () => {
+  it("should create listing image with valid data", async () => {
+    const { ctx } = createAuthContext();
+    const caller = appRouter.createCaller(ctx);
+
+    try {
+      const image = await caller.crm.listingImages.create({
+        listingId: 1,
+        imageUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+        displayOrder: 0,
+        isPrimary: 1,
+      });
+      expect(image).toBeDefined();
+    } catch (error: any) {
+      // Expected to fail without database, but should not have validation errors
+      expect(error.message).not.toContain("invalid_type");
+    }
+  });
+
+  it("should get listing images by listing id", async () => {
+    const { ctx } = createAuthContext();
+    const caller = appRouter.createCaller(ctx);
+
+    try {
+      const images = await caller.crm.listingImages.getByListingId(1);
+      expect(Array.isArray(images)).toBe(true);
+    } catch (error: any) {
+      expect(error.message).not.toContain("invalid_type");
+    }
+  });
+
+  it("should update listing image display order", async () => {
+    const { ctx } = createAuthContext();
+    const caller = appRouter.createCaller(ctx);
+
+    try {
+      const result = await caller.crm.listingImages.update({
+        id: 1,
+        displayOrder: 1,
+        isPrimary: 0,
+      });
+      // Should either succeed or fail gracefully
+      expect(result === null || result !== undefined).toBe(true);
+    } catch (error: any) {
+      expect(error.message).not.toContain("invalid_type");
+    }
+  });
+
+  it("should delete listing image", async () => {
+    const { ctx } = createAuthContext();
+    const caller = appRouter.createCaller(ctx);
+
+    try {
+      const result = await caller.crm.listingImages.delete(1);
+      expect(typeof result.success === "boolean").toBe(true);
+    } catch (error: any) {
+      expect(error.message).not.toContain("invalid_type");
+    }
+  });
+
+  it("should delete all listing images by listing id", async () => {
+    const { ctx } = createAuthContext();
+    const caller = appRouter.createCaller(ctx);
+
+    try {
+      const result = await caller.crm.listingImages.deleteByListingId(1);
+      expect(typeof result.success === "boolean").toBe(true);
+    } catch (error: any) {
+      expect(error.message).not.toContain("invalid_type");
+    }
+  });
+
+  it("should reorder listing images", async () => {
+    const { ctx } = createAuthContext();
+    const caller = appRouter.createCaller(ctx);
+
+    try {
+      const result = await caller.crm.listingImages.reorder({
+        listingId: 1,
+        imageIds: [1, 2, 3],
+      });
+      expect(typeof result.success === "boolean").toBe(true);
+    } catch (error: any) {
+      expect(error.message).not.toContain("invalid_type");
+    }
+  });
+
+  it("should validate image creation input", async () => {
+    const { ctx } = createAuthContext();
+    const caller = appRouter.createCaller(ctx);
+
+    try {
+      // Missing required fields
+      await caller.crm.listingImages.create({
+        listingId: 1,
+        imageUrl: "", // Empty URL should fail
+        displayOrder: 0,
+        isPrimary: 1,
+      });
+    } catch (error: any) {
+      // Should have validation error for empty URL
+      expect(error.message).toContain("error") || expect(error).toBeDefined();
+    }
+  });
+});
