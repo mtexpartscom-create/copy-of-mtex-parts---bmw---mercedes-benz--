@@ -67,25 +67,25 @@ export default function ImageViewerModal({
   const currentImage = images[currentIndex];
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
-      {/* Close Button */}
+    <div className="fixed inset-0 z-50 bg-black/95 flex items-stretch justify-center">
+      {/* Close Button - Positioned at top right */}
       <Button
         variant="ghost"
-        size="sm"
-        className="absolute top-4 right-4 text-white hover:bg-white/10"
+        size="lg"
+        className="absolute top-4 right-4 text-white hover:bg-white/20 z-10"
         onClick={onClose}
       >
-        <X className="w-6 h-6" />
+        <X className="w-8 h-8" />
       </Button>
 
-      <div className="flex w-full h-full">
+      <div className="flex w-full h-full max-w-7xl">
         {/* Image Section - Left Side */}
         <div className="flex-1 flex flex-col items-center justify-center relative group px-4">
           {/* Main Image */}
           <img
             src={currentImage?.imageUrl}
             alt={`${listing.make} ${listing.model}`}
-            className="max-w-full max-h-[80vh] object-contain"
+            className="max-w-full max-h-[85vh] object-contain"
           />
 
           {/* Navigation Arrows */}
@@ -184,7 +184,7 @@ export default function ImageViewerModal({
             {listing.description && (
               <div className="border-t border-white/10 pt-6">
                 <h3 className="text-lg font-semibold text-white mb-3">Описание</h3>
-                <p className="text-gray-300 leading-relaxed text-sm">{listing.description}</p>
+                <p className="text-gray-300 leading-relaxed text-sm whitespace-pre-wrap">{listing.description}</p>
               </div>
             )}
           </div>
