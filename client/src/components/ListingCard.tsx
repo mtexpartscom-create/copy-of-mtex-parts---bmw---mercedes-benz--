@@ -99,10 +99,10 @@ export default function ListingCard({ listing, onDelete, isDeleting }: ListingCa
     <Card className="p-4">
       <div className="flex items-start justify-between gap-4">
         {/* Image Section */}
-        {currentImage && !isLoadingImages && (
+        {currentImage && currentImage.imageUrl && !isLoadingImages && (
           <div className="relative w-32 h-24 flex-shrink-0 bg-muted rounded overflow-hidden group">
             <img
-              src={currentImage.imageUrl}
+              src={currentImage.imageUrl || ""}
               alt={`${listing.make} ${listing.model}`}
               className="w-full h-full object-cover"
             />
