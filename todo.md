@@ -126,3 +126,5 @@
 - [x] Add image reordering and deletion functionality
 - [x] Write vitest tests for multi-image operations (10 new tests passing)
 - [x] Test multi-image upload and display in browser
+- [x] Fix S3 image upload for listings (prevent base64 data URL errors)
+- [x] Add /api/upload endpoint with multer for file handling

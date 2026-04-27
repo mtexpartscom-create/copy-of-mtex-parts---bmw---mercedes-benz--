@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Upload, X, GripVertical } from "lucide-react";
+import { Upload, X, GripVertical, Loader2 } from "lucide-react";
 
 interface ListingImage {
   id?: number;
@@ -19,6 +19,7 @@ interface ListingImage {
   preview: string;
   displayOrder: number;
   isPrimary: boolean;
+  isUploading?: boolean;
 }
 
 interface ListingFormProps {
@@ -78,30 +79,38 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
         description: "",
       });
       setImages([]);
-      onSuccess?.();
+      if (onSuccess) onSuccess();
     },
     onError: (error) => {
-      toast.error(error.message || "Грешка при създаване на обява");
+      console.error("Error creating listing:", error);
+      toast.error("Грешка при създаване на обява");
     },
   });
 
   const createImageMutation = trpc.crm.listingImages.create.useMutation({
     onError: (error) => {
-      toast.error(error.message || "Грешка при качване на снимка");
+      console.error("Error creating image:", error);
+      toast.error("Грешка при качване на снимка");
     },
   });
 
-  const handleMultipleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+  const handleFileSelect = (files: FileList | null) => {
+    if (!files) return;
 
-    files.forEach((file) => {
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith("image/")) {
+        toast.error("Само изображения са разрешени");
+        return;
+      }
+
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onload = () => {
         const newImage: ListingImage = {
           file,
           preview: reader.result as string,
           displayOrder: images.length,
           isPrimary: images.length === 0, // First image is primary
+          isUploading: false,
         };
         setImages((prev) => [...prev, newImage]);
       };
@@ -158,6 +167,23 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
     setDraggedIndex(null);
   };
 
+  const uploadImageToS3 = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to upload image");
+    }
+
+    const data = await response.json();
+    return data.url; // Should return /manus-storage/{key}
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -179,11 +205,56 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
         return;
       }
 
-      // Get primary image
-      const primaryImage = images.find((img) => img.isPrimary);
-      const primaryImageUrl = primaryImage?.preview || images[0].preview;
+      // Upload images to S3 and get URLs
+      const uploadedImages: Array<{ url: string; file: File; isPrimary: boolean; displayOrder: number }> = [];
 
-      // Create listing first
+      for (let i = 0; i < images.length; i++) {
+        const image = images[i];
+        if (image.file) {
+          try {
+            setImages((prev) =>
+              prev.map((img, idx) => (idx === i ? { ...img, isUploading: true } : img))
+            );
+
+            const url = await uploadImageToS3(image.file);
+            uploadedImages.push({
+              url,
+              file: image.file,
+              isPrimary: image.isPrimary,
+              displayOrder: image.displayOrder,
+            });
+
+            setImages((prev) =>
+              prev.map((img, idx) => (idx === i ? { ...img, isUploading: false } : img))
+            );
+          } catch (error) {
+            console.error("Error uploading image:", error);
+            toast.error(`Грешка при качване на снимка ${i + 1}`);
+            setIsLoading(false);
+            return;
+          }
+        } else {
+          // Already uploaded image (from edit)
+          uploadedImages.push({
+            url: image.preview,
+            file: new File([], ""),
+            isPrimary: image.isPrimary,
+            displayOrder: image.displayOrder,
+          });
+        }
+      }
+
+      // Get primary image URL
+      const primaryImage = uploadedImages.find((img) => img.isPrimary);
+      const primaryImageUrl = primaryImage?.url || uploadedImages[0]?.url;
+
+      if (!primaryImageUrl) {
+        toast.error("Няма валидна главна снимка");
+        setIsLoading(false);
+        return;
+      }
+
+      // Create listing with primary image URL
       const listing = await createListingMutation.mutateAsync({
         ...formData,
         year,
@@ -192,12 +263,12 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
       });
 
       // Then create image records for all images
-      for (const image of images) {
+      for (const uploadedImage of uploadedImages) {
         await createImageMutation.mutateAsync({
           listingId: listing.id,
-          imageUrl: image.preview,
-          displayOrder: image.displayOrder,
-          isPrimary: image.isPrimary ? 1 : 0,
+          imageUrl: uploadedImage.url,
+          displayOrder: uploadedImage.displayOrder,
+          isPrimary: uploadedImage.isPrimary ? 1 : 0,
         });
       }
 
@@ -254,7 +325,7 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
                 id="engine"
                 value={formData.engine}
                 onChange={(e) => setFormData({ ...formData, engine: e.target.value })}
-                placeholder="2.0L, 3.0L..."
+                placeholder="2.0L Diesel..."
               />
             </div>
             <div>
@@ -263,7 +334,7 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
                 id="transmission"
                 value={formData.transmission}
                 onChange={(e) => setFormData({ ...formData, transmission: e.target.value })}
-                placeholder="Автоматична, Механична..."
+                placeholder="Automatic..."
               />
             </div>
             <div>
@@ -281,7 +352,7 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
                 id="price"
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                placeholder="€ 15,000"
+                placeholder="€ 15,000..."
               />
             </div>
           </div>
@@ -293,36 +364,36 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Детайли за автомобила..."
+              placeholder="Допълнителна информация за автомобила..."
               rows={4}
             />
           </div>
 
-          {/* Multi-Image Upload */}
+          {/* Image Upload */}
           <div>
-            <Label>Снимки ({images.length})</Label>
-            <div className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary transition">
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleMultipleImageChange}
-                className="hidden"
-                id="image-input"
-              />
-              <label htmlFor="image-input" className="cursor-pointer block">
-                <div className="space-y-2">
-                  <Upload className="w-8 h-8 mx-auto text-muted-foreground" />
-                  <p className="text-sm">Кликни или пусни снимки (можеш да добавиш няколко)</p>
-                </div>
-              </label>
-            </div>
+            <Label>Снимки</Label>
+            <div className="mt-2 space-y-3">
+              {/* Upload Area */}
+              <div
+                className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center cursor-pointer hover:border-primary/50 transition"
+                onClick={() => document.getElementById("file-input")?.click()}
+              >
+                <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                <p className="text-sm font-medium">Кликни или преместни снимки тук</p>
+                <p className="text-xs text-muted-foreground">PNG, JPG, WebP до 5MB</p>
+                <input
+                  id="file-input"
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => handleFileSelect(e.target.files)}
+                />
+              </div>
 
-            {/* Image Gallery */}
-            {images.length > 0 && (
-              <div className="mt-4 space-y-3">
-                <p className="text-sm font-medium">Твои снимки (Драг за преместване):</p>
-                <div className="grid grid-cols-2 gap-3">
+              {/* Images List */}
+              {images.length > 0 && (
+                <div className="space-y-2">
                   {images.map((image, index) => (
                     <div
                       key={index}
@@ -330,59 +401,78 @@ export default function ListingForm({ onSuccess, initialData }: ListingFormProps
                       onDragStart={() => handleDragStart(index)}
                       onDragOver={handleDragOver}
                       onDrop={() => handleDrop(index)}
-                      className={`relative group cursor-move rounded-lg overflow-hidden border-2 ${
-                        draggedIndex === index ? "opacity-50" : ""
-                      } ${image.isPrimary ? "border-primary" : "border-border"}`}
+                      className="flex items-center gap-3 p-3 bg-muted rounded-lg border border-border hover:border-primary/50 transition cursor-move"
                     >
-                      <img
-                        src={image.preview}
-                        alt={`Preview ${index + 1}`}
-                        className="w-full h-32 object-cover"
-                      />
+                      <GripVertical className="w-4 h-4 text-muted-foreground flex-shrink-0" />
 
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2">
-                        <button
+                      {/* Image Preview */}
+                      <div className="relative w-16 h-16 flex-shrink-0 rounded overflow-hidden bg-background">
+                        <img
+                          src={image.preview}
+                          alt={`Preview ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        {image.isUploading && (
+                          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                            <Loader2 className="w-4 h-4 animate-spin text-white" />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Image Info */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">Снимка {index + 1}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {image.isPrimary && "Главна снимка"}
+                        </p>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex gap-2 flex-shrink-0">
+                        {!image.isPrimary && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setPrimaryImage(index)}
+                            disabled={image.isUploading}
+                          >
+                            Главна
+                          </Button>
+                        )}
+                        <Button
                           type="button"
-                          onClick={() => setPrimaryImage(index)}
-                          className={`px-2 py-1 rounded text-xs font-medium ${
-                            image.isPrimary
-                              ? "bg-primary text-primary-foreground"
-                              : "bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground"
-                          }`}
-                        >
-                          {image.isPrimary ? "Главна" : "Направи главна"}
-                        </button>
-                        <button
-                          type="button"
+                          variant="ghost"
+                          size="sm"
                           onClick={() => removeImage(index)}
-                          className="p-1 bg-destructive text-destructive-foreground rounded hover:bg-destructive/90"
+                          disabled={image.isUploading}
                         >
                           <X className="w-4 h-4" />
-                        </button>
+                        </Button>
                       </div>
-
-                      {/* Drag Handle */}
-                      <div className="absolute top-1 left-1 bg-black/50 p-1 rounded opacity-0 group-hover:opacity-100 transition">
-                        <GripVertical className="w-4 h-4 text-white" />
-                      </div>
-
-                      {/* Primary Badge */}
-                      {image.isPrimary && (
-                        <div className="absolute top-1 right-1 bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-medium">
-                          Главна
-                        </div>
-                      )}
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
-          {/* Submit */}
-          <Button type="submit" disabled={isLoading || images.length === 0} className="w-full">
-            {isLoading ? "Обработка..." : initialData ? "Актуализиране" : "Създаване"}
+          {/* Submit Button */}
+          <Button
+            type="submit"
+            disabled={isLoading || images.length === 0}
+            className="w-full"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Обработка...
+              </>
+            ) : initialData ? (
+              "Обновяване на обява"
+            ) : (
+              "Публикуване на обява"
+            )}
           </Button>
         </form>
       </CardContent>
