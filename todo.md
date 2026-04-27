@@ -128,3 +128,6 @@
 - [x] Test multi-image upload and display in browser
 - [x] Fix S3 image upload for listings (prevent base64 data URL errors)
 - [x] Add /api/upload endpoint with multer for file handling
+- [x] Fix VehicleGallery to show all images with carousel navigation
+- [x] Add thumbnail strip for image selection
+- [x] Add image counter badge
