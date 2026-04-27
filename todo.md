@@ -131,3 +131,13 @@
 - [x] Fix VehicleGallery to show all images with carousel navigation
 - [x] Add thumbnail strip for image selection
 - [x] Add image counter badge
+
+## Phase 17: Fullscreen Image Viewer with Details Panel
+- [x] Create ImageViewerModal component with fullscreen display
+- [x] Add navigation arrows for image carousel
+- [x] Display vehicle description on right side panel
+- [x] Add close button and ESC key support
+- [x] Integrate modal with VehicleGallery click handler
+- [x] Style responsive layout for desktop/tablet
+- [x] Write tests for image viewer functionality
+- [x] Test fullscreen viewer in browser

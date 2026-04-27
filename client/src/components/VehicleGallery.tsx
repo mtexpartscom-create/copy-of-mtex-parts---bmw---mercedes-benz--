@@ -8,10 +8,13 @@ import { trpc } from "@/lib/trpc";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ImageViewerModal from "./ImageViewerModal";
 
 // Separate component for individual listing card
 function ListingCard({ listing }: { listing: any }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [viewerImageIndex, setViewerImageIndex] = useState(0);
   const { data: images = [] } = trpc.crm.listingImages.getByListingId.useQuery(listing.id);
 
   const sortedImages = useMemo(() => {
@@ -33,13 +36,18 @@ function ListingCard({ listing }: { listing: any }) {
   };
 
   return (
+    <>
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       {displayImage && (
         <div className="relative w-full h-48 overflow-hidden bg-muted group">
           <img
             src={displayImage}
             alt={`${listing.make} ${listing.model} - ${currentImageIndex + 1}`}
-            className="w-full h-full object-cover hover:scale-105 transition-transform"
+            className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => {
+              setViewerImageIndex(currentImageIndex);
+              setIsViewerOpen(true);
+            }}
           />
 
           {/* Image Counter Badge */}
@@ -132,6 +140,16 @@ function ListingCard({ listing }: { listing: any }) {
         )}
       </CardContent>
     </Card>
+
+    {/* Image Viewer Modal */}
+    <ImageViewerModal
+      isOpen={isViewerOpen}
+      images={sortedImages}
+      initialIndex={viewerImageIndex}
+      listing={listing}
+      onClose={() => setIsViewerOpen(false)}
+    />
+    </>
   );
 }
 
