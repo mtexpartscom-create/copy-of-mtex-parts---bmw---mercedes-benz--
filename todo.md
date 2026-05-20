@@ -141,3 +141,19 @@
 - [x] Style responsive layout for desktop/tablet
 - [x] Write tests for image viewer functionality
 - [x] Test fullscreen viewer in browser
+
+
+## Phase 20: Product Catalog System
+- [x] Create database schema for products, categories, and orders
+- [x] Create backend API procedures for product CRUD
+- [x] Create backend API procedures for order management
+- [x] Build product catalog page with filters (brand, category)
+- [x] Implement search functionality
+- [x] Add product detail view (ProductDetailModal)
+- [x] Implement shopping cart (localStorage)
+- [x] Create order form with customer info (name, phone, Ekonт address)
+- [x] Build admin panel for product management (ProductManagement component)
+- [x] Build admin panel for order management (OrderManagement component)
+- [x] Add order status tracking (pending, confirmed, shipped, delivered, cancelled)
+- [x] Write tests for catalog and orders (29/29 passing)
+- [x] Test end-to-end workflow

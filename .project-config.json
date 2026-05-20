@@ -1,0 +1,41 @@
+{
+  "build_command": "pnpm run build",
+  "capabilities": [
+    "db",
+    "server",
+    "user"
+  ],
+  "dev_command": "pnpm run dev",
+  "env_vars": {
+    "DATABASE_URL": "mysql://3WjyUvfEn7sBytz.root:rC4pLAhbsFc4966w1aCf@gateway05.us-east-1.prod.aws.tidbcloud.com:4000/et2BMyXW6nbbvJiR9KHRH3?ssl={\"rejectUnauthorized\":true}"
+  },
+  "experiments": null,
+  "git_remote": {
+    "repo_url": "s3://vida-prod-gitrepo/webdev-git/310519663583206229/et2BMyXW6nbbvJiR9KHRH3",
+    "access_key_id": "ASIAZV3A2ECZIXXIR4F4",
+    "secret_access_key": "iT1LF4oQHCgnq1NeVM3+v6eR4Q6ApHoiBpKmpzSz",
+    "session_token": "IQoJb3JpZ2luX2VjEOT//////////wEaCXVzLWVhc3QtMSJGMEQCIDXjtsc4/8x64mtRHhx3AmbRpg1Ru0ALIYf3OudqJhbjAiAtkVol2c6pkUy3uFSILapbHt6rkDNepFuUCVRxvwcaFSr+Awit//////////8BEAQaDDY2NTM4NjA5ODg2NiIMnVmZY8jTqeVL4/v/KtIDgVa6PgbJ1VwABsNm3a/6W0DLwBEQazxl6YV8rdjRXdO6eIrkc5WRzZqWtXgTqDUOjauadvKO5OiRUkPSLcBINQZMLs0aWPzHrZVURGPey53sn+E81s26C5mECcIEszWlGV5E9PhIA8HQ7H2i4+Y7rEewU4RFNtQ0ng+RHnb/PDNhfnEfbdCB7UdDVnxZGlWvP1ZfZPRsAI3JUQtFdjGIrDAZcbhwqhTsDORqKgX/rElSNXRaJ/jH+Iab6pxeIzm/GG9rOUZzBQSDXwGPv6oZ6AgcfEdGgaFJyREIvwYVEdS4MFlZDcUmJiBK9Cv2Ck56tp6tFgbnFxeYWCo+qHEWZXNxl2JCpPSR0gRJLJniC/Dmdnih+FMA7mNGibWa8hbNs+uKiX5Dch6qxo+Po7ZgsmRfxQfup2h3UALMJa+9dEVKecBBmUAFu9INbPHYfjImYMbNfc2P64Wm1cIOTmdJ7/eQksjdPTG+oPKtcKGONBNe5wLzI1luaqeLyO+hI+UkJvri+B3vb7GAR3d62uuXs1m6LZW7FD3IRZtNyUt8hyD6UWPE/ReSXDNPQru+9bX2bojrgOCWiZsBmCiZgWJMUBeJSm5FkI7MDjoKyG05LFDGEDDKuKjQBjqeAbKDOx1UQxtSLwL8DVSTGFevU6whIOWbn5AUVSPIbdif9qkV1tSzPRPZUCSzKOCvG/YMwtf3YK5gdVmkJ931QXR98o6oKtfgudQnQ9il1WL9TZy8jeFSE24xPBI3hH3p29X6H9N1Xcia9PvYywmP5roS33eSQhFOxF7T1xXAv31WoGrdx1Tf06e+5juKpArMWPD4VyIqVVQnxaXIwCsS",
+    "expiration": "2026-05-18T07:51:38.000Z"
+  },
+  "name": "copy-of-mtex-parts-–-bmw-\u0026-mercedes-benz-авточасти",
+  "path": "/home/ubuntu/copy-of-mtex-parts-–-bmw-\u0026-mercedes-benz-авточасти",
+  "port": 3000,
+  "secrets": {
+    "BUILT_IN_FORGE_API_KEY": "ApbuqXxxFmPQWcNE8cBab3",
+    "BUILT_IN_FORGE_API_URL": "https://forge.manus.ai",
+    "JWT_SECRET": "UsJG5FP7UVRgihGEMTDYrQ",
+    "OAUTH_SERVER_URL": "https://api.manus.im",
+    "OWNER_NAME": "MTEX PARTS",
+    "OWNER_OPEN_ID": "fxqgqCbeBGoST7hZdwAhEd",
+    "VITE_ANALYTICS_ENDPOINT": "https://manus-analytics.com",
+    "VITE_ANALYTICS_WEBSITE_ID": "6c589cbe-007a-44d3-a317-96b072ee5fdc",
+    "VITE_APP_ID": "et2BMyXW6nbbvJiR9KHRH3",
+    "VITE_APP_LOGO": "https://files.manuscdn.com/user_upload_by_module/web_dev_logo/310519663583206229/VXSLQjOfEagOItJr.png",
+    "VITE_APP_TITLE": "Copy of MTEX PARTS – BMW \u0026 Mercedes-Benz Авточасти",
+    "VITE_FRONTEND_FORGE_API_KEY": "7c4pdRrYUG8ScrmDuL3AKe",
+    "VITE_FRONTEND_FORGE_API_URL": "https://forge.manus.ai",
+    "VITE_OAUTH_PORTAL_URL": "https://manus.im"
+  },
+  "template_id": "web-db-user",
+  "test_command": "pnpm test"
+}

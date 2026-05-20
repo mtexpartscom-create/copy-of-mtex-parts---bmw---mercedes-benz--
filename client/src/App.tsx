@@ -8,12 +8,14 @@ import Home from "./pages/Home";
 import AdminDashboard from "./pages/AdminDashboard";
 import CustomerDetail from "./pages/CustomerDetail";
 import VehicleDetail from "./pages/VehicleDetail";
+import ProductCatalog from "./pages/ProductCatalog";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/catalog"} component={ProductCatalog} />
       <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/customer/:id"} component={CustomerDetail} />
       <Route path={"/vehicle/:id"} component={VehicleDetail} />

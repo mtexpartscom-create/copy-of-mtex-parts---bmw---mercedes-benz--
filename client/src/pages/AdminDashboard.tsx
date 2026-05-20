@@ -15,9 +15,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { Users, Car, FileText, Calendar, Facebook, Plus, Search } from "lucide-react";
+import { Users, Car, FileText, Calendar, Facebook, Plus, Search, ShoppingCart, Package } from "lucide-react";
 import ListingForm from "@/components/ListingForm";
 import ListingCard from "@/components/ListingCard";
+import ProductManagement from "@/components/ProductManagement";
+import OrderManagement from "@/components/OrderManagement";
 
 export default function AdminDashboard() {
   const { user, isAuthenticated } = useAuth();
@@ -149,11 +151,13 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="customers">Клиенти</TabsTrigger>
             <TabsTrigger value="inquiries">Заявки</TabsTrigger>
             <TabsTrigger value="bookings">Резервации</TabsTrigger>
             <TabsTrigger value="listings">Обяви</TabsTrigger>
+            <TabsTrigger value="products">Части</TabsTrigger>
+            <TabsTrigger value="orders">Поръчки</TabsTrigger>
             <TabsTrigger value="facebook">Facebook</TabsTrigger>
           </TabsList>
 
@@ -398,6 +402,32 @@ export default function AdminDashboard() {
                     <p className="text-sm text-muted-foreground">Няма обяви. Създай нова обява с формата по-горе.</p>
                   )}
                 </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Products Tab */}
+          <TabsContent value="products" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Управление на Части</CardTitle>
+                <CardDescription>Добавяне, редактиране и управление на авточасти</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ProductManagement />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Orders Tab */}
+          <TabsContent value="orders" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Управление на Поръчки</CardTitle>
+                <CardDescription>Преглед и управление на клиентски поръчки</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <OrderManagement />
               </CardContent>
             </Card>
           </TabsContent>

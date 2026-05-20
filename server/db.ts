@@ -1,4 +1,4 @@
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   InsertUser,
@@ -11,6 +11,10 @@ import {
   facebookPosts,
   vehicleListings,
   listingImages,
+  products,
+  productCategories,
+  productImages,
+  orders,
   Customer,
   Vehicle,
   ServiceHistory,
@@ -19,6 +23,10 @@ import {
   FacebookPost,
   VehicleListing,
   ListingImage,
+  Product,
+  ProductCategory,
+  ProductImage,
+  Order,
   InsertCustomer,
   InsertVehicle,
   InsertServiceHistory,
@@ -27,6 +35,10 @@ import {
   InsertFacebookPost,
   InsertVehicleListing,
   InsertListingImage,
+  InsertProduct,
+  InsertProductCategory,
+  InsertProductImage,
+  InsertOrder,
 } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
@@ -740,6 +752,265 @@ export async function updateListingImageOrder(
     return true;
   } catch (error) {
     console.error("[Database] Failed to update listing image order:", error);
+    throw error;
+  }
+}
+
+
+// E-Commerce Queries - Products
+
+export async function createProduct(
+  data: InsertProduct
+): Promise<Product | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const result = await db.insert(products).values(data);
+    const productId = (result[0] as any).insertId;
+    const product = await db
+      .select()
+      .from(products)
+      .where(eq(products.id, productId as number))
+      .limit(1);
+    return product.length > 0 ? product[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to create product:", error);
+    throw error;
+  }
+}
+
+export async function getProducts(filters?: {
+  categoryId?: number;
+  status?: string;
+  search?: string;
+}): Promise<Product[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  let query = db.select().from(products);
+
+  if (filters?.categoryId) {
+    query = query.where(eq(products.categoryId, filters.categoryId));
+  }
+  if (filters?.status) {
+    query = query.where(eq(products.status, filters.status));
+  }
+
+  const results = await query;
+
+  // Client-side search filtering
+  if (filters?.search) {
+    const searchLower = filters.search.toLowerCase();
+    return results.filter((p) =>
+      p.name.toLowerCase().includes(searchLower) ||
+      p.description?.toLowerCase().includes(searchLower)
+    );
+  }
+
+  return results;
+}
+
+export async function getProductById(id: number): Promise<Product | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db
+    .select()
+    .from(products)
+    .where(eq(products.id, id))
+    .limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function updateProduct(
+  id: number,
+  data: Partial<InsertProduct>
+): Promise<Product | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    await db.update(products).set(data).where(eq(products.id, id));
+    return await getProductById(id);
+  } catch (error) {
+    console.error("[Database] Failed to update product:", error);
+    throw error;
+  }
+}
+
+export async function deleteProduct(id: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db.delete(products).where(eq(products.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete product:", error);
+    throw error;
+  }
+}
+
+// Product Images
+
+export async function getProductImages(productId: number): Promise<ProductImage[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db
+    .select()
+    .from(productImages)
+    .where(eq(productImages.productId, productId))
+    .orderBy(productImages.displayOrder);
+}
+
+export async function createProductImage(
+  data: InsertProductImage
+): Promise<ProductImage | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const result = await db.insert(productImages).values(data);
+    const imageId = (result[0] as any).insertId;
+    const image = await db
+      .select()
+      .from(productImages)
+      .where(eq(productImages.id, imageId as number))
+      .limit(1);
+    return image.length > 0 ? image[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to create product image:", error);
+    throw error;
+  }
+}
+
+export async function deleteProductImage(id: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db.delete(productImages).where(eq(productImages.id, id));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete product image:", error);
+    throw error;
+  }
+}
+
+// Categories
+
+export async function getCategories(): Promise<ProductCategory[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db.select().from(productCategories);
+}
+
+export async function getCategoryById(id: number): Promise<ProductCategory | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db
+    .select()
+    .from(productCategories)
+    .where(eq(productCategories.id, id))
+    .limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function createCategory(
+  data: InsertProductCategory
+): Promise<ProductCategory | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const result = await db.insert(productCategories).values(data);
+    const categoryId = (result[0] as any).insertId;
+    const category = await db
+      .select()
+      .from(productCategories)
+      .where(eq(productCategories.id, categoryId as number))
+      .limit(1);
+    return category.length > 0 ? category[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to create category:", error);
+    throw error;
+  }
+}
+
+// Orders
+
+export async function createOrder(
+  data: InsertOrder
+): Promise<Order | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const result = await db.insert(orders).values(data);
+    const orderId = (result[0] as any).insertId;
+    const order = await db
+      .select()
+      .from(orders)
+      .where(eq(orders.id, orderId as number))
+      .limit(1);
+    return order.length > 0 ? order[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to create order:", error);
+    throw error;
+  }
+}
+
+export async function getOrders(filters?: {
+  status?: string;
+}): Promise<Order[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  let query = db.select().from(orders);
+
+  if (filters?.status) {
+    query = query.where(eq(orders.status, filters.status));
+  }
+
+  return await query.orderBy(desc(orders.createdAt));
+}
+
+export async function getOrderById(id: number): Promise<Order | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db
+    .select()
+    .from(orders)
+    .where(eq(orders.id, id))
+    .limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function updateOrder(
+  id: number,
+  data: Partial<InsertOrder>
+): Promise<Order | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const updateData: any = { ...data };
+    // Ensure status is a valid enum value if provided
+    if (updateData.status && typeof updateData.status === 'string') {
+      const validStatuses = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'];
+      if (!validStatuses.includes(updateData.status)) {
+        throw new Error(`Invalid status: ${updateData.status}`);
+      }
+    }
+    await db.update(orders).set(updateData).where(eq(orders.id, id));
+    return await getOrderById(id);
+  } catch (error) {
+    console.error("[Database] Failed to update order:", error);
     throw error;
   }
 }

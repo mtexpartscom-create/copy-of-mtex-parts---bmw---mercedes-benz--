@@ -177,3 +177,77 @@ export const listingImages = mysqlTable("listingImages", {
 
 export type ListingImage = typeof listingImages.$inferSelect;
 export type InsertListingImage = typeof listingImages.$inferInsert;
+
+
+// E-Commerce Tables
+
+/**
+ * Product Categories table
+ */
+export const productCategories = mysqlTable("productCategories", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  description: text("description"),
+  parentCategoryId: int("parentCategoryId"), // For subcategories
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ProductCategory = typeof productCategories.$inferSelect;
+export type InsertProductCategory = typeof productCategories.$inferInsert;
+
+/**
+ * Products table - auto parts for sale
+ */
+export const products = mysqlTable("products", {
+  id: int("id").autoincrement().primaryKey(),
+  categoryId: int("categoryId").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  price: varchar("price", { length: 50 }).notNull(),
+  stock: int("stock").default(0).notNull(),
+  compatibleBrands: varchar("compatibleBrands", { length: 255 }), // "BMW,Mercedes"
+  compatibleModels: text("compatibleModels"), // JSON array of compatible models
+  specifications: text("specifications"), // JSON object with specs
+  primaryImageUrl: text("primaryImageUrl"),
+  status: mysqlEnum("status", ["active", "inactive"]).default("active").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Product = typeof products.$inferSelect;
+export type InsertProduct = typeof products.$inferInsert;
+
+/**
+ * Product Images table
+ */
+export const productImages = mysqlTable("productImages", {
+  id: int("id").autoincrement().primaryKey(),
+  productId: int("productId").notNull(),
+  imageUrl: text("imageUrl").notNull(),
+  displayOrder: int("displayOrder").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ProductImage = typeof productImages.$inferSelect;
+export type InsertProductImage = typeof productImages.$inferInsert;
+
+/**
+ * Orders table
+ */
+export const orders = mysqlTable("orders", {
+  id: int("id").autoincrement().primaryKey(),
+  customerName: varchar("customerName", { length: 255 }).notNull(),
+  customerPhone: varchar("customerPhone", { length: 20 }).notNull(),
+  customerEmail: varchar("customerEmail", { length: 320 }),
+  econtOffice: varchar("econtOffice", { length: 255 }).notNull(), // Eконт office address
+  items: text("items").notNull(), // JSON array of order items {productId, quantity, price}
+  totalPrice: varchar("totalPrice", { length: 50 }).notNull(),
+  status: mysqlEnum("status", ["pending", "confirmed", "shipped", "delivered", "cancelled"]).default("pending").notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Order = typeof orders.$inferSelect;
+export type InsertOrder = typeof orders.$inferInsert;
