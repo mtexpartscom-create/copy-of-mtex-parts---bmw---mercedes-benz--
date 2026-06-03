@@ -12,10 +12,10 @@
   "experiments": null,
   "git_remote": {
     "repo_url": "s3://vida-prod-gitrepo/webdev-git/310519663583206229/et2BMyXW6nbbvJiR9KHRH3",
-    "access_key_id": "ASIAZV3A2ECZIXXIR4F4",
-    "secret_access_key": "iT1LF4oQHCgnq1NeVM3+v6eR4Q6ApHoiBpKmpzSz",
-    "session_token": "IQoJb3JpZ2luX2VjEOT//////////wEaCXVzLWVhc3QtMSJGMEQCIDXjtsc4/8x64mtRHhx3AmbRpg1Ru0ALIYf3OudqJhbjAiAtkVol2c6pkUy3uFSILapbHt6rkDNepFuUCVRxvwcaFSr+Awit//////////8BEAQaDDY2NTM4NjA5ODg2NiIMnVmZY8jTqeVL4/v/KtIDgVa6PgbJ1VwABsNm3a/6W0DLwBEQazxl6YV8rdjRXdO6eIrkc5WRzZqWtXgTqDUOjauadvKO5OiRUkPSLcBINQZMLs0aWPzHrZVURGPey53sn+E81s26C5mECcIEszWlGV5E9PhIA8HQ7H2i4+Y7rEewU4RFNtQ0ng+RHnb/PDNhfnEfbdCB7UdDVnxZGlWvP1ZfZPRsAI3JUQtFdjGIrDAZcbhwqhTsDORqKgX/rElSNXRaJ/jH+Iab6pxeIzm/GG9rOUZzBQSDXwGPv6oZ6AgcfEdGgaFJyREIvwYVEdS4MFlZDcUmJiBK9Cv2Ck56tp6tFgbnFxeYWCo+qHEWZXNxl2JCpPSR0gRJLJniC/Dmdnih+FMA7mNGibWa8hbNs+uKiX5Dch6qxo+Po7ZgsmRfxQfup2h3UALMJa+9dEVKecBBmUAFu9INbPHYfjImYMbNfc2P64Wm1cIOTmdJ7/eQksjdPTG+oPKtcKGONBNe5wLzI1luaqeLyO+hI+UkJvri+B3vb7GAR3d62uuXs1m6LZW7FD3IRZtNyUt8hyD6UWPE/ReSXDNPQru+9bX2bojrgOCWiZsBmCiZgWJMUBeJSm5FkI7MDjoKyG05LFDGEDDKuKjQBjqeAbKDOx1UQxtSLwL8DVSTGFevU6whIOWbn5AUVSPIbdif9qkV1tSzPRPZUCSzKOCvG/YMwtf3YK5gdVmkJ931QXR98o6oKtfgudQnQ9il1WL9TZy8jeFSE24xPBI3hH3p29X6H9N1Xcia9PvYywmP5roS33eSQhFOxF7T1xXAv31WoGrdx1Tf06e+5juKpArMWPD4VyIqVVQnxaXIwCsS",
-    "expiration": "2026-05-18T07:51:38.000Z"
+    "access_key_id": "ASIAZV3A2ECZO2ABEZQ3",
+    "secret_access_key": "wZLTfajXN3wFEJp21tPZSt2WlZdrn+RCMlniGsxA",
+    "session_token": "IQoJb3JpZ2luX2VjEGMaCXVzLWVhc3QtMSJHMEUCIQC9ape530Ezznxw2s+zABppJEoJrK/uYpYGSX7ycjQ51gIgca/79hLnFEvYot7XFyMyOjbLN2JH2cxZUF+Au6YsGQ4q9QMILBAEGgw2NjUzODYwOTg4NjYiDPHGA4KzStIFks8KRyrSA2Yb+G8Najqslkv5L+9xxHqvCcuIGN9nHr+M4YFbpKjAIWueKJ5TdAt7LlYkrD/nRUdGbclhvEdgCl7egbZbc43jx9BZEAlLZ9t0jv1qtWTr7v+srztWQny3mKGAPlwfVh3vL53tlkzhVY4V1rfpOT66Cip08Lh20HKhs7J0V70lzU/k9MDJPULn+sbSFz/pZwu2riTTy4VaoQAR+i95juviCefqGw3DpzVvyKDrSYKbdnkQ7vI7kDy3k7esFGtKQPB0rO6XChU7FggpRgvJhGo592u5MURDQI9/yisK2mw11Ejh/B/6naqJNHxosQ3sRInLRgG7yMe3oBTBa+LC31RSy26kvv8Bn9mNWlNEqm9LRdWm6lpC3B1uyauA53z8rGXhbzaameOmt7d+aEiMykzUDj55Y2YRAPTU401S6GaZcOjLUCVY+7sdznVkMKdpUkUFj+9KGXYTmhGQLqB+b+5e86fFS85CASrDZHyLogGM1mfmPL1OnVuWJDTj6AX/7nRhbfEkHNNPFvu2GD3v9T2F7rI2bSrH6dL08JY7uZmy7jJtjS3Om1znVOFL4lQIPx0FKlPCqyLysSmPs2/Bo5SsX9YmIboqg6dI045jrVyfPAkw5sP80AY6nQHN+KQHzW1mztJABAsH56Xz28i5tZ6VneAY7H/kiRfkdqaAmvcAp3DbIp92Y9oYqGHivfemaERxc3xWta8NsGr8pA5aO8t6vYKn5ql6HwRUNLdiwd2IVXgYzd1VtLXTtIS1peCPvpzLl5Luy5LcukAVw8TVfdUJhqV2A9QCzmPHus9YN3HcxUhrAVea0ZqQ30H9Erf45LfNqJKO9c9k",
+    "expiration": "2026-06-03T06:33:10.000Z"
   },
   "name": "copy-of-mtex-parts-–-bmw-\u0026-mercedes-benz-авточасти",
   "path": "/home/ubuntu/copy-of-mtex-parts-–-bmw-\u0026-mercedes-benz-авточасти",

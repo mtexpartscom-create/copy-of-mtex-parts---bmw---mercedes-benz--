@@ -124,7 +124,7 @@ export default function InventorySection() {
       ref={sectionRef}
       style={{
         background: "#15171a",
-        padding: "7rem 0",
+        padding: "3rem 0",
         position: "relative",
       }}
     >

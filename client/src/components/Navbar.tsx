@@ -16,6 +16,12 @@ const NAV_LINKS = [
   { href: "#contact", label: "Контакт" },
 ];
 
+const CATALOG_LINKS = [
+  { href: "/catalog", label: "Каталог: Авточасти" },
+  { href: "/vehicles-for-parts", label: "Автомобили за части" },
+  { href: "/auto-service", label: "Автосервиз" },
+];
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -116,6 +122,35 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   onClick={(e) => { e.preventDefault(); handleLinkClick(link.href); }}
+                  style={{
+                    display: "block",
+                    padding: "0.5rem 0.85rem",
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontWeight: 500,
+                    fontSize: "0.875rem",
+                    color: "#9ca3af",
+                    borderRadius: 8,
+                    transition: "all 0.2s ease",
+                    textDecoration: "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.target as HTMLElement).style.color = "#f0f0ee";
+                    (e.target as HTMLElement).style.background = "rgba(255,255,255,0.05)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.target as HTMLElement).style.color = "#9ca3af";
+                    (e.target as HTMLElement).style.background = "transparent";
+                  }}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li style={{ height: 20, width: 1, background: "rgba(255,255,255,0.1)", margin: "0 0.5rem" }} />
+            {CATALOG_LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
                   style={{
                     display: "block",
                     padding: "0.5rem 0.85rem",
