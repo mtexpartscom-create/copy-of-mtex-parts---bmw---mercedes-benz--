@@ -208,180 +208,176 @@ export default function ProductManagement() {
             </DialogContent>
           </Dialog>
           <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => handleOpenForm()}>
-              <Plus className="w-4 h-4 mr-2" />
-              Добави Част
-            </Button>
-          </DialogTrigger>
+            <DialogTrigger asChild>
+              <Button onClick={() => handleOpenForm()}>
+                <Plus className="w-4 h-4 mr-2" />
+                Добави Част
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>
+                  {editingProduct ? "Редактирай Част" : "Добави Нова Част"}
+                </DialogTitle>
+              </DialogHeader>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Категория *</label>
+                  <Select
+                    value={selectedCategory?.toString() || ""}
+                    onValueChange={(val) => setSelectedCategory(parseInt(val))}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Изберете категория" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((cat: any) => (
+                        <SelectItem key={cat.id} value={cat.id.toString()}>
+                          {cat.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Име на Частта *</label>
+                  <Input
+                    placeholder="Например: Филтър за маслото"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    className="mt-1"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Описание</label>
+                  <Textarea
+                    placeholder="Описание на частта..."
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({ ...formData, description: e.target.value })
+                    }
+                    className="mt-1"
+                    rows={3}
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium">Цена *</label>
+                    <Input
+                      placeholder="50.00"
+                      value={formData.price}
+                      onChange={(e) =>
+                        setFormData({ ...formData, price: e.target.value })
+                      }
+                      className="mt-1"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium">Наличност</label>
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      value={formData.stock}
+                      onChange={(e) =>
+                        setFormData({ ...formData, stock: e.target.value })
+                      }
+                      className="mt-1"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Съвместими Марки</label>
+                  <Input
+                    placeholder="BMW,Mercedes"
+                    value={formData.compatibleBrands}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        compatibleBrands: e.target.value,
+                      })
+                    }
+                    className="mt-1"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Съвместими Модели</label>
+                  <Textarea
+                    placeholder="E90, E91, F30..."
+                    value={formData.compatibleModels}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        compatibleModels: e.target.value,
+                      })
+                    }
+                    className="mt-1"
+                    rows={2}
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Спецификации (JSON)</label>
+                  <Textarea
+                    placeholder='{"Тип": "OEM", "Производител": "BMW"}'
+                    value={formData.specifications}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        specifications: e.target.value,
+                      })
+                    }
+                    className="mt-1"
+                    rows={2}
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">URL на Главна Снимка</label>
+                  <Input
+                    placeholder="/manus-storage/..."
+                    value={formData.primaryImageUrl}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        primaryImageUrl: e.target.value,
+                      })
+                    }
+                    className="mt-1"
+                  />
+                </div>
+
+                <div className="flex gap-2 pt-4">
+                  <Button
+                    className="flex-1"
+                    onClick={handleSubmit}
+                    disabled={
+                      createProductMutation.isPending ||
+                      updateProductMutation.isPending
+                    }
+                  >
+                    {editingProduct ? "Обнови" : "Добави"}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => setIsFormOpen(false)}
+                  >
+                    Отмяна
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
           </Dialog>
         </div>
       </div>
-
-      {/* Dialog for adding/editing products */}
-      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>
-                {editingProduct ? "Редактирай Част" : "Добави Нова Част"}
-              </DialogTitle>
-            </DialogHeader>
-
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium">Категория *</label>
-                <Select
-                  value={selectedCategory?.toString() || ""}
-                  onValueChange={(val) => setSelectedCategory(parseInt(val))}
-                >
-                  <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Изберете категория" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat: any) => (
-                      <SelectItem key={cat.id} value={cat.id.toString()}>
-                        {cat.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">Име на Частта *</label>
-                <Input
-                  placeholder="Например: Филтър за маслото"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">Описание</label>
-                <Textarea
-                  placeholder="Описание на частта..."
-                  value={formData.description}
-                  onChange={(e) =>
-                    setFormData({ ...formData, description: e.target.value })
-                  }
-                  className="mt-1"
-                  rows={3}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium">Цена *</label>
-                  <Input
-                    placeholder="50.00"
-                    value={formData.price}
-                    onChange={(e) =>
-                      setFormData({ ...formData, price: e.target.value })
-                    }
-                    className="mt-1"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium">Наличност</label>
-                  <Input
-                    type="number"
-                    placeholder="0"
-                    value={formData.stock}
-                    onChange={(e) =>
-                      setFormData({ ...formData, stock: e.target.value })
-                    }
-                    className="mt-1"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">Съвместими Марки</label>
-                <Input
-                  placeholder="BMW,Mercedes"
-                  value={formData.compatibleBrands}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      compatibleBrands: e.target.value,
-                    })
-                  }
-                  className="mt-1"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">Съвместими Модели</label>
-                <Textarea
-                  placeholder="E90, E91, F30..."
-                  value={formData.compatibleModels}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      compatibleModels: e.target.value,
-                    })
-                  }
-                  className="mt-1"
-                  rows={2}
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">Спецификации (JSON)</label>
-                <Textarea
-                  placeholder='{"Тип": "OEM", "Производител": "BMW"}'
-                  value={formData.specifications}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      specifications: e.target.value,
-                    })
-                  }
-                  className="mt-1"
-                  rows={2}
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium">URL на Главна Снимка</label>
-                <Input
-                  placeholder="/manus-storage/..."
-                  value={formData.primaryImageUrl}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      primaryImageUrl: e.target.value,
-                    })
-                  }
-                  className="mt-1"
-                />
-              </div>
-
-              <div className="flex gap-2 pt-4">
-                <Button
-                  className="flex-1"
-                  onClick={handleSubmit}
-                  disabled={
-                    createProductMutation.isPending ||
-                    updateProductMutation.isPending
-                  }
-                >
-                  {editingProduct ? "Обнови" : "Добави"}
-                </Button>
-                <Button
-                  variant="outline"
-                  className="flex-1"
-                  onClick={() => setIsFormOpen(false)}
-                >
-                  Отмяна
-                </Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
 
       {/* Category Filter */}
       <div>
