@@ -77,10 +77,10 @@
 - [x] Test all CRUD operations
 
 ## Phase 11: Testing & Deployment
-- [x] Unit tests: 22 vitest tests passing
-- [ ] End-to-end browser testing for CRM workflows
-- [ ] Admin dashboard functionality testing
-- [ ] Performance testing and optimization
+- [x] Unit tests: 36 vitest tests passing (ecommerce + core)
+- [ ] End-to-end browser testing for CRM workflows (customer, vehicle, inquiry, booking CRUD)
+- [ ] Admin dashboard functionality testing (all tabs and key actions)
+- [ ] Performance testing and optimization (profiling and bottleneck fixes)
 - [x] Create checkpoint for deployment
 
 ## Phase 12: Vehicle Listings Management
@@ -90,10 +90,10 @@
 - [x] Add image upload functionality (local preview)
 - [x] Add listings gallery to main website
 - [x] Add delete controls in admin UI
-- [ ] Implement backend file upload to S3 storage (storagePut)
+- [ ] Verify /api/upload uses storagePut end-to-end with validation and error handling
 - [x] Add multi-image upload functionality
-- [ ] Test listings creation and display in browser
-- [ ] Test image upload and display in gallery
+- [ ] Test listings creation/publishing with multiple images in browser
+- [ ] Test image upload/display/carousel behavior after publish
 
 ## Phase 15: UI Updates & Final Polish
 - [x] Update hero statistics (631+, 12.4K+)

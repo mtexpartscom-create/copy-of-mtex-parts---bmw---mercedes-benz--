@@ -149,19 +149,78 @@ export default function ProductManagement() {
     }
   };
 
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const createCategoryMutation = trpc.ecommerce.categories.create.useMutation();
+
+  const handleCreateCategory = async () => {
+    if (!newCategoryName.trim()) {
+      toast.error("Въведете име на категория");
+      return;
+    }
+
+    try {
+      await createCategoryMutation.mutateAsync({ name: newCategoryName });
+      toast.success("Категория създадена успешно");
+      setNewCategoryName("");
+      setIsCategoryDialogOpen(false);
+    } catch (error: any) {
+      toast.error(error.message || "Грешка при създаване на категория");
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Управление на Части</h2>
-        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+        <div className="flex gap-2">
+          <Dialog open={isCategoryDialogOpen} onOpenChange={setIsCategoryDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline">
+                <Plus className="w-4 h-4 mr-2" />
+                Нова Категория
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Добави Нова Категория</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">Име на категория *</label>
+                  <Input
+                    value={newCategoryName}
+                    onChange={(e) => setNewCategoryName(e.target.value)}
+                    placeholder="Напр. Двигател, Трансмисия"
+                    className="mt-1"
+                  />
+                </div>
+                <div className="flex gap-2 justify-end">
+                  <Button variant="outline" onClick={() => setIsCategoryDialogOpen(false)}>
+                    Отмяна
+                  </Button>
+                  <Button onClick={handleCreateCategory}>
+                    Създай
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+          <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
           <DialogTrigger asChild>
             <Button onClick={() => handleOpenForm()}>
               <Plus className="w-4 h-4 mr-2" />
               Добави Част
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          </Dialog>
+        </div>
+      </div>
+
+      {/* Dialog for adding/editing products */}
+      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>
                 {editingProduct ? "Редактирай Част" : "Добави Нова Част"}
@@ -323,7 +382,6 @@ export default function ProductManagement() {
             </div>
           </DialogContent>
         </Dialog>
-      </div>
 
       {/* Category Filter */}
       <div>
