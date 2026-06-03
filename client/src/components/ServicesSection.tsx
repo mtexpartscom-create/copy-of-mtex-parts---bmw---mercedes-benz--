@@ -5,7 +5,7 @@
 */
 
 import { useEffect, useRef } from "react";
-import { Settings, Wrench, Truck, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Settings, Wrench, Truck, ArrowRight, CheckCircle2, Zap, Cog, Shield } from "lucide-react";
 
 const SERVICES = [
   {
