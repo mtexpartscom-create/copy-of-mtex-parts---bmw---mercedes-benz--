@@ -8,6 +8,9 @@ import { storagePut } from "../storage";
 
 const upload = multer({ storage: multer.memoryStorage() });
 
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
 export function registerUploadRoutes(app: Express) {
   app.post("/api/upload", upload.single("file"), async (req: Request, res: Response) => {
     try {
@@ -17,14 +20,30 @@ export function registerUploadRoutes(app: Express) {
       }
 
       const file = req.file;
+
+      // Validate file type
+      if (!ALLOWED_MIME_TYPES.includes(file.mimetype)) {
+        return res.status(400).json({
+          error: `Invalid file type. Allowed types: ${ALLOWED_MIME_TYPES.join(", ")}`,
+        });
+      }
+
+      // Validate file size
+      if (file.size > MAX_FILE_SIZE) {
+        return res.status(400).json({
+          error: `File size exceeds maximum of ${MAX_FILE_SIZE / 1024 / 1024}MB`,
+        });
+      }
+
+      // Validate filename
+      if (!file.originalname || file.originalname.trim().length === 0) {
+        return res.status(400).json({ error: "Invalid filename" });
+      }
+
       const fileName = `listings/${Date.now()}_${file.originalname}`;
 
       // Upload to S3
-      const { url } = await storagePut(
-        fileName,
-        file.buffer,
-        file.mimetype
-      );
+      const { url } = await storagePut(fileName, file.buffer, file.mimetype);
 
       return res.json({ url });
     } catch (error) {

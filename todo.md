@@ -19,7 +19,7 @@
 - [x] Auto-generate posts when vehicle is added
 - [x] Include vehicle model, engine, available parts, contact phone
 - [x] Write vitest tests for Facebook integration
-- [ ] Add real image upload capability to Facebook posts
+- [ ] Add image upload capability to Facebook posts (via storagePut)
 - [ ] Add admin UI to review/edit posts before publishing
 
 ## Phase 4: CRM Database & Core Features
@@ -90,7 +90,7 @@
 - [x] Add image upload functionality (local preview)
 - [x] Add listings gallery to main website
 - [x] Add delete controls in admin UI
-- [ ] Verify /api/upload uses storagePut end-to-end with validation and error handling
+- [x] Verify /api/upload uses storagePut end-to-end with validation and error handling (file type, size, filename validation added)
 - [x] Add multi-image upload functionality
 - [ ] Test listings creation/publishing with multiple images in browser
 - [ ] Test image upload/display/carousel behavior after publish
@@ -176,28 +176,28 @@
 - [ ] Test booking form submission end-to-end in browser
 
 ## Phase 22: E2E Testing & Browser Validation
-- [ ] Test customer creation workflow (form → database)
-- [ ] Test vehicle listing creation with multi-image upload
-- [ ] Test order placement workflow (catalog → cart → checkout)
-- [ ] Test admin dashboard navigation and CRUD operations
-- [ ] Test VIN decoder in contact form
-- [ ] Test image carousel and fullscreen viewer
+- [ ] Test customer creation workflow (form → database) in browser
+- [ ] Test vehicle listing creation with multi-image upload in browser
+- [ ] Test order placement workflow (catalog → cart → checkout) in browser
+- [ ] Test admin dashboard navigation and CRUD operations in browser
+- [ ] Test VIN decoder in contact form in browser
+- [ ] Test image carousel and fullscreen viewer in browser
 - [ ] Test responsive design on mobile/tablet/desktop
-- [ ] Test Facebook integration (mock posting)
-- [ ] Test booking form functionality
+- [ ] Test Facebook integration (mock posting) in admin
+- [ ] Test booking form submission in browser
 
 ## Phase 23: Performance Optimization
-- [ ] Profile application for bottlenecks
-- [ ] Optimize image loading and display
-- [ ] Optimize database queries
-- [ ] Add caching where appropriate
-- [ ] Test performance metrics
+- [ ] Implement lazy loading for images across all pages
+- [ ] Add database indexes for frequently queried fields
+- [ ] Implement React Query caching strategies
+- [ ] Add code splitting for route-based components
+- [ ] Profile and measure performance metrics (bundle size, load time)
 
 ## Phase 24: Final Verification & Polish
-- [ ] Verify all error handling is robust
-- [ ] Test edge cases and error scenarios
-- [ ] Ensure all forms have proper validation
-- [ ] Verify all notifications work correctly
+- [ ] Audit all forms for validation completeness
+- [ ] Add edge case tests for form validation
+- [ ] Verify all notifications deliver correctly (browser testing)
+- [ ] Fix broken navigation links and inconsistent routes
 - [ ] Final visual polish and spacing adjustments
 - [ ] Create final checkpoint for production deployment
 
