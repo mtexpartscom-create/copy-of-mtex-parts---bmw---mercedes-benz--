@@ -20,6 +20,7 @@ import ListingForm from "@/components/ListingForm";
 import ListingCard from "@/components/ListingCard";
 import ProductManagement from "@/components/ProductManagement";
 import OrderManagement from "@/components/OrderManagement";
+import PartsListingManagement from "@/components/PartsListingManagement";
 
 export default function AdminDashboard() {
   const { user, isAuthenticated } = useAuth();
@@ -151,11 +152,12 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid w-full grid-cols-7">
+          <TabsList className="grid w-full grid-cols-8">
             <TabsTrigger value="customers">Клиенти</TabsTrigger>
             <TabsTrigger value="inquiries">Заявки</TabsTrigger>
             <TabsTrigger value="bookings">Резервации</TabsTrigger>
             <TabsTrigger value="listings">Обяви</TabsTrigger>
+            <TabsTrigger value="parts">Авточасти</TabsTrigger>
             <TabsTrigger value="products">Части</TabsTrigger>
             <TabsTrigger value="orders">Поръчки</TabsTrigger>
             <TabsTrigger value="facebook">Facebook</TabsTrigger>
@@ -402,6 +404,19 @@ export default function AdminDashboard() {
                     <p className="text-sm text-muted-foreground">Няма обяви. Създай нова обява с формата по-горе.</p>
                   )}
                 </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Parts Listings Tab */}
+          <TabsContent value="parts" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Управление на Листинги на Авточасти</CardTitle>
+                <CardDescription>Добавяне, редактиране и управление на листинги на авточасти с изображения</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <PartsListingManagement />
               </CardContent>
             </Card>
           </TabsContent>

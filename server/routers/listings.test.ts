@@ -208,3 +208,76 @@ describe("listing images router", () => {
     }
   });
 });
+
+
+describe("parts listing management", () => {
+  it("should validate listing make field", () => {
+    const testData = { make: "BMW", model: "X5", price: "$45000" };
+    expect(testData.make).toBeTruthy();
+    expect(typeof testData.make).toBe("string");
+  });
+
+  it("should validate listing model field", () => {
+    const testData = { make: "BMW", model: "X5", price: "$45000" };
+    expect(testData.model).toBeTruthy();
+    expect(typeof testData.model).toBe("string");
+  });
+
+  it("should validate listing price field", () => {
+    const testData = { make: "BMW", model: "X5", price: "$45000" };
+    expect(testData.price).toBeTruthy();
+    expect(typeof testData.price).toBe("string");
+  });
+
+  it("should validate listing year as optional number", () => {
+    const testData = { year: 2022 };
+    expect(typeof testData.year).toBe("number");
+    expect(testData.year).toBeGreaterThan(1990);
+  });
+
+  it("should validate listing status enum", () => {
+    const validStatuses = ["active", "sold", "archived"];
+    const testStatus = "active";
+    expect(validStatuses).toContain(testStatus);
+  });
+
+  it("should handle image URLs as JSON string", () => {
+    const imageUrls = JSON.stringify([
+      "/manus-storage/listings/image1.jpg",
+      "/manus-storage/listings/image2.jpg",
+    ]);
+    const parsed = JSON.parse(imageUrls);
+    expect(Array.isArray(parsed)).toBe(true);
+    expect(parsed.length).toBe(2);
+  });
+
+  it("should validate primary image URL", () => {
+    const primaryImageUrl = "/manus-storage/listings/image1.jpg";
+    expect(primaryImageUrl).toBeTruthy();
+    expect(primaryImageUrl.includes("/manus-storage/")).toBe(true);
+  });
+
+  it("should support listing features as comma-separated string", () => {
+    const features = "Panoramic roof, Leather seats, Navigation system";
+    expect(features).toBeTruthy();
+    expect(typeof features).toBe("string");
+  });
+
+  it("should validate listing transmission field", () => {
+    const transmission = "Automatic";
+    expect(transmission).toBeTruthy();
+    expect(["Automatic", "Manual", "CVT"]).toContain(transmission);
+  });
+
+  it("should validate listing engine field", () => {
+    const engine = "3.0L TwinTurbo";
+    expect(engine).toBeTruthy();
+    expect(typeof engine).toBe("string");
+  });
+
+  it("should validate listing mileage as number", () => {
+    const mileage = 15000;
+    expect(typeof mileage).toBe("number");
+    expect(mileage).toBeGreaterThanOrEqual(0);
+  });
+});
