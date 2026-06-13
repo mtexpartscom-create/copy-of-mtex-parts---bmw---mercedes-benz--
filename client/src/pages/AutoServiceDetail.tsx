@@ -10,6 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 
 const SERVICES = [
   {
@@ -62,10 +64,60 @@ export default function AutoServiceDetail() {
     description: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const createBookingMutation = trpc.crm.bookings.createPublic.useMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Booking:", formData);
-    // TODO: Send to backend
+    
+    // Validation
+    if (!formData.name.trim()) {
+      toast.error("Моля, въведете име");
+      return;
+    }
+    if (!formData.phone.trim()) {
+      toast.error("Моля, въведете телефонен номер");
+      return;
+    }
+    if (!formData.service) {
+      toast.error("Моля, изберете услуга");
+      return;
+    }
+    if (!formData.date) {
+      toast.error("Моля, изберете дата");
+      return;
+    }
+    if (!formData.time) {
+      toast.error("Моля, изберете час");
+      return;
+    }
+
+    try {
+      // Combine date and time into ISO datetime
+      const bookingDateTime = new Date(`${formData.date}T${formData.time}`);
+      
+      await createBookingMutation.mutateAsync({
+        name: formData.name,
+        phone: formData.phone,
+        serviceType: formData.service,
+        bookingDate: bookingDateTime,
+        description: formData.description,
+      });
+      
+      toast.success("Резервацията е създадена успешно! Ще се свържем с вас скоро.");
+      
+      // Reset form
+      setFormData({
+        name: "",
+        phone: "",
+        service: "",
+        date: "",
+        time: "",
+        description: "",
+      });
+    } catch (error) {
+      console.error("Booking error:", error);
+      toast.error("Грешка при създаване на резервация. Моля, опитайте отново.");
+    }
   };
 
   return (
@@ -181,8 +233,12 @@ export default function AutoServiceDetail() {
               rows={4}
             />
 
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-              Запази час
+            <Button 
+              type="submit" 
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              disabled={createBookingMutation.isPending}
+            >
+              {createBookingMutation.isPending ? "Запазване..." : "Запази час"}
             </Button>
           </form>
         </div>

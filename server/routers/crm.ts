@@ -319,6 +319,62 @@ export const crmRouter = router({
 
   // ============ BOOKINGS ============
   bookings: router({
+    createPublic: publicProcedure
+      .input(
+        z.object({
+          name: z.string().min(1, "Name is required"),
+          phone: z.string().min(1, "Phone is required"),
+          email: z.string().email().optional(),
+          serviceType: z.string().min(1, "Service type is required"),
+          bookingDate: z.date(),
+          description: z.string().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        try {
+          // Create or get customer
+          let customer = await db.getCustomerByPhone(input.phone);
+          if (!customer) {
+            customer = await db.createCustomer({
+              name: input.name,
+              phone: input.phone,
+              email: input.email,
+            });
+          }
+
+          if (!customer) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: "Failed to create customer",
+            });
+          }
+
+          // Create booking
+          const booking = await db.createBooking({
+            customerId: customer.id,
+            serviceType: input.serviceType,
+            bookingDate: input.bookingDate,
+            status: "pending",
+            notes: input.description,
+          });
+
+          if (!booking) {
+            throw new TRPCError({
+              code: "INTERNAL_SERVER_ERROR",
+              message: "Failed to create booking",
+            });
+          }
+
+          return booking;
+        } catch (error) {
+          console.error("[CRM] Error creating public booking:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to create booking",
+          });
+        }
+      }),
+
     create: publicProcedure
       .input(
         z.object({

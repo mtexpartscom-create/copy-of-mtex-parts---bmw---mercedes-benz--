@@ -169,9 +169,11 @@
 - [x] Integrate route in App.tsx at /auto-service-detail
 - [x] Write vitest tests for AutoService page (8 tests passing)
 - [x] Fix ProductManagement component syntax errors
-- [ ] Connect booking form to backend (create tRPC procedure for bookings)
-- [ ] Add booking confirmation notifications
-- [ ] Test booking form submission end-to-end
+- [x] Connect booking form to backend with createPublic procedure
+- [x] Create customer automatically from booking form (name, phone)
+- [x] Add booking confirmation notifications with toast
+- [x] Implement proper validation and error handling
+- [ ] Test booking form submission end-to-end in browser
 
 ## Phase 22: E2E Testing & Browser Validation
 - [ ] Test customer creation workflow (form → database)
