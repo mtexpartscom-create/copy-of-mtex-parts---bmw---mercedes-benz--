@@ -160,7 +160,8 @@ export default function ProductManagement() {
     }
 
     try {
-      await createCategoryMutation.mutateAsync({ name: newCategoryName });
+      const slug = newCategoryName.toLowerCase().replace(/\s+/g, '-');
+      await createCategoryMutation.mutateAsync({ name: newCategoryName, slug });
       toast.success("Категория създадена успешно");
       setNewCategoryName("");
       setIsCategoryDialogOpen(false);

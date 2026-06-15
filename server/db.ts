@@ -794,7 +794,7 @@ export async function getProducts(filters?: {
     query = query.where(eq(products.categoryId, filters.categoryId));
   }
   if (filters?.status) {
-    query = query.where(eq(products.status, filters.status));
+    query = query.where(eq(products.status, filters.status as any));
   }
 
   const results = await query;
@@ -973,7 +973,7 @@ export async function getOrders(filters?: {
   let query = db.select().from(orders);
 
   if (filters?.status) {
-    query = query.where(eq(orders.status, filters.status));
+    query = query.where(eq(orders.status, filters.status as any));
   }
 
   return await query.orderBy(desc(orders.createdAt));

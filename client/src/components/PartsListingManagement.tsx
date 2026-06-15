@@ -180,28 +180,32 @@ export default function PartsListingManagement() {
       // Upload images first
       const uploadedImageUrls: string[] = [];
       for (const imgData of images) {
-        if (imgData.file.size > 0) {
+        if (imgData.file && imgData.file.size > 0) {
           const formDataForUpload = new FormData();
           formDataForUpload.append("file", imgData.file);
           
           const uploadResult = await uploadImageMutation.mutateAsync({
             fileName: imgData.file.name,
-            fileSize: imgData.file.size,
           });
           uploadedImageUrls.push(uploadResult.url);
-        } else {
+        } else if (imgData.preview) {
           // Existing image URL
           uploadedImageUrls.push(imgData.preview);
         }
       }
 
+      if (uploadedImageUrls.length === 0) {
+        toast.error("Моля, качете поне едно изображение");
+        return;
+      }
+
       const listingData = {
         make: formData.make.trim(),
         model: formData.model.trim(),
-        year: parseInt(formData.year) || new Date().getFullYear(),
+        year: parseInt(formData.year),
         engine: formData.engine.trim(),
         transmission: formData.transmission.trim(),
-        mileage: formData.mileage ? parseInt(formData.mileage) : null,
+        mileage: formData.mileage ? parseInt(formData.mileage) : undefined,
         price: formData.price.trim(),
         description: formData.description.trim(),
         features: formData.features.trim(),
@@ -214,7 +218,8 @@ export default function PartsListingManagement() {
         await updateListingMutation.mutateAsync({
           id: editingListing.id,
           ...listingData,
-        });
+          mileage: listingData.mileage ?? null,
+        } as any);
         toast.success("Листингът е обновен успешно");
       } else {
         await createListingMutation.mutateAsync(listingData);
@@ -235,7 +240,7 @@ export default function PartsListingManagement() {
     }
 
     try {
-      await deleteListingMutation.mutateAsync({ id });
+      await deleteListingMutation.mutateAsync(id);
       toast.success("Листингът е изтрит успешно");
       refetchListings();
     } catch (error) {
