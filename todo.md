@@ -210,4 +210,4 @@
 - [x] Add parts listing validation (make, model, price, images required)
 - [x] Write vitest tests for parts management (10 new tests passing)
 - [x] Integrate parts management into admin dashboard with new tab
-- [ ] Test end-to-end parts workflow (add, edit, delete, images)
+- [ ] Fix TypeScript errors in parts management (category slug, mileage handling, mutations, fileData, Drizzle enum types)

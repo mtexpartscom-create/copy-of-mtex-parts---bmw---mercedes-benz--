@@ -37,9 +37,12 @@ function ListingCard({ listing }: { listing: any }) {
 
   return (
     <>
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
       {displayImage && (
-        <div className="relative w-full h-48 overflow-hidden bg-muted group">
+        <div className="relative w-full h-40 md:h-48 overflow-hidden bg-muted group" onClick={() => {
+          setViewerImageIndex(currentImageIndex);
+          setIsViewerOpen(true);
+        }}>
           <img
             src={displayImage}
             alt={`${listing.make} ${listing.model} - ${currentImageIndex + 1}`}
