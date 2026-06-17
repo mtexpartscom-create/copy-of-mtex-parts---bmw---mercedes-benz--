@@ -35,7 +35,7 @@ const SERVICES = [
     iconBg: "rgba(196,18,48,0.12)",
     title: "АВТОСЕРВИЗ",
     subtitle: "Професионален Ремонт",
-    image: "/manus-storage/DTC_JPG_WEB_FORMAAT_Tweede_Keuze00064_4da18195.jpg",
+    image: "/manus-storage/service_workshop_25e9dd1a.png",
     description: "Професионален сервиз за BMW и Mercedes-Benz. Диагностика, ремонт и поддръжка от опитни техници с богат опит.",
     features: [
       "Компютърна диагностика",
@@ -45,7 +45,7 @@ const SERVICES = [
       "Спирачна система",
       "Електрически системи",
     ],
-    cta: { label: "Разбери повече", href: "#contact" },
+    cta: { label: "Разбери повече", href: "/auto-service-detail" },
     featured: true,
   },
   {
