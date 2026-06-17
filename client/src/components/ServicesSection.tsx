@@ -15,7 +15,7 @@ const SERVICES = [
     iconBg: "rgba(28,105,212,0.12)",
     title: "АВТОМОРГА",
     subtitle: "OEM Употребявани Части",
-    image: "/manus-storage/photo_engine_1a1b2ff3.webp",
+    image: "/manus-storage/DTC_JPG_WEB_FORMAAT_Tweede_Keuze00064_4da18195.jpg",
     description: "Широк асортимент от употребявани OEM авточасти за BMW и Mercedes-Benz. Двигатели, скоростни кутии, ходова, електроника и каросерия.",
     features: [
       "Двигатели и агрегати",
@@ -35,7 +35,7 @@ const SERVICES = [
     iconBg: "rgba(196,18,48,0.12)",
     title: "АВТОСЕРВИЗ",
     subtitle: "Професионален Ремонт",
-    image: "/manus-storage/photo_gearbox_c92c30a2.webp",
+    image: "/manus-storage/DTC_JPG_WEB_FORMAAT_Tweede_Keuze00064_4da18195.jpg",
     description: "Професионален сервиз за BMW и Mercedes-Benz. Диагностика, ремонт и поддръжка от опитни техници с богат опит.",
     features: [
       "Компютърна диагностика",
