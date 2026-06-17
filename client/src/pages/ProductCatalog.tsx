@@ -1,6 +1,7 @@
-/**
+/*
  * Product Catalog Page
  * Каталог на авточасти за продажба
+ * Same design as Home page for consistent UX
  */
 
 import { useState, useEffect } from "react";
@@ -19,6 +20,8 @@ import { ShoppingCart, Search, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import ProductDetailModal from "@/components/ProductDetailModal";
 import ShoppingCartSidebar from "@/components/ShoppingCartSidebar";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface CartItem {
   productId: number;
@@ -27,6 +30,8 @@ interface CartItem {
   quantity: number;
   image: string;
 }
+
+const brands = ["BMW", "Mercedes-Benz"];
 
 export default function ProductCatalog() {
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
@@ -84,7 +89,6 @@ export default function ProductCatalog() {
         },
       ]);
     }
-
     toast.success(`${product.name} добавена в кошницата`);
   };
 
@@ -93,42 +97,133 @@ export default function ProductCatalog() {
     setIsDetailOpen(true);
   };
 
-  const brands = ["BMW", "Mercedes"];
-
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-8">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-2">Каталог на Авточасти</h1>
-          <p className="text-blue-100">
-            Качествени OEM авточасти за BMW и Mercedes-Benz
+    <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
+      <Navbar />
+
+      {/* Hero Section */}
+      <div style={{
+        background: "linear-gradient(135deg, #1a1d22 0%, #15171a 100%)",
+        borderBottom: "1px solid rgba(255,255,255,0.05)",
+        padding: "4rem 0",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        <div style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          padding: "0 2rem",
+          position: "relative",
+          zIndex: 1,
+        }}>
+          <h1 style={{
+            fontFamily: "'Syne', sans-serif",
+            fontWeight: 800,
+            fontSize: "clamp(2.8rem, 6vw, 5rem)",
+            lineHeight: 1.08,
+            letterSpacing: "-0.03em",
+            color: "#f0f0ee",
+            marginBottom: "1.5rem",
+          }}>
+            Каталог<br />
+            <span style={{ color: "#2563eb" }}>Авточасти</span>
+          </h1>
+          <p style={{
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            fontSize: "1.1rem",
+            color: "#9ca3af",
+            lineHeight: 1.6,
+            maxWidth: "600px",
+          }}>
+            Качествени OEM авточасти за BMW и Mercedes-Benz. Намерете нужната вам част от нашия богат склад.
           </p>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar - Filters */}
-          <div className="lg:col-span-1">
-            <div className="bg-card rounded-lg p-6 space-y-6 sticky top-4">
-              <div>
-                <h3 className="font-semibold mb-3">Търсене</h3>
-                <div className="relative">
-                  <Search className="absolute left-2 top-2.5 w-4 h-4 text-muted-foreground" />
+      {/* Main Content */}
+      <div style={{
+        background: "#0d0e10",
+        padding: "3rem 0",
+      }}>
+        <div style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          padding: "0 2rem",
+        }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 3fr",
+            gap: "2rem",
+          }}>
+            {/* Sidebar - Filters */}
+            <div style={{
+              background: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(255,255,255,0.05)",
+              borderRadius: "12px",
+              padding: "1.5rem",
+              height: "fit-content",
+              position: "sticky",
+              top: "1rem",
+            }}>
+              <h3 style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 700,
+                fontSize: "1.1rem",
+                color: "#f0f0ee",
+                marginBottom: "1rem",
+              }}>
+                Филтри
+              </h3>
+
+              {/* Search */}
+              <div style={{ marginBottom: "1.5rem" }}>
+                <label style={{
+                  display: "block",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "0.875rem",
+                  color: "#9ca3af",
+                  marginBottom: "0.5rem",
+                }}>
+                  Търсене
+                </label>
+                <div style={{ position: "relative" }}>
+                  <Search size={16} style={{
+                    position: "absolute",
+                    left: "0.75rem",
+                    top: "0.75rem",
+                    color: "#6b7280",
+                  }} />
                   <Input
                     placeholder="Търси части..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-8"
+                    style={{
+                      paddingLeft: "2.25rem",
+                      background: "rgba(255,255,255,0.02)",
+                      border: "1px solid rgba(255,255,255,0.05)",
+                      color: "#f0f0ee",
+                    }}
                   />
                 </div>
               </div>
 
-              <div>
-                <h3 className="font-semibold mb-3">Марка</h3>
+              {/* Brand Filter */}
+              <div style={{ marginBottom: "1.5rem" }}>
+                <label style={{
+                  display: "block",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "0.875rem",
+                  color: "#9ca3af",
+                  marginBottom: "0.5rem",
+                }}>
+                  Марка
+                </label>
                 <Select value={selectedBrand} onValueChange={setSelectedBrand}>
-                  <SelectTrigger>
+                  <SelectTrigger style={{
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.05)",
+                    color: "#f0f0ee",
+                  }}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -142,15 +237,28 @@ export default function ProductCatalog() {
                 </Select>
               </div>
 
-              <div>
-                <h3 className="font-semibold mb-3">Категория</h3>
+              {/* Category Filter */}
+              <div style={{ marginBottom: "1.5rem" }}>
+                <label style={{
+                  display: "block",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "0.875rem",
+                  color: "#9ca3af",
+                  marginBottom: "0.5rem",
+                }}>
+                  Категория
+                </label>
                 <Select
                   value={selectedCategory?.toString() || "all"}
                   onValueChange={(val) =>
                     setSelectedCategory(val === "all" ? undefined : parseInt(val))
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger style={{
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.05)",
+                    color: "#f0f0ee",
+                  }}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -165,124 +273,231 @@ export default function ProductCatalog() {
               </div>
 
               {/* Cart Summary */}
-              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-                <Button
-                  onClick={() => setIsCartOpen(true)}
-                  className="w-full"
-                  size="lg"
-                >
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  Кошница ({cart.length})
-                </Button>
-              </div>
+              <Button
+                onClick={() => setIsCartOpen(true)}
+                style={{
+                  width: "100%",
+                  background: "#2563eb",
+                  color: "#f0f0ee",
+                  padding: "0.75rem",
+                  borderRadius: "8px",
+                  border: "none",
+                  cursor: "pointer",
+                  fontWeight: 600,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <ShoppingCart size={18} />
+                Кошница ({cart.length})
+              </Button>
             </div>
-          </div>
 
-          {/* Main Content - Products Grid */}
-          <div className="lg:col-span-3">
-            {filteredProducts.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground text-lg">
-                  Няма намерени части. Опитайте други филтри.
-                </p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map((product: any) => (
-                  <Card
-                    key={product.id}
-                    className="overflow-hidden hover:shadow-lg transition-shadow"
-                  >
-                    {/* Product Image */}
-                    <div className="relative bg-muted h-48 overflow-hidden">
-                      {product.primaryImageUrl ? (
-                        <img
-                          src={product.primaryImageUrl}
-                          alt={product.name}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                          Няма снимка
-                        </div>
-                      )}
-                      {product.stock === 0 && (
-                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                          <span className="text-white font-semibold">Изчерпана</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Product Info */}
-                    <div className="p-4 space-y-3">
-                      <h3 className="font-semibold line-clamp-2">{product.name}</h3>
-
-                      {product.description && (
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {product.description}
-                        </p>
-                      )}
-
-                      <div className="flex items-center justify-between">
-                        <span className="text-lg font-bold text-primary">
-                          {product.price}
-                        </span>
-                        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                          {product.stock > 0 ? `${product.stock} в наличност` : "Изчерпана"}
-                        </span>
+            {/* Main Content - Products Grid */}
+            <div>
+              {filteredProducts.length === 0 ? (
+                <div style={{
+                  textAlign: "center",
+                  padding: "3rem",
+                  background: "rgba(255,255,255,0.02)",
+                  borderRadius: "12px",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                }}>
+                  <p style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "1.1rem",
+                    color: "#9ca3af",
+                  }}>
+                    Няма намерени части. Опитайте други филтри.
+                  </p>
+                </div>
+              ) : (
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+                  gap: "1.5rem",
+                }}>
+                  {filteredProducts.map((product: any) => (
+                    <div
+                      key={product.id}
+                      style={{
+                        background: "rgba(255,255,255,0.02)",
+                        border: "1px solid rgba(255,255,255,0.05)",
+                        borderRadius: "12px",
+                        overflow: "hidden",
+                        transition: "all 0.3s ease",
+                        cursor: "pointer",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = "rgba(37,99,235,0.5)";
+                        e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
+                        e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                      }}
+                    >
+                      {/* Product Image */}
+                      <div style={{
+                        background: "rgba(255,255,255,0.02)",
+                        height: "200px",
+                        overflow: "hidden",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}>
+                        {product.primaryImageUrl ? (
+                          <img
+                            src={product.primaryImageUrl}
+                            alt={product.name}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          <div style={{
+                            color: "#6b7280",
+                            fontSize: "0.875rem",
+                          }}>
+                            Няма изображение
+                          </div>
+                        )}
                       </div>
 
-                      {product.compatibleBrands && (
-                        <p className="text-xs text-muted-foreground">
-                          Съвместима с: {product.compatibleBrands}
-                        </p>
-                      )}
+                      {/* Product Info */}
+                      <div style={{ padding: "1rem" }}>
+                        <h3 style={{
+                          fontFamily: "'Syne', sans-serif",
+                          fontWeight: 700,
+                          fontSize: "1rem",
+                          color: "#f0f0ee",
+                          marginBottom: "0.5rem",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}>
+                          {product.name}
+                        </h3>
 
-                      {/* Actions */}
-                      <div className="flex gap-2 pt-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="flex-1"
-                          onClick={() => handleViewDetails(product)}
-                        >
-                          <ChevronRight className="w-4 h-4 mr-1" />
-                          Детайли
-                        </Button>
-                        <Button
-                          size="sm"
-                          className="flex-1"
-                          onClick={() => handleAddToCart(product)}
-                          disabled={product.stock === 0}
-                        >
-                          <ShoppingCart className="w-4 h-4 mr-1" />
-                          Добави
-                        </Button>
+                        <p style={{
+                          fontFamily: "'Plus Jakarta Sans', sans-serif",
+                          fontSize: "0.875rem",
+                          color: "#9ca3af",
+                          marginBottom: "1rem",
+                          lineHeight: 1.4,
+                          minHeight: "2.4rem",
+                          overflow: "hidden",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                        }}>
+                          {product.description || "Качествена авточаст"}
+                        </p>
+
+                        <div style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginBottom: "1rem",
+                        }}>
+                          <span style={{
+                            fontFamily: "'Syne', sans-serif",
+                            fontWeight: 700,
+                            fontSize: "1.25rem",
+                            color: "#2563eb",
+                          }}>
+                            {product.price} лв.
+                          </span>
+                          {product.compatibleBrands && (
+                            <span style={{
+                              fontFamily: "'Plus Jakarta Sans', sans-serif",
+                              fontSize: "0.75rem",
+                              color: "#6b7280",
+                              background: "rgba(255,255,255,0.05)",
+                              padding: "0.25rem 0.5rem",
+                              borderRadius: "4px",
+                            }}>
+                              {product.compatibleBrands.join(", ")}
+                            </span>
+                          )}
+                        </div>
+
+                        <div style={{
+                          display: "flex",
+                          gap: "0.5rem",
+                        }}>
+                          <Button
+                            onClick={() => handleViewDetails(product)}
+                            style={{
+                              flex: 1,
+                              background: "rgba(37,99,235,0.1)",
+                              color: "#2563eb",
+                              border: "1px solid rgba(37,99,235,0.3)",
+                              padding: "0.5rem",
+                              borderRadius: "6px",
+                              cursor: "pointer",
+                              fontWeight: 600,
+                              fontSize: "0.875rem",
+                            }}
+                          >
+                            Детайли
+                          </Button>
+                          <Button
+                            onClick={() => handleAddToCart(product)}
+                            style={{
+                              flex: 1,
+                              background: "#2563eb",
+                              color: "#f0f0ee",
+                              border: "none",
+                              padding: "0.5rem",
+                              borderRadius: "6px",
+                              cursor: "pointer",
+                              fontWeight: 600,
+                              fontSize: "0.875rem",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              gap: "0.25rem",
+                            }}
+                          >
+                            <ShoppingCart size={14} />
+                            Добави
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </Card>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Product Detail Modal */}
-      <ProductDetailModal
-        isOpen={isDetailOpen}
-        product={selectedProduct}
-        onClose={() => setIsDetailOpen(false)}
-        onAddToCart={handleAddToCart}
-      />
+      {/* Modals */}
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          isOpen={isDetailOpen}
+          onClose={() => setIsDetailOpen(false)}
+          onAddToCart={handleAddToCart}
+        />
+      )}
 
-      {/* Shopping Cart Sidebar */}
-      <ShoppingCartSidebar
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cart={cart}
-        onUpdateCart={setCart}
-      />
+      {isCartOpen && (
+        <ShoppingCartSidebar
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          cart={cart}
+          onUpdateCart={setCart}
+        />
+      )}
+
+      <Footer />
     </div>
   );
 }

@@ -251,7 +251,7 @@ export default function ServicesSection() {
                 <h3 style={{
                   fontFamily: "'Syne', sans-serif",
                   fontWeight: 700,
-                  fontSize: "1.3rem",
+                  fontSize: '35px',
                   color: "#f0f0ee",
                   letterSpacing: "-0.02em",
                   marginBottom: "0.75rem",
@@ -302,12 +302,12 @@ export default function ServicesSection() {
                     if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
                   } : undefined}
                   style={{
-                    display: "inline-flex",
+                    display: 'flex',
                     alignItems: "center",
                     gap: "0.4rem",
                     fontFamily: "'Plus Jakarta Sans', sans-serif",
                     fontWeight: 600,
-                    fontSize: "0.875rem",
+                    fontSize: '18px',
                     color: service.iconColor,
                     textDecoration: "none",
                     transition: "gap 0.2s ease",

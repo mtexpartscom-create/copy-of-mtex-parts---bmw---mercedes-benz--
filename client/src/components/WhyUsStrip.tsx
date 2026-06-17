@@ -70,16 +70,16 @@ export default function WhyUsStrip() {
         background: "#15171a",
         borderTop: "1px solid rgba(255,255,255,0.05)",
         borderBottom: "1px solid rgba(255,255,255,0.05)",
-        padding: "3rem 0",
+        padding: "3rem 0", display: 'inline',
       }}
     >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem", paddingLeft: '3px' }}>
         <div
           className="fade-up"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-            gap: "1.5rem",
+            gap: "1.5rem", height: '85px', width: '1280px',
           }}
         >
           {FEATURES.map((feat, i) => (
@@ -91,7 +91,7 @@ export default function WhyUsStrip() {
                 gap: "0.85rem",
                 padding: "0.75rem",
                 borderRadius: 12,
-                transition: "background 0.2s ease",
+                transition: "background 0.2s ease", marginTop: 'px',
               }}
               onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.03)")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
@@ -113,17 +113,16 @@ export default function WhyUsStrip() {
               <div>
                 <div style={{
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "0.875rem",
-                  color: "#f0f0ee",
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  color: '#ffffff',
                   lineHeight: 1.2,
-                  marginBottom: "0.15rem",
                 }}>
                   {feat.label}
                 </div>
                 <div style={{
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontSize: "0.75rem",
+                  fontSize: '11px',
                   color: "#6b7280",
                 }}>
                   {feat.desc}

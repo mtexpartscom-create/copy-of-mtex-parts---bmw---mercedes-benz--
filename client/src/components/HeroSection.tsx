@@ -163,11 +163,11 @@ export default function HeroSection() {
           <h1 style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(2.8rem, 6vw, 5rem)",
+            fontSize: '50px',
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
             color: "#f0f0ee",
-            marginBottom: "1.5rem",
+            marginBottom: "1.5rem", fontSize: '50px',
           }}>
             Качествени<br />
             <span style={{
