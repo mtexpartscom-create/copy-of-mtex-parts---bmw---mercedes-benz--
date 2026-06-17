@@ -205,6 +205,7 @@ export default function ServicesSection() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
+                    objectPosition: service.id === "service" ? "center bottom" : "center center",
                     transition: "transform 0.5s ease",
                   }}
                 />
