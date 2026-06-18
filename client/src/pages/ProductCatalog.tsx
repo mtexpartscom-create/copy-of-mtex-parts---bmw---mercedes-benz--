@@ -105,32 +105,32 @@ export default function ProductCatalog() {
       <div style={{
         background: "linear-gradient(135deg, #1a1d22 0%, #15171a 100%)",
         borderBottom: "1px solid rgba(255,255,255,0.05)",
-        padding: "4rem 0",
+        padding: "clamp(2rem, 5vh, 4rem) 0",
         position: "relative",
         overflow: "hidden",
       }}>
         <div style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 2rem",
+          padding: "0 1rem",
           position: "relative",
           zIndex: 1,
         }}>
           <h1 style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(2.8rem, 6vw, 5rem)",
+            fontSize: "clamp(1.75rem, 5vw, 5rem)",
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
             color: "#f0f0ee",
-            marginBottom: "1.5rem",
+            marginBottom: "1rem",
           }}>
             Каталог<br />
             <span style={{ color: "#2563eb" }}>Авточасти</span>
           </h1>
           <p style={{
             fontFamily: "'Plus Jakarta Sans', sans-serif",
-            fontSize: "1.1rem",
+            fontSize: "clamp(0.9rem, 2.5vw, 1.1rem)",
             color: "#9ca3af",
             lineHeight: 1.6,
             maxWidth: "600px",
@@ -143,17 +143,25 @@ export default function ProductCatalog() {
       {/* Main Content */}
       <div style={{
         background: "#0d0e10",
-        padding: "3rem 0",
+        padding: "2rem 0",
       }}>
         <div style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 2rem",
+          padding: "0 1rem",
         }}>
-          <div style={{
+          <style>{`
+            @media (min-width: 768px) {
+              .catalog-grid {
+                grid-template-columns: 1fr 3fr !important;
+                gap: 2rem !important;
+              }
+            }
+          `}</style>
+          <div className="catalog-grid" style={{
             display: "grid",
-            gridTemplateColumns: "1fr 3fr",
-            gap: "2rem",
+            gridTemplateColumns: "1fr",
+            gap: "1.5rem",
           }}>
             {/* Sidebar - Filters */}
             <div style={{

@@ -118,10 +118,10 @@ export default function HeroSection() {
         zIndex: 2,
         maxWidth: 1280,
         margin: "0 auto",
-        padding: "0 2rem",
+        padding: "0 1rem",
         width: "100%",
-        paddingTop: "6rem",
-        paddingBottom: "6rem",
+        paddingTop: "clamp(3rem, 10vh, 6rem)",
+        paddingBottom: "clamp(3rem, 10vh, 6rem)",
       }}>
         <div style={{ maxWidth: 680 }}>
           {/* Badge */}
@@ -163,7 +163,7 @@ export default function HeroSection() {
           <h1 style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: '50px',
+            fontSize: 'clamp(1.75rem, 5vw, 50px)',
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
             color: "#f0f0ee",
@@ -184,7 +184,7 @@ export default function HeroSection() {
           {/* Description */}
           <p style={{
             fontFamily: "'Plus Jakarta Sans', sans-serif",
-            fontSize: "1.1rem",
+            fontSize: "clamp(0.9rem, 2.5vw, 1.1rem)",
             color: "#9ca3af",
             lineHeight: 1.7,
             marginBottom: "2.5rem",
@@ -198,7 +198,7 @@ export default function HeroSection() {
           {/* Stats */}
           <div style={{
             display: "flex",
-            gap: "2.5rem",
+            gap: "clamp(1.5rem, 4vw, 2.5rem)",
             marginBottom: "2.5rem",
             flexWrap: "wrap",
           }}>
@@ -207,7 +207,7 @@ export default function HeroSection() {
                 <span style={{
                   fontFamily: "'Syne', sans-serif",
                   fontWeight: 800,
-                  fontSize: "2rem",
+                  fontSize: "clamp(1.5rem, 4vw, 2rem)",
                   color: "#f0f0ee",
                   lineHeight: 1,
                   letterSpacing: "-0.03em",

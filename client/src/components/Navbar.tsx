@@ -64,11 +64,11 @@ export default function Navbar() {
           style={{
             maxWidth: 1280,
             margin: "0 auto",
-            padding: "0 2rem",
+            padding: "0 1rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: scrolled ? 68 : 80,
+            height: scrolled ? 60 : 70,
             transition: "height 0.4s cubic-bezier(0.4,0,0.2,1)",
           }}
         >
@@ -81,13 +81,13 @@ export default function Navbar() {
             <img
               src="/manus-storage/profile_logo_9d43d216.webp"
               alt="MTEX PARTS"
-              style={{ width: 44, height: 44, borderRadius: 8, objectFit: "cover" }}
+              style={{ width: 36, height: 36, borderRadius: 6, objectFit: "cover" }}
             />
-            <div style={{ lineHeight: 1.2 }}>
+            <div style={{ lineHeight: 1.1 }}>
               <div style={{
                 fontFamily: "'Syne', sans-serif",
                 fontWeight: 800,
-                fontSize: "1.15rem",
+                fontSize: "clamp(0.9rem, 2vw, 1.15rem)",
                 color: "#f0f0ee",
                 letterSpacing: "-0.02em",
               }}>
@@ -95,7 +95,7 @@ export default function Navbar() {
               </div>
               <div style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
-                fontSize: "0.68rem",
+                fontSize: "clamp(0.55rem, 1.5vw, 0.68rem)",
                 color: "#60a5fa",
                 fontWeight: 500,
                 letterSpacing: "0.06em",
@@ -184,14 +184,14 @@ export default function Navbar() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.55rem 1.1rem",
+                gap: "0.4rem",
+                padding: "0.45rem 0.8rem",
                 background: "#1c69d4",
                 color: "#fff",
-                borderRadius: 8,
+                borderRadius: 6,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 600,
-                fontSize: "0.85rem",
+                fontSize: "clamp(0.75rem, 2vw, 0.85rem)",
                 textDecoration: "none",
                 transition: "all 0.2s ease",
                 whiteSpace: "nowrap",
