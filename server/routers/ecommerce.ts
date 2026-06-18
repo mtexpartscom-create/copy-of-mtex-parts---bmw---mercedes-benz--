@@ -32,7 +32,7 @@ export const ecommerceRouter = router({
       .input(
         z.object({
           categoryId: z.number().optional(),
-          status: z.string().optional(),
+          status: z.enum(["active", "inactive"]).optional(),
           search: z.string().optional(),
         }).optional()
       )
@@ -338,7 +338,7 @@ export const ecommerceRouter = router({
     getAll: protectedProcedure
       .input(
         z.object({
-          status: z.string().optional(),
+          status: z.enum(["pending", "confirmed", "shipped", "delivered", "cancelled"]).optional(),
         }).optional()
       )
       .query(async ({ input, ctx }) => {

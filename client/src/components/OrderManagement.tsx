@@ -33,7 +33,7 @@ const statusLabels: Record<string, { label: string; color: string }> = {
 };
 
 export default function OrderManagement() {
-  const [selectedStatus, setSelectedStatus] = useState<string>("pending");
+  const [selectedStatus, setSelectedStatus] = useState<"pending" | "confirmed" | "shipped" | "delivered" | "cancelled">("pending");
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
@@ -77,7 +77,7 @@ export default function OrderManagement() {
 
       {/* Status Filter */}
       <div>
-        <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+        <Select value={selectedStatus || "pending"} onValueChange={(value) => setSelectedStatus(value as "pending" | "confirmed" | "shipped" | "delivered" | "cancelled")}>
           <SelectTrigger className="w-full">
             <SelectValue />
           </SelectTrigger>

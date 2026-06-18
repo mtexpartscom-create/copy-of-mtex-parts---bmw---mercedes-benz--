@@ -181,11 +181,12 @@ export default function PartsListingManagement() {
       const uploadedImageUrls: string[] = [];
       for (const imgData of images) {
         if (imgData.file && imgData.file.size > 0) {
-          const formDataForUpload = new FormData();
-          formDataForUpload.append("file", imgData.file);
+          const arrayBuffer = await imgData.file.arrayBuffer();
+          const buffer = Buffer.from(arrayBuffer);
           
           const uploadResult = await uploadImageMutation.mutateAsync({
             fileName: imgData.file.name,
+            fileData: buffer,
           });
           uploadedImageUrls.push(uploadResult.url);
         } else if (imgData.preview) {

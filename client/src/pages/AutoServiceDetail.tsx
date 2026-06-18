@@ -670,7 +670,14 @@ export default function AutoServiceDetail() {
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 color: "#9ca3af",
               }}>
-                +359 2 XXX XXXX
+                <a href="tel:+359898606626" style={{ color: "#2563eb", textDecoration: "none" }}>+359 898 606 626</a>
+              </p>
+              <p style={{
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                color: "#9ca3af",
+                marginTop: "0.5rem",
+              }}>
+                <a href="tel:+359896811902" style={{ color: "#2563eb", textDecoration: "none" }}>+359 896 811 902</a>
               </p>
             </div>
 
@@ -694,7 +701,7 @@ export default function AutoServiceDetail() {
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 color: "#9ca3af",
               }}>
-                ул. XXXX, София
+                Варна, България
               </p>
             </div>
 

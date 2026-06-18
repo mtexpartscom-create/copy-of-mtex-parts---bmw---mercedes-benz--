@@ -782,20 +782,24 @@ export async function createProduct(
 
 export async function getProducts(filters?: {
   categoryId?: number;
-  status?: string;
+  status?: "active" | "inactive";
   search?: string;
 }): Promise<Product[]> {
   const db = await getDb();
   if (!db) return [];
 
-  let query = db.select().from(products);
-
+  const conditions: any[] = [];
+  
   if (filters?.categoryId) {
-    query = query.where(eq(products.categoryId, filters.categoryId));
+    conditions.push(eq(products.categoryId, filters.categoryId));
   }
   if (filters?.status) {
-    query = query.where(eq(products.status, filters.status as any));
+    conditions.push(eq(products.status, filters.status));
   }
+
+  const query = conditions.length > 0 
+    ? db.select().from(products).where(and(...conditions))
+    : db.select().from(products);
 
   const results = await query;
 
@@ -965,18 +969,22 @@ export async function createOrder(
 }
 
 export async function getOrders(filters?: {
-  status?: string;
+  status?: "pending" | "confirmed" | "shipped" | "delivered" | "cancelled";
 }): Promise<Order[]> {
   const db = await getDb();
   if (!db) return [];
 
-  let query = db.select().from(orders);
-
+  const conditions: any[] = [];
+  
   if (filters?.status) {
-    query = query.where(eq(orders.status, filters.status as any));
+    conditions.push(eq(orders.status, filters.status));
   }
 
-  return await query.orderBy(desc(orders.createdAt));
+  const query = conditions.length > 0 
+    ? db.select().from(orders).where(and(...conditions)).orderBy(desc(orders.createdAt))
+    : db.select().from(orders).orderBy(desc(orders.createdAt));
+
+  return await query;
 }
 
 export async function getOrderById(id: number): Promise<Order | null> {

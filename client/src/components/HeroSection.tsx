@@ -167,7 +167,7 @@ export default function HeroSection() {
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
             color: "#f0f0ee",
-            marginBottom: "1.5rem", fontSize: '50px',
+            marginBottom: "1.5rem",
           }}>
             Качествени<br />
             <span style={{

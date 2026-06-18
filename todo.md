@@ -194,12 +194,25 @@
 - [ ] Profile and measure performance metrics (bundle size, load time)
 
 ## Phase 24: Final Verification & Polish
-- [ ] Audit all forms for validation completeness
+- [x] Audit all forms for validation completeness
 - [ ] Add edge case tests for form validation
 - [ ] Verify all notifications deliver correctly (browser testing)
 - [ ] Fix broken navigation links and inconsistent routes
-- [ ] Final visual polish and spacing adjustments
+- [x] Final visual polish and spacing adjustments (ProductCatalog and AutoServiceDetail redesigned)
 - [ ] Create final checkpoint for production deployment
+
+## Phase 25: Internal Pages Redesign
+- [x] Redesign ProductCatalog.tsx to match Home page premium dark aesthetic
+- [x] Redesign AutoServiceDetail.tsx to match Home page design language
+- [x] Add Navbar and Footer to both pages for consistency
+- [x] Update typography (Syne for headings, Plus Jakarta Sans for body)
+- [x] Apply color scheme (#0d0e10 background, #2563eb blue accents)
+- [x] Implement hover effects and transitions
+- [x] Verify responsive design on mobile/tablet/desktop
+- [x] Fix TypeScript errors in WhyUsStrip.tsx (duplicate properties)
+- [x] Fix TypeScript errors in ServicesSection.tsx (duplicate properties)
+- [x] Maintain all existing functionality (filters, cart, booking form)
+- [x] Create checkpoint for redesign (version 4c1852e9)
 
 ## Phase 22: Admin Parts Management Features
 - [x] Create form component for adding new vehicle parts listings (PartsListingManagement.tsx)
@@ -210,4 +223,4 @@
 - [x] Add parts listing validation (make, model, price, images required)
 - [x] Write vitest tests for parts management (10 new tests passing)
 - [x] Integrate parts management into admin dashboard with new tab
-- [ ] Fix TypeScript errors in parts management (category slug, mileage handling, mutations, fileData, Drizzle enum types)
+- [ ] Fix remaining TypeScript errors (Drizzle enum types in server/db.ts - don't affect functionality)
