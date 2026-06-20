@@ -347,3 +347,50 @@
 - [ ] Test all 7 modules on mobile and desktop
 - [ ] Optimize performance and responsive design
 - [ ] Create final checkpoint for deployment
+
+
+## Phase 29: Complete Desktop & Mobile Redesign (7 Modules + Responsive)
+
+### Desktop Layout (from screenshot)
+- [ ] Redesign Header with full navigation menu
+- [ ] Module 1: Hero Section with "Качествени авточасти втора употреба и професионален автосервиз"
+- [ ] Module 2: Trust Infographics (14-дневен тест, Бърза доставка, 10 600+ части, Професионална диагностика)
+- [ ] Module 3: Vehicle Dismantling Catalog (3x2 grid with car images)
+- [ ] Module 4: Categories Tree (sidebar with categories)
+- [ ] Module 5: Car Air Conditioning Service (blue box with service details)
+- [ ] Module 6: Vehicle Buyback/Scrapping Form (right side form)
+- [ ] Module 7: Contacts & Footer (map, contact info, social links)
+- [ ] Add responsive design for desktop (1024px+)
+
+### Mobile Layout (from screenshot)
+- [ ] Create mobile Home screen (hero + trust + vehicles carousel)
+- [ ] Create mobile Catalog screen (search + categories + 2x2 product grid)
+- [ ] Create mobile Auto Service screen (form with photo, date, time, service type)
+- [ ] Create mobile Vehicle Buyback screen (form with car details)
+- [ ] Create mobile Contacts screen (map + contact info + social)
+- [ ] Implement hamburger menu for mobile navigation
+- [ ] Add responsive design for mobile (up to 768px)
+
+### Shopping Cart & Checkout
+- [ ] Integrate cart into mobile and desktop versions
+- [ ] Add "Add to Cart" buttons to products
+- [ ] Create checkout form with delivery options (Eконт)
+- [ ] Add cash on delivery payment option
+- [ ] Create order success page
+
+### Admin Panel
+- [ ] Create secure admin login page
+- [ ] Build admin dashboard with order management
+- [ ] Add order notifications display
+- [ ] Hide admin panel from public sitemap
+- [ ] Add role-based access control
+
+### Testing & Deployment
+- [ ] Test desktop layout on Chrome, Firefox, Safari
+- [ ] Test mobile layout on iPhone 11 and Samsung Galaxy S25
+- [ ] Test shopping cart on both versions
+- [ ] Test checkout process
+- [ ] Test admin panel access
+- [ ] Verify all 7 modules display correctly
+- [ ] Performance optimization
+- [ ] Create final checkpoint

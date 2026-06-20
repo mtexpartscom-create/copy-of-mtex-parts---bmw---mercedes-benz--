@@ -169,16 +169,8 @@ export default function HeroSection() {
             color: "#f0f0ee",
             marginBottom: "1.5rem",
           }}>
-            Качествени<br />
-            <span style={{
-              background: "linear-gradient(135deg, #FF0000 0%, #FF6666 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}>
-              OEM Авточасти
-            </span><br />
-            на Достъпни Цени
+            Качествени авточасти втора употреба<br />
+            и професионален автосервиз
           </h1>
 
           {/* Description */}
@@ -190,9 +182,7 @@ export default function HeroSection() {
             marginBottom: "2.5rem",
             maxWidth: 520,
           }}>
-            Автоморга за употребявани OEM авточасти и автомобили на части.
-            Намерете нужната ви авточаст от нашия богат склад – BMW и Mercedes-Benz.
-            Обслужваме клиенти от цяла България.
+            Над 10 000 качествени части с гаранция и бърза доставка до 24 часа
           </p>
 
           {/* Stats */}

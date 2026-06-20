@@ -22,15 +22,15 @@ export default function Home() {
   let { user, loading, error, isAuthenticated, logout } = useAuth();
 
   return (
-    <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
+    <div style={{ background: "#0a0a0a", minHeight: "100vh" }}>
       <Navbar />
+      {/* Module 1: Hero Section */}
       <HeroSection />
+      {/* Module 2: Trust Infographics */}
       <WhyUsStrip />
-      <ServicesSection />
+      {/* Module 3: Vehicle Dismantling Catalog */}
       <InventorySection />
-      <AboutSection />
-      <MapSection />
-      <ReviewsSection />
+      {/* Module 7: Contacts & Footer */}
       <ContactSection />
       <Footer />
     </div>
