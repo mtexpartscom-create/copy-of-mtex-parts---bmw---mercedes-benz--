@@ -36,7 +36,7 @@ export default function Footer() {
 
   return (
     <footer style={{
-      background: "#0a0b0d",
+      background: "#0a0a0a",
       borderTop: "1px solid rgba(255,255,255,0.06)",
       padding: "5rem 0 2rem",
     }}>
@@ -69,7 +69,7 @@ export default function Footer() {
                 <div style={{
                   fontFamily: "'Plus Jakarta Sans', sans-serif",
                   fontSize: "0.7rem",
-                  color: "#60a5fa",
+                  color: "#FF6666",
                   fontWeight: 500,
                   letterSpacing: "0.06em",
                   textTransform: "uppercase",
@@ -149,7 +149,7 @@ export default function Footer() {
                       alignItems: "center",
                       gap: "0.3rem",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#9ca3af")}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#FF6666")}
                     onMouseLeave={(e) => (e.currentTarget.style.color = "#6b7280")}
                   >
                     <ArrowRight size={12} style={{ flexShrink: 0 }} />
@@ -191,7 +191,7 @@ export default function Footer() {
                       alignItems: "center",
                       gap: "0.3rem",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#9ca3af")}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#FF6666")}
                     onMouseLeave={(e) => (e.currentTarget.style.color = "#6b7280")}
                   >
                     <ArrowRight size={12} style={{ flexShrink: 0 }} />

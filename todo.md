@@ -246,3 +246,84 @@
 - [ ] Verify all images load correctly and are responsive
 - [ ] Test form submission on mobile
 - [ ] Create checkpoint after mobile optimization
+
+
+## Phase 27: Complete Redesign - New Red/Black/White Aesthetic
+- [ ] Update color scheme (red #FF0000, black #0a0a0a, white #f0f0ee)
+- [ ] Redesign Navbar with new colors and layout
+- [ ] Redesign Hero section with new aesthetic
+- [ ] Redesign all section components (Services, Inventory, About, etc.)
+- [ ] Update button styles (red primary, dark secondary)
+- [ ] Update form styling with new color scheme
+- [ ] Update footer with new design
+- [ ] Test responsive design on all breakpoints
+
+## Phase 28: Shopping Cart System
+- [ ] Add cart table to database schema (cart_items with product_id, quantity, user_id)
+- [ ] Create tRPC procedures for cart operations (add, remove, update, get)
+- [ ] Create Cart context/state management
+- [ ] Add "Add to Cart" buttons to product cards
+- [ ] Create shopping cart page with cart items list
+- [ ] Implement cart item quantity controls
+- [ ] Add remove item functionality
+- [ ] Calculate total price dynamically
+- [ ] Persist cart to database/localStorage
+
+## Phase 29: Order Management & Checkout
+- [ ] Add orders table to database schema (order_id, customer_info, items, total, status)
+- [ ] Create checkout form component (Name, Phone, City, Ekon\u0442 Office, Payment Method)
+- [ ] Implement form validation
+- [ ] Add "Cash on Delivery" payment option
+- [ ] Create tRPC procedure to create order from cart
+- [ ] Clear cart after successful order
+- [ ] Generate order confirmation
+- [ ] Store order in database
+
+## Phase 30: Secure Admin Panel
+- [ ] Create admin authentication (role-based access control)
+- [ ] Hide admin panel from public sitemap/navigation
+- [ ] Create admin login page
+- [ ] Implement admin-only route protection
+- [ ] Create admin dashboard layout
+- [ ] Add orders management section
+- [ ] Display all orders with customer details
+- [ ] Add order status tracking (pending, confirmed, shipped, delivered)
+- [ ] Create order detail view
+
+## Phase 31: Order Notifications System
+- [ ] Create notification table in database
+- [ ] Implement notification trigger on new order
+- [ ] Add notification badge to admin panel
+- [ ] Create notification list view
+- [ ] Add real-time notification updates (polling or websockets)
+- [ ] Mark notifications as read/unread
+- [ ] Send email notification to admin on new order
+- [ ] Add toast notifications for admin actions
+
+## Phase 32: Ekon\u0442 Integration & Payment Options
+- [ ] Research Ekon\u0442 API for office locations
+- [ ] Create Ekon\u0442 office selector component
+- [ ] Integrate Ekon\u0442 office list in checkout form
+- [ ] Implement cash on delivery payment flow
+- [ ] Add payment method selection in checkout
+- [ ] Create order confirmation with delivery details
+- [ ] Add tracking information (if available)
+
+## Phase 33: Testing & Verification
+- [ ] Test shopping cart add/remove functionality
+- [ ] Test checkout form validation
+- [ ] Test order creation and storage
+- [ ] Test admin panel access control
+- [ ] Test order notifications
+- [ ] Test responsive design on mobile
+- [ ] Test on iPhone 11 and Samsung Galaxy S25
+- [ ] Verify all forms work correctly
+- [ ] Test payment flow
+
+## Phase 34: Final Deployment
+- [ ] Create checkpoint with all changes
+- [ ] Verify no TypeScript errors
+- [ ] Verify no console errors
+- [ ] Test all features end-to-end
+- [ ] Deploy to production
+- [ ] Verify domain is working

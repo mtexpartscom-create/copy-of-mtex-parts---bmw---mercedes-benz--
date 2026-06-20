@@ -53,7 +53,7 @@ export default function Navbar() {
           zIndex: 1000,
           transition: "all 0.4s cubic-bezier(0.4,0,0.2,1)",
           background: scrolled
-            ? "rgba(13,14,16,0.96)"
+            ? "rgba(10,10,10,0.96)"
             : "transparent",
           backdropFilter: scrolled ? "blur(20px)" : "none",
           borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
@@ -186,7 +186,7 @@ export default function Navbar() {
                 alignItems: "center",
                 gap: "0.4rem",
                 padding: "0.45rem 0.8rem",
-                background: "#1c69d4",
+                background: "#FF0000",
                 color: "#fff",
                 borderRadius: 6,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -197,12 +197,12 @@ export default function Navbar() {
                 whiteSpace: "nowrap",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "#2d7de8";
+                (e.currentTarget as HTMLElement).style.background = "#FF3333";
                 (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 20px rgba(28,105,212,0.4)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 20px rgba(255,0,0,0.4)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "#1c69d4";
+                (e.currentTarget as HTMLElement).style.background = "#FF0000";
                 (e.currentTarget as HTMLElement).style.transform = "none";
                 (e.currentTarget as HTMLElement).style.boxShadow = "none";
               }}

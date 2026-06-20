@@ -40,19 +40,20 @@
 }
 
 :root {
-  /* Brand Colors */
-  --bmw-blue: #1c69d4;
-  --bmw-blue-light: #2d7de8;
-  --bmw-blue-dim: rgba(28, 105, 212, 0.15);
-  --bmw-red: #c41230;
-  --amber: #f59e0b;
-  --amber-dim: rgba(245, 158, 11, 0.12);
+  /* Brand Colors - Red/Black/White */
+  --primary-red: #FF0000;
+  --primary-red-light: #FF3333;
+  --primary-red-dim: rgba(255, 0, 0, 0.15);
+  --secondary-blue: #1a5fb8;
+  --secondary-blue-light: #2d7de8;
+  --secondary-blue-dim: rgba(26, 95, 184, 0.15);
+  --accent-white: #f0f0ee;
 
   /* Dark Palette */
-  --bg-base: #0d0e10;
-  --bg-surface: #15171a;
-  --bg-elevated: #1e2025;
-  --bg-hover: #252830;
+  --bg-base: #0a0a0a;
+  --bg-surface: #1a1a1a;
+  --bg-elevated: #252525;
+  --bg-hover: #333333;
 
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.06);
