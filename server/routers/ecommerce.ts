@@ -398,10 +398,16 @@ export const ecommerceRouter = router({
         z.object({
           customerName: z.string().min(1),
           customerPhone: z.string().min(1),
+          customerCity: z.string().min(1),
           customerEmail: z.string().email().optional(),
           econtOffice: z.string().min(1),
-          items: z.string(), // JSON string of items
+          items: z.array(z.object({
+            productId: z.number(),
+            quantity: z.number(),
+            price: z.string(),
+          })),
           totalPrice: z.string().min(1),
+          paymentMethod: z.enum(["cash_on_delivery", "bank_transfer"]).default("cash_on_delivery"),
         })
       )
       .mutation(async ({ input }) => {
@@ -411,7 +417,7 @@ export const ecommerceRouter = router({
             customerPhone: input.customerPhone,
             customerEmail: input.customerEmail,
             econtOffice: input.econtOffice,
-            items: input.items,
+            items: JSON.stringify(input.items),
             totalPrice: input.totalPrice,
             status: "pending",
           });

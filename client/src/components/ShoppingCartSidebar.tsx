@@ -42,6 +42,7 @@ export default function ShoppingCartSidebar({
   const [formData, setFormData] = useState({
     customerName: "",
     customerPhone: "",
+    customerCity: "",
     customerEmail: "",
     econtOffice: "",
     notes: "",
@@ -103,10 +104,16 @@ export default function ShoppingCartSidebar({
       await createOrderMutation.mutateAsync({
         customerName: formData.customerName,
         customerPhone: formData.customerPhone,
+        customerCity: formData.customerCity || 'Unknown',
         customerEmail: formData.customerEmail,
         econtOffice: formData.econtOffice,
-        items: JSON.stringify(items),
+        items: items.map(item => ({
+          productId: item.productId,
+          quantity: item.quantity,
+          price: item.price,
+        })),
         totalPrice: totalPrice.toFixed(2),
+        paymentMethod: 'cash_on_delivery',
       });
 
       toast.success("Поръчката е изпратена успешно!");
@@ -115,6 +122,7 @@ export default function ShoppingCartSidebar({
       setFormData({
         customerName: "",
         customerPhone: "",
+        customerCity: "",
         customerEmail: "",
         econtOffice: "",
         notes: "",
