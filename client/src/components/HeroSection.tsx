@@ -67,7 +67,7 @@ export default function HeroSection() {
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
-        background: "#0a0a0a",
+        background: "#0d0e10",
       }}
     >
       {/* Background image */}
@@ -90,12 +90,12 @@ export default function HeroSection() {
         <div style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(105deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.75) 50%, rgba(10,10,10,0.4) 100%)",
+          background: "linear-gradient(105deg, rgba(13,14,16,0.92) 0%, rgba(13,14,16,0.75) 50%, rgba(13,14,16,0.4) 100%)",
         }} />
         <div style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 50%)",
+          background: "linear-gradient(to top, rgba(13,14,16,0.9) 0%, transparent 50%)",
         }} />
       </div>
 
@@ -107,7 +107,7 @@ export default function HeroSection() {
         width: 600,
         height: 600,
         borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(255,0,0,0.12) 0%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(28,105,212,0.12) 0%, transparent 70%)",
         zIndex: 1,
         pointerEvents: "none",
       }} />
@@ -133,8 +133,8 @@ export default function HeroSection() {
               gap: "0.5rem",
               padding: "0.35rem 1rem",
               borderRadius: 9999,
-              background: "rgba(255,0,0,0.12)",
-              border: "1px solid rgba(255,0,0,0.3)",
+              background: "rgba(28,105,212,0.12)",
+              border: "1px solid rgba(28,105,212,0.3)",
               marginBottom: "1.75rem",
             }}
           >
@@ -142,8 +142,8 @@ export default function HeroSection() {
               width: 7,
               height: 7,
               borderRadius: "50%",
-              background: "#FF0000",
-              boxShadow: "0 0 8px #FF0000",
+              background: "#1c69d4",
+              boxShadow: "0 0 8px #1c69d4",
               flexShrink: 0,
               animation: "pulse 2s infinite",
             }} />
@@ -151,7 +151,7 @@ export default function HeroSection() {
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontSize: "0.78rem",
               fontWeight: 600,
-              color: "#FF6666",
+              color: "#60a5fa",
               letterSpacing: "0.06em",
               textTransform: "uppercase",
             }}>
@@ -169,8 +169,16 @@ export default function HeroSection() {
             color: "#f0f0ee",
             marginBottom: "1.5rem",
           }}>
-            Качествени авточасти втора употреба<br />
-            и професионален автосервиз
+            Качествени<br />
+            <span style={{
+              background: "linear-gradient(135deg, #1c69d4 0%, #60a5fa 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}>
+              OEM Авточасти
+            </span><br />
+            на Достъпни Цени
           </h1>
 
           {/* Description */}
@@ -182,7 +190,9 @@ export default function HeroSection() {
             marginBottom: "2.5rem",
             maxWidth: 520,
           }}>
-            Над 10 000 качествени части с гаранция и бърза доставка до 24 часа
+            Автоморга за употребявани OEM авточасти и автомобили на части.
+            Намерете нужната ви авточаст от нашия богат склад – BMW и Mercedes-Benz.
+            Обслужваме клиенти от цяла България.
           </p>
 
           {/* Stats */}
@@ -231,7 +241,7 @@ export default function HeroSection() {
                 alignItems: "center",
                 gap: "0.5rem",
                 padding: "0.85rem 1.75rem",
-                background: "#FF0000",
+                background: "#1c69d4",
                 color: "#fff",
                 borderRadius: 10,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -239,17 +249,17 @@ export default function HeroSection() {
                 fontSize: "0.95rem",
                 textDecoration: "none",
                 transition: "all 0.25s ease",
-                border: "2px solid #FF0000",
+                border: "2px solid #1c69d4",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "#FF3333";
-                (e.currentTarget as HTMLElement).style.borderColor = "#FF3333";
+                (e.currentTarget as HTMLElement).style.background = "#2d7de8";
+                (e.currentTarget as HTMLElement).style.borderColor = "#2d7de8";
                 (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 28px rgba(255,0,0,0.45)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 28px rgba(28,105,212,0.45)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "#FF0000";
-                (e.currentTarget as HTMLElement).style.borderColor = "#FF0000";
+                (e.currentTarget as HTMLElement).style.background = "#1c69d4";
+                (e.currentTarget as HTMLElement).style.borderColor = "#1c69d4";
                 (e.currentTarget as HTMLElement).style.transform = "none";
                 (e.currentTarget as HTMLElement).style.boxShadow = "none";
               }}

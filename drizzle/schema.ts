@@ -251,34 +251,3 @@ export const orders = mysqlTable("orders", {
 
 export type Order = typeof orders.$inferSelect;
 export type InsertOrder = typeof orders.$inferInsert;
-
-/**
- * Cart Items table - stores shopping cart items for users
- */
-export const cartItems = mysqlTable("cartItems", {
-  id: int("id").autoincrement().primaryKey(),
-  userId: int("userId").notNull(), // Link to users table
-  productId: int("productId").notNull(), // Link to products table
-  quantity: int("quantity").default(1).notNull(),
-  addedAt: timestamp("addedAt").defaultNow().notNull(),
-});
-
-export type CartItem = typeof cartItems.$inferSelect;
-export type InsertCartItem = typeof cartItems.$inferInsert;
-
-/**
- * Notifications table - stores order notifications for admin
- */
-export const notifications = mysqlTable("notifications", {
-  id: int("id").autoincrement().primaryKey(),
-  orderId: int("orderId").notNull(), // Link to orders table
-  type: mysqlEnum("type", ["new_order", "order_confirmed", "order_shipped", "order_delivered"]).notNull(),
-  title: varchar("title", { length: 255 }).notNull(),
-  message: text("message"),
-  isRead: int("isRead").default(0).notNull(), // 0 = unread, 1 = read
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  readAt: timestamp("readAt"),
-});
-
-export type Notification = typeof notifications.$inferSelect;
-export type InsertNotification = typeof notifications.$inferInsert;
