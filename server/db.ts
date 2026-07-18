@@ -1,6 +1,7 @@
 import { eq, and, desc, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
+  User,
   InsertUser,
   users,
   customers,
@@ -86,6 +87,24 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     };
 
     textFields.forEach(assignNullable);
+
+    // Handle B2B fields
+    if (user.userType !== undefined) {
+      values.userType = user.userType;
+      updateSet.userType = user.userType;
+    }
+    if (user.companyName !== undefined) {
+      values.companyName = user.companyName ?? null;
+      updateSet.companyName = user.companyName ?? null;
+    }
+    if (user.companyTaxId !== undefined) {
+      values.companyTaxId = user.companyTaxId ?? null;
+      updateSet.companyTaxId = user.companyTaxId ?? null;
+    }
+    if (user.b2bApprovalStatus !== undefined) {
+      values.b2bApprovalStatus = user.b2bApprovalStatus;
+      updateSet.b2bApprovalStatus = user.b2bApprovalStatus;
+    }
 
     if (user.lastSignedIn !== undefined) {
       values.lastSignedIn = user.lastSignedIn;
@@ -1019,6 +1038,74 @@ export async function updateOrder(
     return await getOrderById(id);
   } catch (error) {
     console.error("[Database] Failed to update order:", error);
+    throw error;
+  }
+}
+
+// B2B User Management
+
+export async function getAllB2BUsers(approvalStatus?: "pending" | "approved" | "rejected"): Promise<User[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  const conditions: any[] = [eq(users.userType, "b2b")];
+  
+  if (approvalStatus) {
+    conditions.push(eq(users.b2bApprovalStatus, approvalStatus));
+  }
+
+  return await db.select().from(users).where(and(...conditions)).orderBy(desc(users.createdAt));
+}
+
+export async function approveB2BUser(userId: number): Promise<User | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    await db.update(users).set({ b2bApprovalStatus: "approved" }).where(eq(users.id, userId));
+    const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to approve B2B user:", error);
+    throw error;
+  }
+}
+
+export async function rejectB2BUser(userId: number): Promise<User | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    await db.update(users).set({ b2bApprovalStatus: "rejected" }).where(eq(users.id, userId));
+    const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+    return result.length > 0 ? result[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to reject B2B user:", error);
+    throw error;
+  }
+}
+
+export async function getUserById(id: number): Promise<User | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function updateUser(
+  id: number,
+  data: Partial<User>
+): Promise<User | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const updateData: any = { ...data };
+    await db.update(users).set(updateData).where(eq(users.id, id));
+    return await getUserById(id);
+  } catch (error) {
+    console.error("[Database] Failed to update user:", error);
     throw error;
   }
 }

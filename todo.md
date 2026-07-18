@@ -246,3 +246,35 @@
 - [ ] Verify all images load correctly and are responsive
 - [ ] Test form submission on mobile
 - [ ] Create checkpoint after mobile optimization
+
+
+## Phase 27: B2B System & Ekont Integration ✅ COMPLETED
+- [x] Add B2B fields to users table (userType, companyName, companyTaxId, b2bApprovalStatus)
+- [x] Create database migration for B2B fields (0006_colossal_harpoon.sql)
+- [x] Create B2B database helpers (getAllB2BUsers, approveB2BUser, rejectB2BUser, getUserById, updateUser)
+- [x] Update upsertUser to handle B2B fields
+- [x] Create B2B tRPC procedures (register, getAllUsers, approve, reject)
+- [x] Create B2BRegistrationModal component for user signup
+- [x] Create B2BUsersManagement admin panel for approvals
+- [x] Add B2B tab to AdminDashboard
+- [x] Create ShoppingCartSidebarB2B with 15% automatic discount
+- [x] Implement discount calculation for approved B2B users
+- [x] Add discount display in cart summary and checkout
+- [x] Create Ekont service (getCities, getOfficesByCity, calculateShippingCost)
+- [x] Add 20 Bulgarian cities with office locations
+- [x] Create Ekont tRPC procedures (getCities, getOffices, calculateShipping)
+- [x] Create EkontSelector component for dynamic city/office selection
+- [x] Integrate shipping cost calculation
+- [x] All TypeScript compilation passing
+- [x] Create checkpoint for B2B and Ekont integration
+
+## Phase 28: Final Integration & Testing (NEXT)
+- [ ] Integrate B2BRegistrationModal into Home page or user profile
+- [ ] Test B2B registration workflow end-to-end
+- [ ] Test B2B approval workflow in admin panel
+- [ ] Test 15% discount calculation in checkout
+- [ ] Test Ekont city/office selection in checkout
+- [ ] Test shipping cost calculation
+- [ ] Integrate EkontSelector into ShoppingCartSidebarB2B
+- [ ] Test complete checkout flow with B2B discount and Ekont shipping
+- [ ] Create final checkpoint for production deployment

@@ -17,6 +17,11 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
+  // B2B Fields
+  userType: mysqlEnum("userType", ["b2c", "b2b"]).default("b2c").notNull(),
+  companyName: varchar("companyName", { length: 255 }),
+  companyTaxId: varchar("companyTaxId", { length: 50 }),
+  b2bApprovalStatus: mysqlEnum("b2bApprovalStatus", ["pending", "approved", "rejected"]).default("pending"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),

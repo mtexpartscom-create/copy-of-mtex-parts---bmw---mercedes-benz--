@@ -21,6 +21,7 @@ import ListingCard from "@/components/ListingCard";
 import ProductManagement from "@/components/ProductManagement";
 import OrderManagement from "@/components/OrderManagement";
 import PartsListingManagement from "@/components/PartsListingManagement";
+import B2BUsersManagement from "@/components/B2BUsersManagement";
 
 export default function AdminDashboard() {
   const { user, isAuthenticated } = useAuth();
@@ -152,7 +153,8 @@ export default function AdminDashboard() {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="grid w-full grid-cols-8">
+          <TabsList className="grid w-full grid-cols-9">
+            <TabsTrigger value="b2b">B2B</TabsTrigger>
             <TabsTrigger value="customers">Клиенти</TabsTrigger>
             <TabsTrigger value="inquiries">Заявки</TabsTrigger>
             <TabsTrigger value="bookings">Резервации</TabsTrigger>
@@ -162,6 +164,11 @@ export default function AdminDashboard() {
             <TabsTrigger value="orders">Поръчки</TabsTrigger>
             <TabsTrigger value="facebook">Facebook</TabsTrigger>
           </TabsList>
+
+          {/* B2B Users Tab */}
+          <TabsContent value="b2b" className="space-y-4">
+            <B2BUsersManagement />
+          </TabsContent>
 
           {/* Customers Tab */}
           <TabsContent value="customers" className="space-y-4">

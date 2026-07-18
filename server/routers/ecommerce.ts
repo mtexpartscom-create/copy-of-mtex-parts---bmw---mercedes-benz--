@@ -23,6 +23,7 @@ import {
   updateOrder,
 } from "../db";
 import { TRPCError } from "@trpc/server";
+import { getCities, getOfficesByCity, calculateShippingCost } from "../_core/ekont";
 
 export const ecommerceRouter = router({
   // Product procedures
@@ -453,6 +454,171 @@ export const ecommerceRouter = router({
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",
             message: "Failed to update order",
+          });
+        }
+      }),
+  }),
+
+  // B2B Management
+  b2b: router({
+    // Register as B2B (protected)
+    register: protectedProcedure
+      .input(
+        z.object({
+          userType: z.enum(["b2c", "b2b"]),
+          companyName: z.string().min(1).optional(),
+          companyTaxId: z.string().min(1).optional(),
+        })
+      )
+      .mutation(async ({ input, ctx }) => {
+        try {
+          if (!ctx.user?.id) {
+            throw new TRPCError({
+              code: "UNAUTHORIZED",
+              message: "User not authenticated",
+            });
+          }
+
+          // Update user with B2B info
+          const { updateUser } = await import("../db");
+          const updated = await updateUser(ctx.user.id, {
+            userType: input.userType,
+            companyName: input.companyName || null,
+            companyTaxId: input.companyTaxId || null,
+            b2bApprovalStatus: input.userType === "b2b" ? "pending" : undefined,
+          });
+
+          return updated;
+        } catch (error) {
+          console.error("Error registering B2B user:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to register B2B user",
+          });
+        }
+      }),
+
+    // Get all B2B users (admin only)
+    getAllUsers: protectedProcedure
+      .input(
+        z.object({
+          approvalStatus: z.enum(["pending", "approved", "rejected"]).optional(),
+        }).optional()
+      )
+      .query(async ({ input, ctx }) => {
+        try {
+          if (ctx.user?.role !== "admin") {
+            throw new TRPCError({
+              code: "FORBIDDEN",
+              message: "Only admins can view B2B users",
+            });
+          }
+
+          const { getAllB2BUsers } = await import("../db");
+          return await getAllB2BUsers(input?.approvalStatus);
+        } catch (error) {
+          console.error("Error fetching B2B users:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to fetch B2B users",
+          });
+        }
+      }),
+
+    // Approve B2B user (admin only)
+    approve: protectedProcedure
+      .input(z.number())
+      .mutation(async ({ input: userId, ctx }) => {
+        try {
+          if (ctx.user?.role !== "admin") {
+            throw new TRPCError({
+              code: "FORBIDDEN",
+              message: "Only admins can approve B2B users",
+            });
+          }
+
+          const { approveB2BUser } = await import("../db");
+          return await approveB2BUser(userId);
+        } catch (error) {
+          console.error("Error approving B2B user:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to approve B2B user",
+          });
+        }
+      }),
+
+    // Reject B2B user (admin only)
+    reject: protectedProcedure
+      .input(z.number())
+      .mutation(async ({ input: userId, ctx }) => {
+        try {
+          if (ctx.user?.role !== "admin") {
+            throw new TRPCError({
+              code: "FORBIDDEN",
+              message: "Only admins can reject B2B users",
+            });
+          }
+
+          const { rejectB2BUser } = await import("../db");
+          return await rejectB2BUser(userId);
+        } catch (error) {
+          console.error("Error rejecting B2B user:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to reject B2B user",
+          });
+        }
+      }),
+  }),
+
+  // Ekont Shipping
+  ekont: router({
+    // Get all cities
+    getCities: publicProcedure.query(async () => {
+      try {
+        return await getCities();
+      } catch (error) {
+        console.error("Error fetching Ekont cities:", error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch cities",
+        });
+      }
+    }),
+
+    // Get offices for a city
+    getOffices: publicProcedure
+      .input(z.string())
+      .query(async ({ input: cityId }) => {
+        try {
+          return await getOfficesByCity(cityId);
+        } catch (error) {
+          console.error("Error fetching Ekont offices:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to fetch offices",
+          });
+        }
+      }),
+
+    // Calculate shipping cost
+    calculateShipping: publicProcedure
+      .input(
+        z.object({
+          cityId: z.string(),
+          weight: z.number().default(1),
+        })
+      )
+      .query(async ({ input }) => {
+        try {
+          const cost = await calculateShippingCost(input.cityId, input.weight);
+          return { cost };
+        } catch (error) {
+          console.error("Error calculating shipping:", error);
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to calculate shipping",
           });
         }
       }),
