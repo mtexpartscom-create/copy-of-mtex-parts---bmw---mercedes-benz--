@@ -14,6 +14,9 @@ import AboutSection from "@/components/AboutSection";
 import MapSection from "@/components/MapSection";
 import ReviewsSection from "@/components/ReviewsSection";
 import ContactSection from "@/components/ContactSection";
+import ACServiceSection from "@/components/ACServiceSection";
+import VehicleBuybackSection from "@/components/VehicleBuybackSection";
+import RoadAssistanceSection from "@/components/RoadAssistanceSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -28,6 +31,9 @@ export default function Home() {
       <WhyUsStrip />
       <ServicesSection />
       <InventorySection />
+      <ACServiceSection />
+      <VehicleBuybackSection />
+      <RoadAssistanceSection />
       <AboutSection />
       <MapSection />
       <ReviewsSection />
