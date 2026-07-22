@@ -89,13 +89,17 @@ export default function EkontSelector({
             <SelectContent>
               {citiesQuery.isLoading ? (
                 <div className="p-2 text-sm text-muted-foreground">Зареждане...</div>
-              ) : citiesQuery.data ? (
+              ) : citiesQuery.error ? (
+                <div className="p-2 text-sm text-destructive">Грешка при зареждане</div>
+              ) : citiesQuery.data && citiesQuery.data.length > 0 ? (
                 citiesQuery.data.map((city) => (
                   <SelectItem key={city.id} value={city.id}>
                     {city.name}
                   </SelectItem>
                 ))
-              ) : null}
+              ) : (
+                <div className="p-2 text-sm text-muted-foreground">Няма налични градове</div>
+              )}
             </SelectContent>
           </Select>
         </div>
@@ -108,24 +112,26 @@ export default function EkontSelector({
               <SelectTrigger id="office-select">
                 <SelectValue placeholder="Изберете офис..." />
               </SelectTrigger>
-              <SelectContent>
-                {officesQuery.isLoading ? (
-                  <div className="p-2 text-sm text-muted-foreground">Зареждане...</div>
-                ) : officesQuery.data && officesQuery.data.length > 0 ? (
-                  officesQuery.data.map((office) => (
-                    <SelectItem key={office.id} value={office.id}>
-                      <div className="flex flex-col">
-                        <span>{office.name}</span>
-                        <span className="text-xs text-muted-foreground">{office.address}</span>
-                      </div>
-                    </SelectItem>
-                  ))
-                ) : (
-                  <div className="p-2 text-sm text-muted-foreground">
-                    Няма налични офиси
-                  </div>
-                )}
-              </SelectContent>
+            <SelectContent>
+              {officesQuery.isLoading ? (
+                <div className="p-2 text-sm text-muted-foreground">Зареждане...</div>
+              ) : officesQuery.error ? (
+                <div className="p-2 text-sm text-destructive">Грешка при зареждане</div>
+              ) : officesQuery.data && officesQuery.data.length > 0 ? (
+                officesQuery.data.map((office) => (
+                  <SelectItem key={office.id} value={office.id}>
+                    <div className="flex flex-col">
+                      <span>{office.name}</span>
+                      <span className="text-xs text-muted-foreground">{office.address}</span>
+                    </div>
+                  </SelectItem>
+                ))
+              ) : (
+                <div className="p-2 text-sm text-muted-foreground">
+                  Няма налични офиси
+                </div>
+              )}
+            </SelectContent>
             </Select>
           </div>
         )}

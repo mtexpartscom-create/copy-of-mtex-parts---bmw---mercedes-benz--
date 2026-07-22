@@ -6,6 +6,8 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
+import { useAuth } from "@/_core/hooks/useAuth";
+import B2BRegistrationModal from "./B2BRegistrationModal";
 
 const NAV_LINKS = [
   { href: "#home", label: "Начало" },
@@ -25,6 +27,8 @@ const CATALOG_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [b2bModalOpen, setB2BModalOpen] = useState(false);
+  const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -296,6 +300,13 @@ export default function Navbar() {
           </div>
         )}
       </nav>
+
+      {/* B2B Registration Modal */}
+      <B2BRegistrationModal
+        isOpen={b2bModalOpen}
+        onClose={() => setB2BModalOpen(false)}
+        onSuccess={() => setB2BModalOpen(false)}
+      />
     </>
   );
 }

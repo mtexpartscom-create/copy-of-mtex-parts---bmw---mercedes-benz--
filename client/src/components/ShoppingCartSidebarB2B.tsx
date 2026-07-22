@@ -11,6 +11,7 @@ import { X, Trash2, Plus, Minus } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { useAuth } from "@/_core/hooks/useAuth";
+import EkontSelector from "./EkontSelector";
 import {
   Sheet,
   SheetContent,
@@ -50,6 +51,8 @@ export default function ShoppingCartSidebarB2B({
     notes: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string>("");
+  const [shippingCost, setShippingCost] = useState<number>(0);
 
   const createOrderMutation = trpc.ecommerce.orders.create.useMutation();
 
@@ -64,7 +67,7 @@ export default function ShoppingCartSidebarB2B({
   }, 0);
 
   const discountAmount = subtotal * b2bDiscount;
-  const totalPrice = subtotal - discountAmount;
+  const totalPrice = subtotal - discountAmount + shippingCost;
 
   const handleUpdateQuantity = (productId: number, change: number) => {
     const updated = cart
@@ -290,17 +293,17 @@ export default function ShoppingCartSidebarB2B({
                 />
               </div>
 
-              <div>
-                <label className="text-sm font-medium">Офис на Еконт *</label>
-                <Input
-                  placeholder="Град, адрес"
-                  value={formData.econtOffice}
-                  onChange={(e) =>
-                    setFormData({ ...formData, econtOffice: e.target.value })
-                  }
-                  className="mt-1"
-                />
-              </div>
+              {/* Ekont Selector */}
+              <EkontSelector
+                onCityChange={(cityId) => {
+                  setSelectedCity(cityId);
+                  setFormData({ ...formData, econtOffice: "" });
+                }}
+                onOfficeChange={(officeId, officeName) => {
+                  setFormData({ ...formData, econtOffice: officeName });
+                }}
+                onShippingCostChange={(cost) => setShippingCost(cost)}
+              />
 
               <div>
                 <label className="text-sm font-medium">Бележки</label>
@@ -324,6 +327,12 @@ export default function ShoppingCartSidebarB2B({
                   <div className="flex justify-between text-green-600 dark:text-green-400">
                     <span>B2B отстъпка (15%):</span>
                     <span>-{discountAmount.toFixed(2)} лв.</span>
+                  </div>
+                )}
+                {shippingCost > 0 && (
+                  <div className="flex justify-between">
+                    <span>Доставка:</span>
+                    <span>{shippingCost.toFixed(2)} лв.</span>
                   </div>
                 )}
                 <div className="flex justify-between font-bold border-t pt-2">
