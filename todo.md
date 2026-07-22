@@ -280,6 +280,11 @@
 - [x] Add error handling to EkontSelector (cities and offices)
 - [x] Fix validation: econtOffice only populated on office selection
 - [x] All TypeScript compilation passing
+- [x] Add comprehensive validation for order submission
+- [x] Add error handling to EkontSelector
+- [x] Fix validation: office selection required before checkout
+- [x] Add shipping cost validation
+- [x] Add city selection validation
 - [ ] Test B2B registration workflow end-to-end
 - [ ] Test B2B approval workflow in admin panel
 - [ ] Test 15% discount calculation in checkout

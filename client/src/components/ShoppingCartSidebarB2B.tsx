@@ -105,6 +105,14 @@ export default function ShoppingCartSidebarB2B({
       toast.error("Кошницата е празна");
       return;
     }
+    if (!selectedCity) {
+      toast.error("Моля, изберете град");
+      return;
+    }
+    if (shippingCost === 0) {
+      toast.error("Моля, изчакайте да се изчисли цената на доставката");
+      return;
+    }
 
     setIsSubmitting(true);
 
