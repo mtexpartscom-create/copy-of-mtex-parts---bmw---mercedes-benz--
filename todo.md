@@ -285,6 +285,7 @@
 - [x] Fix validation: office selection required before checkout
 - [x] Add shipping cost validation
 - [x] Add city selection validation
+- [x] Create comprehensive B2B & Ekont implementation guide
 - [ ] Test B2B registration workflow end-to-end
 - [ ] Test B2B approval workflow in admin panel
 - [ ] Test 15% discount calculation in checkout

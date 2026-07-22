@@ -77,20 +77,20 @@ export default function HeroSection() {
         zIndex: 0,
       }}>
         <img
-          src="https://d2xsxph8kpxj0f.cloudfront.net/310519663583206229/hqNh2jLriKqMKmwGEXEYuv/hero_workshop_final-6wBtFo6FbgbCQ84JYX8JQ9.webp"
-          alt="MTEX PARTS Workshop"
+          src="/manus-storage/1000007162_35c64632.png"
+          alt="BMW M5 MTEX PARTS"
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            objectPosition: "center",
+            objectPosition: "center right",
           }}
         />
         {/* Multi-layer overlay for text readability */}
         <div style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(105deg, rgba(13,14,16,0.92) 0%, rgba(13,14,16,0.75) 50%, rgba(13,14,16,0.4) 100%)",
+          background: "linear-gradient(105deg, rgba(13,14,16,0.95) 0%, rgba(13,14,16,0.8) 40%, rgba(13,14,16,0.3) 100%)",
         }} />
         <div style={{
           position: "absolute",
@@ -133,8 +133,8 @@ export default function HeroSection() {
               gap: "0.5rem",
               padding: "0.35rem 1rem",
               borderRadius: 9999,
-              background: "rgba(28,105,212,0.12)",
-              border: "1px solid rgba(28,105,212,0.3)",
+              background: "rgba(37,99,235,0.15)",
+              border: "1px solid rgba(37,99,235,0.4)",
               marginBottom: "1.75rem",
             }}
           >
@@ -142,8 +142,8 @@ export default function HeroSection() {
               width: 7,
               height: 7,
               borderRadius: "50%",
-              background: "#1c69d4",
-              boxShadow: "0 0 8px #1c69d4",
+              background: "#2563eb",
+              boxShadow: "0 0 8px #2563eb",
               flexShrink: 0,
               animation: "pulse 2s infinite",
             }} />
@@ -171,7 +171,7 @@ export default function HeroSection() {
           }}>
             Качествени<br />
             <span style={{
-              background: "linear-gradient(135deg, #1c69d4 0%, #60a5fa 100%)",
+              background: "linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -241,7 +241,7 @@ export default function HeroSection() {
                 alignItems: "center",
                 gap: "0.5rem",
                 padding: "0.85rem 1.75rem",
-                background: "#1c69d4",
+                background: "#2563eb",
                 color: "#fff",
                 borderRadius: 10,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
