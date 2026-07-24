@@ -63,7 +63,7 @@ export default function AboutSection() {
       ref={sectionRef}
       style={{
         background: "#0d0e10",
-        padding: "7rem 0",
+        padding: "clamp(3rem, 8vh, 6rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
@@ -80,14 +80,14 @@ export default function AboutSection() {
         pointerEvents: "none",
       }} />
 
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem", position: "relative" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1rem", position: "relative" }}>
         <div style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "5rem",
+          gridTemplateColumns: "1fr",
+          gap: "3rem",
           alignItems: "center",
         }}
-          className="about-grid"
+          className="about-grid md:grid-cols-2 md:gap-20"
         >
           {/* Left: Visual */}
           <div className="fade-up" style={{ position: "relative" }}>

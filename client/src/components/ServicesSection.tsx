@@ -109,14 +109,14 @@ export default function ServicesSection() {
         pointerEvents: "none",
       }} />
 
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem", position: "relative" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1rem", position: "relative" }}>
         {/* Section header */}
         <div className="fade-up" style={{ marginBottom: "4rem", maxWidth: 600 }}>
           <div className="section-tag" style={{ marginBottom: "1.25rem" }}>Нашите Услуги</div>
           <h2 style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(2rem, 4vw, 3rem)",
+            fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)",
             color: "#f0f0ee",
             letterSpacing: "-0.03em",
             marginBottom: "1rem",
