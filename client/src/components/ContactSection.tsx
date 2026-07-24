@@ -192,7 +192,7 @@ export default function ContactSection() {
       ref={sectionRef}
       style={{
         background: "#0d0e10",
-        padding: "7rem 0",
+        padding: "clamp(3rem, 8vh, 6rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
@@ -208,14 +208,14 @@ export default function ContactSection() {
         pointerEvents: "none",
       }} />
 
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem", position: "relative" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1rem", position: "relative" }}>
         {/* Section header */}
         <div className="fade-up" style={{ marginBottom: "4rem", maxWidth: 600 }}>
           <div className="section-tag" style={{ marginBottom: "1.25rem" }}>Свържете се с нас</div>
           <h2 style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(2rem, 4vw, 3rem)",
+            fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)",
             color: "#f0f0ee",
             letterSpacing: "-0.03em",
             lineHeight: 1.1,
@@ -236,11 +236,11 @@ export default function ContactSection() {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1.4fr",
-          gap: "3rem",
+          gridTemplateColumns: "1fr",
+          gap: "2rem",
           alignItems: "start",
         }}
-          className="contact-grid"
+          className="contact-grid md:grid-cols-[1fr_1.4fr] md:gap-12"
         >
           {/* Left: Contact info */}
           <div className="fade-up">

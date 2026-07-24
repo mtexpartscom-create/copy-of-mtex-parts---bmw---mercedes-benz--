@@ -86,7 +86,7 @@ export default function ReviewsSection() {
       ref={sectionRef}
       style={{
         background: "#15171a",
-        padding: "7rem 0",
+        padding: "clamp(3rem, 8vh, 6rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
@@ -100,14 +100,14 @@ export default function ReviewsSection() {
         background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)",
       }} />
 
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1rem" }}>
         {/* Header */}
         <div className="fade-up" style={{ textAlign: "center", marginBottom: "4rem" }}>
           <div className="section-tag" style={{ marginBottom: "1.25rem", display: "inline-flex" }}>Доволни Клиенти</div>
           <h2 style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: "clamp(2rem, 4vw, 3rem)",
+            fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)",
             color: "#f0f0ee",
             letterSpacing: "-0.03em",
             lineHeight: 1.1,
@@ -131,7 +131,7 @@ export default function ReviewsSection() {
         {/* Reviews grid */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
           gap: "1.25rem",
           marginBottom: "4rem",
         }}>

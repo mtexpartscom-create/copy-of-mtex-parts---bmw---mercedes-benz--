@@ -45,7 +45,7 @@ export default function MapSection() {
         style={{
           maxWidth: 1280,
           margin: "0 auto",
-          padding: "3rem 2rem",
+          padding: "3rem 1rem",
           position: "relative",
         }}
       >
@@ -61,7 +61,7 @@ export default function MapSection() {
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 800,
-              fontSize: "clamp(1.75rem, 3vw, 2.5rem)",
+              fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
               color: "#f0f0ee",
               letterSpacing: "-0.03em",
               lineHeight: 1.1,
