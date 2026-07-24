@@ -120,8 +120,8 @@ export default function HeroSection() {
         margin: "0 auto",
         padding: "0 1rem",
         width: "100%",
-        paddingTop: "clamp(3rem, 10vh, 6rem)",
-        paddingBottom: "clamp(3rem, 10vh, 6rem)",
+        paddingTop: "clamp(2rem, 8vh, 5rem)",
+        paddingBottom: "clamp(2rem, 8vh, 5rem)",
       }}>
         <div style={{ maxWidth: 680 }}>
           {/* Badge */}
@@ -163,7 +163,7 @@ export default function HeroSection() {
           <h1 style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: 'clamp(1.75rem, 5vw, 50px)',
+            fontSize: 'clamp(1.5rem, 4.5vw, 3.5rem)',
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
             color: "#f0f0ee",
@@ -207,7 +207,7 @@ export default function HeroSection() {
                 <span style={{
                   fontFamily: "'Syne', sans-serif",
                   fontWeight: 800,
-                  fontSize: "clamp(1.5rem, 4vw, 2rem)",
+                  fontSize: "clamp(1.25rem, 3.5vw, 1.75rem)",
                   color: "#f0f0ee",
                   lineHeight: 1,
                   letterSpacing: "-0.03em",
@@ -228,7 +228,7 @@ export default function HeroSection() {
           </div>
 
           {/* CTAs */}
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", flexDirection: "column", alignItems: "flex-start" }} className="sm:flex-row sm:items-center">
             <a
               href="#inventory"
               onClick={(e) => {
@@ -237,11 +237,13 @@ export default function HeroSection() {
                 if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
               }}
               style={{
-                display: "inline-flex",
+                display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "0.5rem",
                 padding: "0.85rem 1.75rem",
                 background: "#2563eb",
+                width: "100%",
                 color: "#fff",
                 borderRadius: 10,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -270,12 +272,14 @@ export default function HeroSection() {
             <a
               href="tel:+359898606626"
               style={{
-                display: "inline-flex",
+                display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "0.5rem",
                 padding: "0.85rem 1.75rem",
                 background: "transparent",
                 color: "#f0f0ee",
+                width: "100%",
                 borderRadius: 10,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 600,
