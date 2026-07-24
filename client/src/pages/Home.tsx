@@ -17,6 +17,7 @@ import ContactSection from "@/components/ContactSection";
 import ACServiceSection from "@/components/ACServiceSection";
 import VehicleBuybackSection from "@/components/VehicleBuybackSection";
 import RoadAssistanceSection from "@/components/RoadAssistanceSection";
+import BMW_M5_PartsSection from "@/components/BMW_M5_PartsSection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -28,6 +29,7 @@ export default function Home() {
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
       <Navbar />
       <HeroSection />
+      <BMW_M5_PartsSection />
       <WhyUsStrip />
       <ServicesSection />
       <InventorySection />

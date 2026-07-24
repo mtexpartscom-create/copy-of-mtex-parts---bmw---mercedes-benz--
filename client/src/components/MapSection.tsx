@@ -160,7 +160,7 @@ export default function MapSection() {
                   marginTop: "0.5rem",
                 }}
               >
-                Централно местоположение в град Варна
+                Гр.Варна
               </div>
             </div>
           </div>
@@ -205,6 +205,7 @@ export default function MapSection() {
                   style={{ color: "#60a5fa", textDecoration: "none" }}
                 >
                   +359 898 606 626
++359 896 811 902
                 </a>
               </p>
               <p style={{ margin: "0 0 0.5rem 0" }}>
