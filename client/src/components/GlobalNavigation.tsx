@@ -12,13 +12,14 @@ import { useLocation } from "wouter";
 
 const SERVICES_MENU = [
   { href: "/catalog", label: "АВТОМОРГА" },
-  { href: "/catalog", label: "АВТОЧАСТИ" },
+  { href: "/parts-shop", label: "АВТОЧАСТИ" },
   { href: "/auto-service-detail", label: "АВТОСЕРВИЗ" },
   { href: "/ac-service", label: "АВТОКЛИМАТИЦИ" },
   { href: "/road-assistance", label: "ПЪТНА ПОМОЩ" },
   { href: "/sell-car", label: "ПРОДАЙ АВТОМОБИЛА СИ" },
 ];
 
+// Navigation links for main menu
 const NAV_LINKS = [
   { href: "/", label: "НАЧАЛО" },
   { href: "#services", label: "УСЛУГИ", dropdown: true },
