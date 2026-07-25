@@ -11,6 +11,8 @@ import VehicleDetail from "./pages/VehicleDetail";
 import ProductCatalog from "./pages/ProductCatalog";
 import AutoServiceDetail from "./pages/AutoServiceDetail";
 import ACService from "./pages/ACService";
+import RoadAssistance from "./pages/RoadAssistance";
+import SellCar from "./pages/SellCar";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -20,6 +22,8 @@ function Router() {
       <Route path={"/catalog"} component={ProductCatalog} />
       <Route path={"/auto-service-detail"} component={AutoServiceDetail} />
       <Route path={"/ac-service"} component={ACService} />
+      <Route path={"/road-assistance"} component={RoadAssistance} />
+      <Route path={"/sell-car"} component={SellCar} />
       <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/customer/:id"} component={CustomerDetail} />
       <Route path={"/vehicle/:id"} component={VehicleDetail} />

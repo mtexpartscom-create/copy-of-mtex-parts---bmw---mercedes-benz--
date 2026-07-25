@@ -12,7 +12,7 @@ import { useLocation } from "wouter";
 
 const SERVICES_MENU = [
   { href: "/catalog", label: "АВТОМОРГА" },
-  { href: "/parts-shop", label: "АВТОЧАСТИ" },
+  { href: "/catalog", label: "АВТОЧАСТИ" },
   { href: "/auto-service-detail", label: "АВТОСЕРВИЗ" },
   { href: "/ac-service", label: "АВТОКЛИМАТИЦИ" },
   { href: "/road-assistance", label: "ПЪТНА ПОМОЩ" },
