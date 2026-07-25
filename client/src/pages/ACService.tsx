@@ -5,10 +5,12 @@
 
 import GlobalNavigation from "@/components/GlobalNavigation";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 import { Phone, CheckCircle2, Thermometer, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
+import { setSEOMetadata, SEO_PAGES } from "@/lib/seo";
 
 const FREON_TYPES = [
   { name: "R134a", description: "Стандартен фреон за BMW и Mercedes-Benz", price: "89 лв." },
@@ -26,6 +28,10 @@ const AC_SERVICES = [
 ];
 
 export default function ACService() {
+  useEffect(() => {
+    setSEOMetadata(SEO_PAGES.acService);
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -62,6 +68,11 @@ export default function ACService() {
   return (
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
       <GlobalNavigation />
+      <Breadcrumb items={[
+        { label: "Начало", href: "/" },
+        { label: "Услуги", href: "#" },
+        { label: "Автоклиматици" },
+      ]} />
 
       {/* Hero */}
       <div

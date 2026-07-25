@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Phone, MapPin, Clock, CheckCircle2, Star, Calendar } from "lucide-react";
+import { setSEOMetadata, SEO_PAGES } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,6 +15,7 @@ import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import GlobalNavigation from "@/components/GlobalNavigation";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const SERVICES = [
   {
@@ -122,9 +124,18 @@ export default function AutoServiceDetail() {
     }
   };
 
+  useEffect(() => {
+    setSEOMetadata(SEO_PAGES.autoService);
+  }, []);
+
   return (
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
       <GlobalNavigation />
+      <Breadcrumb items={[
+        { label: "Начало", href: "/" },
+        { label: "Услуги", href: "#" },
+        { label: "Автосервиз" },
+      ]} />
 
       {/* Hero Section */}
       <div style={{

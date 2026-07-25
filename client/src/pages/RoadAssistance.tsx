@@ -5,7 +5,10 @@
 
 import GlobalNavigation from "@/components/GlobalNavigation";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 import { Phone, AlertCircle, Clock, MapPin, Zap } from "lucide-react";
+import { useEffect } from "react";
+import { setSEOMetadata, SEO_PAGES } from "@/lib/seo";
 
 const SERVICES = [
   { title: "Техническа помощ", icon: "🔧", desc: "Авариен ремонт на място" },
@@ -17,9 +20,18 @@ const SERVICES = [
 ];
 
 export default function RoadAssistance() {
+  useEffect(() => {
+    setSEOMetadata(SEO_PAGES.roadAssistance);
+  }, []);
+
   return (
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
       <GlobalNavigation />
+      <Breadcrumb items={[
+        { label: "Начало", href: "/" },
+        { label: "Услуги", href: "#" },
+        { label: "Пътна помощ" },
+      ]} />
 
       {/* Hero */}
       <div

@@ -5,7 +5,9 @@
 
 import GlobalNavigation from "@/components/GlobalNavigation";
 import Footer from "@/components/Footer";
-import { useState } from "react";
+import Breadcrumb from "@/components/Breadcrumb";
+import { useState, useEffect } from "react";
+import { setSEOMetadata, SEO_PAGES } from "@/lib/seo";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 
@@ -18,6 +20,10 @@ const CAR_CONDITIONS = [
 ];
 
 export default function SellCar() {
+  useEffect(() => {
+    setSEOMetadata(SEO_PAGES.sellCar);
+  }, []);
+
   const [formData, setFormData] = useState({
     ownerName: "",
     phone: "",
@@ -66,6 +72,11 @@ export default function SellCar() {
   return (
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
       <GlobalNavigation />
+      <Breadcrumb items={[
+        { label: "Начало", href: "/" },
+        { label: "Услуги", href: "#" },
+        { label: "Продай автомобила" },
+      ]} />
 
       {/* Hero */}
       <div
