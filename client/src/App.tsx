@@ -14,6 +14,7 @@ import ACService from "./pages/ACService";
 import RoadAssistance from "./pages/RoadAssistance";
 import SellCar from "./pages/SellCar";
 import PartsShop from "./pages/PartsShop";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -42,6 +43,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <SpeedInsights />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
