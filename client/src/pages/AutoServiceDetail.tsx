@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
-import Navbar from "@/components/Navbar";
+import GlobalNavigation from "@/components/GlobalNavigation";
 import Footer from "@/components/Footer";
 
 const SERVICES = [
@@ -124,7 +124,7 @@ export default function AutoServiceDetail() {
 
   return (
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
-      <Navbar />
+      <GlobalNavigation />
 
       {/* Hero Section */}
       <div style={{

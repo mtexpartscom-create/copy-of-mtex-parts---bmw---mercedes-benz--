@@ -20,7 +20,7 @@ import { ShoppingCart, Search, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import ProductDetailModal from "@/components/ProductDetailModal";
 import ShoppingCartSidebar from "@/components/ShoppingCartSidebar";
-import Navbar from "@/components/Navbar";
+import GlobalNavigation from "@/components/GlobalNavigation";
 import Footer from "@/components/Footer";
 
 interface CartItem {
@@ -99,7 +99,7 @@ export default function ProductCatalog() {
 
   return (
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
-      <Navbar />
+      <GlobalNavigation />
 
       {/* Hero Section */}
       <div style={{
