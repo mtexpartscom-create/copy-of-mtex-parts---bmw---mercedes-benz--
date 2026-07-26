@@ -10,8 +10,11 @@ import Breadcrumb from "@/components/Breadcrumb";
 import { useEffect, useState, useMemo } from "react";
 import { setSEOMetadata, SEO_PAGES } from "@/lib/seo";
 import { Search, Filter, ShoppingCart, X, ChevronDown } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 export default function PartsShop() {
+  const { addToCart } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
@@ -663,6 +666,10 @@ export default function PartsShop() {
                     </div>
                   </div>
                   <button
+                    onClick={() => {
+                      addToCart({ ...part, quantity: 1 });
+                      toast.success(`${part.name} добавена в кошницата`);
+                    }}
                     style={{
                       width: "100%",
                       padding: "0.75rem",
