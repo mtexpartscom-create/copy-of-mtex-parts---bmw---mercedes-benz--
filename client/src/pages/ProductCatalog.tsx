@@ -22,6 +22,7 @@ import ProductDetailModal from "@/components/ProductDetailModal";
 import ShoppingCartSidebar from "@/components/ShoppingCartSidebar";
 import GlobalNavigation from "@/components/GlobalNavigation";
 import Footer from "@/components/Footer";
+import { LazyImage } from "@/components/LazyImage";
 
 interface CartItem {
   productId: number;
@@ -357,14 +358,12 @@ export default function ProductCatalog() {
                         justifyContent: "center",
                       }}>
                         {product.primaryImageUrl ? (
-                          <img
+                          <LazyImage
                             src={product.primaryImageUrl}
                             alt={product.name}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }}
+                            className="w-full h-full object-cover"
+                            width={250}
+                            height={200}
                           />
                         ) : (
                           <div style={{

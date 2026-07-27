@@ -12,6 +12,7 @@ import { setSEOMetadata, SEO_PAGES } from "@/lib/seo";
 import { Search, Filter, ShoppingCart, X, ChevronDown } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
+import { LazyImage } from "@/components/LazyImage";
 
 export default function PartsShop() {
   const { addToCart } = useCart();
