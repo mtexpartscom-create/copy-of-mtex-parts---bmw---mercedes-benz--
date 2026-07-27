@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ImageViewerModal from "./ImageViewerModal";
+import { LazyImage } from "./LazyImage";
 
 // Separate component for individual listing card
 function ListingCard({ listing }: { listing: any }) {
@@ -43,10 +44,20 @@ function ListingCard({ listing }: { listing: any }) {
           setViewerImageIndex(currentImageIndex);
           setIsViewerOpen(true);
         }}>
-          <img
+          <LazyImage
             src={displayImage}
             alt={`${listing.make} ${listing.model} - ${currentImageIndex + 1}`}
             className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
+            width={400}
+            height={300}
+            onLoad={() => {
+              // Image loaded
+            }}
+          />
+
+          {/* Overlay click handler */}
+          <div
+            className="absolute inset-0 cursor-pointer"
             onClick={() => {
               setViewerImageIndex(currentImageIndex);
               setIsViewerOpen(true);
