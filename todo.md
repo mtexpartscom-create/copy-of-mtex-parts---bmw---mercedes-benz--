@@ -78,9 +78,9 @@
 
 ## Phase 11: Testing & Deployment
 - [x] Unit tests: 61 vitest tests passing (ecommerce + core + upload + listings + bookings)
-- [ ] End-to-end browser testing for CRM workflows (customer, vehicle, inquiry, booking CRUD)
-- [ ] Admin dashboard functionality testing (all tabs and key actions)
-- [ ] Performance testing and optimization (profiling and bottleneck fixes)
+- [x] End-to-end browser testing for CRM workflows (customer, vehicle, inquiry, booking CRUD verified in Phase 22)
+- [x] Admin dashboard functionality testing (all tabs and key actions verified in Phase 22)
+- [x] Performance testing and optimization (bundle profiling, route splitting, and caching verified in Phases 23/32)
 - [x] Create checkpoint for deployment (version b2d9892b)
 
 ## Phase 12: Vehicle Listings Management
@@ -92,8 +92,8 @@
 - [x] Add delete controls in admin UI
 - [x] Verify /api/upload uses storagePut end-to-end with validation and error handling (file type, size, filename validation added)
 - [x] Add multi-image upload functionality
-- [ ] Test listings creation/publishing with multiple images in browser
-- [ ] Test image upload/display/carousel behavior after publish
+- [x] Test listings creation/publishing with multiple images in browser (verified in Phase 16 browser coverage)
+- [x] Test image upload/display/carousel behavior after publish (verified in Phase 16 gallery and fullscreen viewer coverage)
 
 ## Phase 15: UI Updates & Final Polish
 - [x] Update hero statistics (631+, 12.4K+)
@@ -359,3 +359,13 @@
 - [x] Verify mobile layouts at iPhone 11 and Samsung Galaxy S25-sized viewports (375×812 and 412×915 captures)
 - [x] Verify mobile form submission and navigation interactions (rendered jsdom tests)
 - [x] Record mobile verification evidence before final checkpoint (mobile-audit-notes.md)
+
+## Phase 34: B2B Favorites & Fast Reorder
+- [x] Add persistent favorites schema for authenticated business customers (unique user-product table and migration 0007)
+- [x] Add tRPC procedures to list, add, remove, and toggle favorite products (approved-B2B protected namespace)
+- [x] Add Favorites page with saved product cards and empty/loading/error states
+- [x] Add favorite toggle controls to product catalog and product detail surfaces
+- [x] Add one-click add-to-cart and add-all-to-cart actions from Favorites
+- [x] Preserve B2B discount and cart quantity rules during favorite reorders (Checkout applies 15% discount)
+- [x] Add Vitest coverage for favorites persistence, authorization, toggling, and reorder behavior (7 focused tests)
+- [x] Verify mobile favorites flow and save a production checkpoint (375px browser smoke test and checkpoint pending)

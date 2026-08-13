@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
+import FavoriteButton from "@/components/FavoriteButton";
 
 interface ProductDetailModalProps {
   isOpen: boolean;
@@ -185,19 +186,22 @@ export default function ProductDetailModal({
               </div>
             )}
 
-            {/* Add to Cart Button */}
-            <Button
-              size="lg"
-              className="w-full"
-              onClick={() => {
-                onAddToCart(product);
-                onClose();
-              }}
-              disabled={product.stock === 0}
-            >
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              Добави в кошница
-            </Button>
+            {/* Favorites and cart actions */}
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <FavoriteButton productId={product.id} productName={product.name} size="default" className="sm:flex-1" />
+              <Button
+                size="lg"
+                className="sm:flex-1"
+                onClick={() => {
+                  onAddToCart(product);
+                  onClose();
+                }}
+                disabled={product.stock === 0}
+              >
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                Добави в кошница
+              </Button>
+            </div>
           </div>
         </div>
       </DialogContent>

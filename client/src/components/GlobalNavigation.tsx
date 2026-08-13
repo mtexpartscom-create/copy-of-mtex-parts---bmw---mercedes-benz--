@@ -25,6 +25,7 @@ const NAV_LINKS = [
   { href: "#services", label: "УСЛУГИ", dropdown: true },
   { href: "#about", label: "ЗА НАС" },
   { href: "#contact", label: "КОНТАКТИ" },
+  { href: "/favorites", label: "ЛЮБИМИ", authOnly: true },
 ];
 
 export default function GlobalNavigation() {
@@ -32,6 +33,9 @@ export default function GlobalNavigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [location] = useLocation();
+  const { user } = useAuth();
+  const isApprovedB2B = user?.userType === "b2b" && user?.b2bApprovalStatus === "approved";
+  const visibleNavLinks = NAV_LINKS.filter((link) => !link.authOnly || isApprovedB2B);
   const servicesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -143,7 +147,7 @@ export default function GlobalNavigation() {
           }}
           className="hidden md:flex"
         >
-          {NAV_LINKS.map((link) => (
+          {visibleNavLinks.map((link) => (
             <div key={link.href} style={{ position: "relative" }}>
               {link.dropdown ? (
                 <div ref={servicesRef}>
@@ -290,7 +294,7 @@ export default function GlobalNavigation() {
           className="md:hidden"
         >
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "1rem" }}>
-            {NAV_LINKS.map((link) => (
+            {visibleNavLinks.map((link) => (
               <div key={link.href}>
                 {link.dropdown ? (
                   <>

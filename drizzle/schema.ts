@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, index } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, index, uniqueIndex } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -270,6 +270,22 @@ export const cartItems = mysqlTable("cartItems", {
 
 export type CartItem = typeof cartItems.$inferSelect;
 export type InsertCartItem = typeof cartItems.$inferInsert;
+
+/**
+ * Favorites table - saved products for authenticated customers, especially B2B repeat orders
+ */
+export const favoriteProducts = mysqlTable("favoriteProducts", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  productId: int("productId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  userProductUnique: uniqueIndex("favoriteProducts_user_product_unique").on(table.userId, table.productId),
+  userLookup: index("favoriteProducts_user_idx").on(table.userId),
+}));
+
+export type FavoriteProduct = typeof favoriteProducts.$inferSelect;
+export type InsertFavoriteProduct = typeof favoriteProducts.$inferInsert;
 
 /**
  * Notifications table - stores order notifications for admin

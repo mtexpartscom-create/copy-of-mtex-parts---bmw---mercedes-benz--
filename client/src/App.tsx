@@ -17,6 +17,7 @@ const SellCar = lazy(() => import("./pages/SellCar"));
 const PartsShop = lazy(() => import("./pages/PartsShop"));
 const Cart = lazy(() => import("./pages/Cart"));
 const Checkout = lazy(() => import("./pages/Checkout"));
+const Favorites = lazy(() => import("./pages/Favorites"));
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -38,6 +39,7 @@ function Router() {
       <Route path={"/parts-shop"} component={PartsShop} />
       <Route path={"/cart"} component={Cart} />
       <Route path={"/checkout"} component={Checkout} />
+      <Route path={"/favorites"} component={Favorites} />
       <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/customer/:id"} component={CustomerDetail} />
       <Route path={"/vehicle/:id"} component={VehicleDetail} />

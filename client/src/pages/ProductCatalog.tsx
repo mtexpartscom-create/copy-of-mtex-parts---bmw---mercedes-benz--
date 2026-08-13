@@ -23,6 +23,7 @@ import ShoppingCartSidebar from "@/components/ShoppingCartSidebar";
 import GlobalNavigation from "@/components/GlobalNavigation";
 import Footer from "@/components/Footer";
 import { LazyImage } from "@/components/LazyImage";
+import FavoriteButton from "@/components/FavoriteButton";
 
 interface CartItem {
   productId: number;
@@ -356,7 +357,13 @@ export default function ProductCatalog() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        position: "relative",
                       }}>
+                        <FavoriteButton
+                          productId={product.id}
+                          productName={product.name}
+                          className="absolute right-3 top-3 z-10 bg-black/60"
+                        />
                         {product.primaryImageUrl ? (
                           <LazyImage
                             src={product.primaryImageUrl}

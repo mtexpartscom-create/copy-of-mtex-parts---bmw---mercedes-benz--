@@ -10,9 +10,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { calculateCheckoutTotals } from "@shared/checkout";
 
 export default function Checkout() {
-  const { items, getTotalPrice, clearCart } = useCart();
+  const { items, clearCart } = useCart();
+  const { user } = useAuth();
+  const isApprovedB2B = user?.userType === "b2b" && user?.b2bApprovalStatus === "approved";
+  const checkoutTotals = calculateCheckoutTotals(
+    items.map((item) => ({ price: item.price.toString(), quantity: item.quantity })),
+    isApprovedB2B,
+    5.99
+  );
+  const vatAmount = checkoutTotals.totalPrice * 0.2;
+  const grandTotal = checkoutTotals.totalPrice + vatAmount;
   const [, setLocation] = useLocation();
   const [step, setStep] = useState<"shipping" | "payment" | "confirmation">("shipping");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -103,7 +114,7 @@ export default function Checkout() {
             price: item.price,
           }))
         ),
-        totalPrice: getTotalPrice().toString(),
+        totalPrice: grandTotal.toFixed(2),
         customerEmail: shippingData.email,
       });
       setOrderNumber(result?.id?.toString() || "ORD-" + Date.now());
@@ -419,17 +430,21 @@ export default function Checkout() {
                 <div className="border-t pt-4 space-y-2">
                   <div className="flex justify-between">
                     <span>Подсума:</span>
-                    <span className="font-semibold">{getTotalPrice().toFixed(2)} лв.</span>
+                    <span className="font-semibold">{checkoutTotals.subtotal.toFixed(2)} лв.</span>
                   </div>
+                  {isApprovedB2B && (
+                    <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
+                      <span>B2B отстъпка (15%):</span>
+                      <span className="font-semibold">−{checkoutTotals.discountAmount.toFixed(2)} лв.</span>
+                    </div>
+                  )}
                   <div className="flex justify-between">
                     <span>Доставка:</span>
                     <span className="font-semibold">5.99 лв.</span>
                   </div>
                   <div className="flex justify-between">
                     <span>ДДС (20%):</span>
-                    <span className="font-semibold">
-                      {((getTotalPrice() + 5.99) * 0.2).toFixed(2)} лв.
-                    </span>
+                    <span className="font-semibold">{vatAmount.toFixed(2)} лв.</span>
                   </div>
                 </div>
 
@@ -437,7 +452,7 @@ export default function Checkout() {
                   <div className="flex justify-between text-lg font-bold">
                     <span>Общо:</span>
                     <span>
-                      {(getTotalPrice() + 5.99 + (getTotalPrice() + 5.99) * 0.2).toFixed(2)} лв.
+                      {grandTotal.toFixed(2)} лв.
                     </span>
                   </div>
                 </div>

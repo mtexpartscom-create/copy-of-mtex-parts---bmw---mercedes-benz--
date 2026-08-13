@@ -13,6 +13,7 @@ import {
   vehicleListings,
   listingImages,
   products,
+  favoriteProducts,
   productCategories,
   productImages,
   orders,
@@ -25,6 +26,8 @@ import {
   VehicleListing,
   ListingImage,
   Product,
+  FavoriteProduct,
+  InsertFavoriteProduct,
   ProductCategory,
   ProductImage,
   Order,
@@ -871,6 +874,88 @@ export async function deleteProduct(id: number): Promise<boolean> {
     return true;
   } catch (error) {
     console.error("[Database] Failed to delete product:", error);
+    throw error;
+  }
+}
+
+// Favorites
+
+export async function getFavoriteProducts(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db
+    .select({
+      favoriteId: favoriteProducts.id,
+      favoritedAt: favoriteProducts.createdAt,
+      productId: products.id,
+      categoryId: products.categoryId,
+      name: products.name,
+      description: products.description,
+      price: products.price,
+      stock: products.stock,
+      compatibleBrands: products.compatibleBrands,
+      compatibleModels: products.compatibleModels,
+      specifications: products.specifications,
+      primaryImageUrl: products.primaryImageUrl,
+      status: products.status,
+      productCreatedAt: products.createdAt,
+      productUpdatedAt: products.updatedAt,
+    })
+    .from(favoriteProducts)
+    .innerJoin(products, eq(favoriteProducts.productId, products.id))
+    .where(eq(favoriteProducts.userId, userId))
+    .orderBy(desc(favoriteProducts.createdAt));
+}
+
+export async function getFavoriteProduct(userId: number, productId: number): Promise<FavoriteProduct | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db
+    .select()
+    .from(favoriteProducts)
+    .where(and(eq(favoriteProducts.userId, userId), eq(favoriteProducts.productId, productId)))
+    .limit(1);
+
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function createFavoriteProduct(
+  data: InsertFavoriteProduct
+): Promise<FavoriteProduct | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  try {
+    const existing = await getFavoriteProduct(data.userId, data.productId);
+    if (existing) return existing;
+
+    const result = await db.insert(favoriteProducts).values(data);
+    const favoriteId = (result[0] as any).insertId;
+    const favorite = await db
+      .select()
+      .from(favoriteProducts)
+      .where(eq(favoriteProducts.id, favoriteId as number))
+      .limit(1);
+    return favorite.length > 0 ? favorite[0] : null;
+  } catch (error) {
+    console.error("[Database] Failed to create favorite product:", error);
+    throw error;
+  }
+}
+
+export async function deleteFavoriteProduct(userId: number, productId: number): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+
+  try {
+    await db
+      .delete(favoriteProducts)
+      .where(and(eq(favoriteProducts.userId, userId), eq(favoriteProducts.productId, productId)));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete favorite product:", error);
     throw error;
   }
 }

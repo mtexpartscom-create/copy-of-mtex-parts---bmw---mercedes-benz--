@@ -21,9 +21,22 @@ import {
   getOrders,
   getOrderById,
   updateOrder,
+  getFavoriteProducts,
+  getFavoriteProduct,
+  createFavoriteProduct,
+  deleteFavoriteProduct,
 } from "../db";
 import { TRPCError } from "@trpc/server";
 import { getCities, getOfficesByCity, calculateShippingCost } from "../_core/ekont";
+
+function assertApprovedB2B(user: { userType?: string | null; b2bApprovalStatus?: string | null } | null | undefined) {
+  if (user?.userType !== "b2b" || user.b2bApprovalStatus !== "approved") {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Любими продукти са достъпни за одобрени B2B клиенти.",
+    });
+  }
+}
 
 export const ecommerceRouter = router({
   // Product procedures
@@ -456,6 +469,54 @@ export const ecommerceRouter = router({
             message: "Failed to update order",
           });
         }
+      }),
+  }),
+
+  // Favorites for approved B2B customers
+  favorites: router({
+    getAll: protectedProcedure.query(async ({ ctx }) => {
+      assertApprovedB2B(ctx.user);
+      return await getFavoriteProducts(ctx.user.id);
+    }),
+
+    getIds: protectedProcedure.query(async ({ ctx }) => {
+      assertApprovedB2B(ctx.user);
+      const favorites = await getFavoriteProducts(ctx.user.id);
+      return favorites.map((favorite) => favorite.productId);
+    }),
+
+    toggle: protectedProcedure
+      .input(z.object({ productId: z.number().int().positive() }))
+      .mutation(async ({ input, ctx }) => {
+        assertApprovedB2B(ctx.user);
+
+        const product = await getProductById(input.productId);
+        if (!product || product.status !== "active") {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Продуктът не е наличен.",
+          });
+        }
+
+        const existing = await getFavoriteProduct(ctx.user.id, input.productId);
+        if (existing) {
+          await deleteFavoriteProduct(ctx.user.id, input.productId);
+          return { isFavorite: false, productId: input.productId };
+        }
+
+        await createFavoriteProduct({
+          userId: ctx.user.id,
+          productId: input.productId,
+        });
+        return { isFavorite: true, productId: input.productId };
+      }),
+
+    remove: protectedProcedure
+      .input(z.object({ productId: z.number().int().positive() }))
+      .mutation(async ({ input, ctx }) => {
+        assertApprovedB2B(ctx.user);
+        await deleteFavoriteProduct(ctx.user.id, input.productId);
+        return { success: true, productId: input.productId };
       }),
   }),
 
