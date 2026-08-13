@@ -144,3 +144,35 @@ describe("CRM Router", () => {
     });
   });
 });
+
+
+describe("Facebook review authorization", () => {
+  it("keeps caption generation public", async () => {
+    const caller = appRouter.createCaller(createMockContext());
+    const caption = await caller.crm.facebook.generateCaption({
+      vehicleModel: "BMW X5",
+      engine: "3.0d",
+      availableParts: [],
+      contactPhone: "+359 898 606 626",
+    });
+    expect(caption).toContain("BMW X5");
+  });
+
+  it("requires an authenticated admin for review listing", async () => {
+    const caller = appRouter.createCaller(createMockContext());
+    await expect(caller.crm.facebook.list()).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
+
+  it("requires an authenticated admin for draft creation", async () => {
+    const caller = appRouter.createCaller(createMockContext());
+    await expect(
+      caller.crm.facebook.createDraft({
+        vehicleId: 1,
+        vehicleModel: "BMW X5",
+        engine: "3.0d",
+        availableParts: [],
+        contactPhone: "+359 898 606 626",
+      })
+    ).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
+});

@@ -45,16 +45,13 @@ export default function MapSection() {
         style={{
           maxWidth: 1280,
           margin: "0 auto",
-          padding: "3rem 1rem",
+          padding: "clamp(2rem, 6vw, 3rem) 1rem",
           position: "relative",
         }}
       >
         {/* Section header */}
-        <div style={{ marginBottom: "2rem" }}>
-          <div
-            className="section-tag"
-            style={{ marginBottom: "1rem" }}
-          >
+        <div style={{ marginBottom: "clamp(1.5rem, 4vw, 2rem)" }}>
+          <div className="section-tag" style={{ marginBottom: "1rem" }}>
             Намерете нас
           </div>
           <h2
@@ -78,7 +75,7 @@ export default function MapSection() {
             overflow: "hidden",
             border: "1px solid rgba(255,255,255,0.08)",
             boxShadow: "0 16px 64px rgba(0,0,0,0.5)",
-            height: 500,
+            height: "clamp(280px, 70vw, 500px)",
             position: "relative",
           }}
         >
@@ -92,10 +89,10 @@ export default function MapSection() {
 
         {/* Location info card below map */}
         <div
+          className="map-location-grid"
           style={{
             marginTop: "2rem",
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
             gap: "1.5rem",
           }}
         >

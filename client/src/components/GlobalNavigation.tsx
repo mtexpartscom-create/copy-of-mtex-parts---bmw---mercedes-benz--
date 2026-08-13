@@ -9,6 +9,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
+import HeaderQuickActions from "@/components/HeaderQuickActions";
 
 const SERVICES_MENU = [
   { href: "/catalog", label: "АВТОМОРГА" },
@@ -265,6 +266,8 @@ export default function GlobalNavigation() {
           ))}
         </div>
 
+        <HeaderQuickActions />
+
         {/* Mobile Menu Button */}
         <button
           className="global-nav-menu-button md:hidden"
@@ -294,6 +297,7 @@ export default function GlobalNavigation() {
           className="md:hidden"
         >
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "1rem" }}>
+            <HeaderQuickActions mobile />
             {visibleNavLinks.map((link) => (
               <div key={link.href}>
                 {link.dropdown ? (

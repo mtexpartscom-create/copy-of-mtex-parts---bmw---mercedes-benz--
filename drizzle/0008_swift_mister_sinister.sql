@@ -1,0 +1,26 @@
+CREATE INDEX `bookings_customer_status_idx` ON `bookings` (`customerId`,`status`);--> statement-breakpoint
+CREATE INDEX `bookings_date_idx` ON `bookings` (`bookingDate`);--> statement-breakpoint
+CREATE INDEX `cart_items_user_product_idx` ON `cartItems` (`userId`,`productId`);--> statement-breakpoint
+CREATE INDEX `customers_phone_idx` ON `customers` (`phone`);--> statement-breakpoint
+CREATE INDEX `customers_email_idx` ON `customers` (`email`);--> statement-breakpoint
+CREATE INDEX `facebook_posts_vehicle_status_idx` ON `facebookPosts` (`vehicleId`,`status`);--> statement-breakpoint
+CREATE INDEX `listing_images_listing_order_idx` ON `listingImages` (`listingId`,`displayOrder`);--> statement-breakpoint
+CREATE INDEX `notifications_unread_created_idx` ON `notifications` (`isRead`,`createdAt`);--> statement-breakpoint
+CREATE INDEX `notifications_order_idx` ON `notifications` (`orderId`);--> statement-breakpoint
+CREATE INDEX `orders_status_created_idx` ON `orders` (`status`,`createdAt`);--> statement-breakpoint
+CREATE INDEX `orders_phone_idx` ON `orders` (`customerPhone`);--> statement-breakpoint
+CREATE INDEX `parts_inquiries_customer_status_idx` ON `partsInquiries` (`customerId`,`status`);--> statement-breakpoint
+CREATE INDEX `parts_inquiries_vehicle_idx` ON `partsInquiries` (`vehicleId`);--> statement-breakpoint
+CREATE INDEX `product_categories_parent_idx` ON `productCategories` (`parentCategoryId`);--> statement-breakpoint
+CREATE INDEX `product_images_product_order_idx` ON `productImages` (`productId`,`displayOrder`);--> statement-breakpoint
+CREATE INDEX `products_category_status_idx` ON `products` (`categoryId`,`status`);--> statement-breakpoint
+CREATE INDEX `products_brands_idx` ON `products` (`compatibleBrands`);--> statement-breakpoint
+CREATE INDEX `service_history_vehicle_idx` ON `serviceHistory` (`vehicleId`);--> statement-breakpoint
+CREATE INDEX `service_history_customer_idx` ON `serviceHistory` (`customerId`);--> statement-breakpoint
+CREATE INDEX `service_history_date_idx` ON `serviceHistory` (`serviceDate`);--> statement-breakpoint
+CREATE INDEX `users_b2b_approval_idx` ON `users` (`userType`,`b2bApprovalStatus`);--> statement-breakpoint
+CREATE INDEX `users_email_idx` ON `users` (`email`);--> statement-breakpoint
+CREATE INDEX `vehicle_listings_status_idx` ON `vehicleListings` (`status`);--> statement-breakpoint
+CREATE INDEX `vehicle_listings_make_model_idx` ON `vehicleListings` (`make`,`model`);--> statement-breakpoint
+CREATE INDEX `vehicles_customer_idx` ON `vehicles` (`customerId`);--> statement-breakpoint
+CREATE INDEX `vehicles_make_model_idx` ON `vehicles` (`make`,`model`);

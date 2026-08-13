@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Phone, MapPin, Clock, CheckCircle2, Star, Calendar } from "lucide-react";
+import {
+  Phone,
+  MapPin,
+  Clock,
+  CheckCircle2,
+  Star,
+  Calendar,
+} from "lucide-react";
 import { setSEOMetadata, SEO_PAGES } from "@/lib/seo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +33,13 @@ const SERVICES = [
   {
     title: "Ходова част",
     icon: "🔧",
-    items: ["Носачи", "Тампони", "Амортисьори", "Шарнири", "Кормилни накрайници"],
+    items: [
+      "Носачи",
+      "Тампони",
+      "Амортисьори",
+      "Шарнири",
+      "Кормилни накрайници",
+    ],
   },
   {
     title: "Спирачна система",
@@ -36,12 +49,22 @@ const SERVICES = [
   {
     title: "Автоклиматици",
     icon: "❄️",
-    items: ["Зареждане", "Диагностика", "Откриване на течове", "Смяна на компресори"],
+    items: [
+      "Зареждане",
+      "Диагностика",
+      "Откриване на течове",
+      "Смяна на компресори",
+    ],
   },
   {
     title: "Компютърна диагностика",
     icon: "💻",
-    items: ["Изчистване на грешки", "Кодиране", "Адаптации", "Проверка на живи данни"],
+    items: [
+      "Изчистване на грешки",
+      "Кодиране",
+      "Адаптации",
+      "Проверка на живи данни",
+    ],
   },
   {
     title: "Смяна на масла и консумативи",
@@ -72,7 +95,7 @@ export default function AutoServiceDetail() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validation
     if (!formData.name.trim()) {
       toast.error("Моля, въведете име");
@@ -98,7 +121,7 @@ export default function AutoServiceDetail() {
     try {
       // Combine date and time into ISO datetime
       const bookingDateTime = new Date(`${formData.date}T${formData.time}`);
-      
+
       await createBookingMutation.mutateAsync({
         name: formData.name,
         phone: formData.phone,
@@ -106,9 +129,11 @@ export default function AutoServiceDetail() {
         bookingDate: bookingDateTime,
         description: formData.description,
       });
-      
-      toast.success("Резервацията е създадена успешно! Ще се свържем с вас скоро.");
-      
+
+      toast.success(
+        "Резервацията е създадена успешно! Ще се свържем с вас скоро."
+      );
+
       // Reset form
       setFormData({
         name: "",
@@ -131,105 +156,136 @@ export default function AutoServiceDetail() {
   return (
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
       <GlobalNavigation />
-      <Breadcrumb items={[
-        { label: "Начало", href: "/" },
-        { label: "Услуги", href: "#" },
-        { label: "Автосервиз" },
-      ]} />
+      <Breadcrumb
+        items={[
+          { label: "Начало", href: "/" },
+          { label: "Услуги", href: "#" },
+          { label: "Автосервиз" },
+        ]}
+      />
 
       {/* Hero Section */}
-      <div style={{
-        background: "linear-gradient(135deg, #1a1d22 0%, #15171a 100%)",
-        borderBottom: "1px solid rgba(255,255,255,0.05)",
-        padding: "clamp(2rem, 5vh, 4rem) 0",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        <div style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "0 1rem",
+      <div
+        style={{
+          background: "linear-gradient(135deg, #1a1d22 0%, #15171a 100%)",
+          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          padding: "clamp(2rem, 5vh, 4rem) 0",
           position: "relative",
-          zIndex: 1,
-        }}>
-          <h1 style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 800,
-            fontSize: "clamp(1.75rem, 5vw, 5rem)",
-            lineHeight: 1.08,
-            letterSpacing: "-0.03em",
-            color: "#f0f0ee",
-            marginBottom: "1rem",
-          }}>
-            Автосервиз<br />
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "0 1rem",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          <h1
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 800,
+              fontSize: "clamp(1.6rem, 5vw, 5rem)",
+              lineHeight: 1.08,
+              letterSpacing: "-0.03em",
+              color: "#f0f0ee",
+              marginBottom: "1rem",
+            }}
+          >
+            Автосервиз
+            <br />
             <span style={{ color: "#2563eb" }}>MTEX PARTS</span>
           </h1>
-          <p style={{
-            fontFamily: "'Plus Jakarta Sans', sans-serif",
-            fontSize: "clamp(0.9rem, 2.5vw, 1.1rem)",
-            color: "#9ca3af",
-            lineHeight: 1.6,
-            maxWidth: "600px",
-            marginBottom: "1.5rem",
-          }}>
+          <p
+            style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontSize: "clamp(0.9rem, 2.5vw, 1.1rem)",
+              color: "#9ca3af",
+              lineHeight: 1.6,
+              maxWidth: "600px",
+              marginBottom: "1.5rem",
+            }}
+          >
             Професионален ремонт и диагностика за BMW и Mercedes-Benz
           </p>
-          
+
           {/* Service Tags */}
-          <div className="service-tags" style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "0.75rem",
-            marginBottom: "2rem",
-          }}>
-            {["Диагностика", "Ремонт двигатели", "Ходова част", "Автоклиматици", "Смяна масла", "Компютърна диагностика"].map((tag) => (
-              <span key={tag} style={{
-                background: "rgba(37,99,235,0.1)",
-                border: "1px solid rgba(37,99,235,0.3)",
-                color: "#2563eb",
-                padding: "0.5rem 1rem",
-                borderRadius: "20px",
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                fontSize: "0.875rem",
-              }}>
+          <div
+            className="service-tags"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.75rem",
+              marginBottom: "2rem",
+            }}
+          >
+            {[
+              "Диагностика",
+              "Ремонт двигатели",
+              "Ходова част",
+              "Автоклиматици",
+              "Смяна масла",
+              "Компютърна диагностика",
+            ].map(tag => (
+              <span
+                key={tag}
+                style={{
+                  background: "rgba(37,99,235,0.1)",
+                  border: "1px solid rgba(37,99,235,0.3)",
+                  color: "#2563eb",
+                  padding: "0.5rem 1rem",
+                  borderRadius: "20px",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "0.875rem",
+                }}
+              >
                 {tag}
               </span>
             ))}
           </div>
 
           {/* CTA Buttons */}
-          <div className="service-hero-cta" style={{
-            display: "flex",
-            gap: "1rem",
-            flexWrap: "wrap",
-          }}>
-            <Button style={{
-              background: "#2563eb",
-              color: "#f0f0ee",
-              border: "none",
-              padding: "0.75rem 1.5rem",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontWeight: 600,
+          <div
+            className="service-hero-cta"
+            style={{
               display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-            }}>
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <Button
+              style={{
+                background: "#2563eb",
+                color: "#f0f0ee",
+                border: "none",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "8px",
+                cursor: "pointer",
+                fontWeight: 600,
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
               <Calendar size={18} />
               Запази час
             </Button>
-            <Button style={{
-              background: "transparent",
-              color: "#2563eb",
-              border: "1px solid #2563eb",
-              padding: "0.75rem 1.5rem",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontWeight: 600,
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-            }}>
+            <Button
+              style={{
+                background: "transparent",
+                color: "#2563eb",
+                border: "1px solid #2563eb",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "8px",
+                cursor: "pointer",
+                fontWeight: 600,
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
               <Phone size={18} />
               Обади се
             </Button>
@@ -238,32 +294,41 @@ export default function AutoServiceDetail() {
       </div>
 
       {/* Services Section */}
-      <div style={{
-        background: "#0d0e10",
-        padding: "clamp(2rem, 5vh, 4rem) 0",
-      }}>
-        <div style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "0 1rem",
-        }}>
-          <h2 style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 800,
-            fontSize: "clamp(1.75rem, 5vw, 2.5rem)",
-            color: "#f0f0ee",
-            marginBottom: "2rem",
-            textAlign: "center",
-          }}>
+      <div
+        style={{
+          background: "#0d0e10",
+          padding: "clamp(2rem, 5vh, 4rem) 0",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "0 1rem",
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 800,
+              fontSize: "clamp(1.55rem, 5vw, 2.5rem)",
+              color: "#f0f0ee",
+              marginBottom: "2rem",
+              textAlign: "center",
+            }}
+          >
             Наши услуги
           </h2>
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-            gap: "1rem",
-          }}>
-            {SERVICES.map((service) => (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 250px), 1fr))",
+              gap: "1rem",
+            }}
+          >
+            {SERVICES.map(service => (
               <div
                 key={service.title}
                 style={{
@@ -274,49 +339,61 @@ export default function AutoServiceDetail() {
                   transition: "all 0.3s ease",
                   cursor: "pointer",
                 }}
-                onMouseEnter={(e) => {
+                onMouseEnter={e => {
                   e.currentTarget.style.borderColor = "rgba(37,99,235,0.5)";
                   e.currentTarget.style.background = "rgba(255,255,255,0.03)";
                 }}
-                onMouseLeave={(e) => {
+                onMouseLeave={e => {
                   e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
                   e.currentTarget.style.background = "rgba(255,255,255,0.02)";
                 }}
               >
-                <div style={{
-                  fontSize: "2.5rem",
-                  marginBottom: "1rem",
-                }}>
+                <div
+                  style={{
+                    fontSize: "2.5rem",
+                    marginBottom: "1rem",
+                  }}
+                >
                   {service.icon}
                 </div>
-                <h3 style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "1.1rem",
-                  color: "#f0f0ee",
-                  marginBottom: "1rem",
-                }}>
+                <h3
+                  style={{
+                    fontFamily: "'Syne', sans-serif",
+                    fontWeight: 700,
+                    fontSize: "1.1rem",
+                    color: "#f0f0ee",
+                    marginBottom: "1rem",
+                  }}
+                >
                   {service.title}
                 </h3>
-                <ul style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.75rem",
-                }}>
-                  {service.items.map((item) => (
-                    <li key={item} style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "0.75rem",
-                      fontFamily: "'Plus Jakarta Sans', sans-serif",
-                      fontSize: "0.9rem",
-                      color: "#9ca3af",
-                    }}>
-                      <CheckCircle2 size={16} style={{
-                        color: "#2563eb",
-                        flexShrink: 0,
-                        marginTop: "0.25rem",
-                      }} />
+                <ul
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.75rem",
+                  }}
+                >
+                  {service.items.map(item => (
+                    <li
+                      key={item}
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "0.75rem",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
+                        fontSize: "0.9rem",
+                        color: "#9ca3af",
+                      }}
+                    >
+                      <CheckCircle2
+                        size={16}
+                        style={{
+                          color: "#2563eb",
+                          flexShrink: 0,
+                          marginTop: "0.25rem",
+                        }}
+                      />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -328,33 +405,46 @@ export default function AutoServiceDetail() {
       </div>
 
       {/* Booking Form Section */}
-      <div className="service-booking-section" style={{
-        background: "linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(37,99,235,0.02) 100%)",
-        borderTop: "1px solid rgba(37,99,235,0.1)",
-        borderBottom: "1px solid rgba(37,99,235,0.1)",
-        padding: "4rem 0",
-      }}>
-        <div className="service-booking-container" style={{
-          maxWidth: "600px",
-          margin: "0 auto",
-          padding: "0 1rem",
-        }}>
-          <h2 className="service-section-heading" style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 800,
-            fontSize: "clamp(1.75rem, 5vw, 2.5rem)",
-            color: "#f0f0ee",
-            marginBottom: "2rem",
-            textAlign: "center",
-          }}>
+      <div
+        className="service-booking-section"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(37,99,235,0.02) 100%)",
+          borderTop: "1px solid rgba(37,99,235,0.1)",
+          borderBottom: "1px solid rgba(37,99,235,0.1)",
+          padding: "clamp(2.5rem, 7vw, 4rem) 0",
+        }}
+      >
+        <div
+          className="service-booking-container"
+          style={{
+            maxWidth: "600px",
+            margin: "0 auto",
+            padding: "0 1rem",
+          }}
+        >
+          <h2
+            className="service-section-heading"
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 800,
+              fontSize: "clamp(1.55rem, 5vw, 2.5rem)",
+              color: "#f0f0ee",
+              marginBottom: "2rem",
+              textAlign: "center",
+            }}
+          >
             Онлайн записване
           </h2>
 
-          <form onSubmit={handleSubmit} style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-          }}>
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
             <style>{`
               @media (max-width: 640px) {
                 .form-row {
@@ -362,15 +452,20 @@ export default function AutoServiceDetail() {
                 }
               }
             `}</style>
-            <div className="form-row" style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "1rem",
-            }}>
+            <div
+              className="form-row"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "1rem",
+              }}
+            >
               <Input
                 placeholder="Име"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={e =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 style={{
                   background: "rgba(255,255,255,0.02)",
                   border: "1px solid rgba(255,255,255,0.05)",
@@ -382,7 +477,9 @@ export default function AutoServiceDetail() {
               <Input
                 placeholder="Телефонен номер"
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={e =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
                 style={{
                   background: "rgba(255,255,255,0.02)",
                   border: "1px solid rgba(255,255,255,0.05)",
@@ -393,18 +490,25 @@ export default function AutoServiceDetail() {
               />
             </div>
 
-            <Select value={formData.service} onValueChange={(value) => setFormData({ ...formData, service: value })}>
-              <SelectTrigger style={{
-                background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255,255,255,0.05)",
-                color: "#f0f0ee",
-                padding: "0.75rem",
-                borderRadius: "8px",
-              }}>
+            <Select
+              value={formData.service}
+              onValueChange={value =>
+                setFormData({ ...formData, service: value })
+              }
+            >
+              <SelectTrigger
+                style={{
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  color: "#f0f0ee",
+                  padding: "0.75rem",
+                  borderRadius: "8px",
+                }}
+              >
                 <SelectValue placeholder="Избери услуга" />
               </SelectTrigger>
               <SelectContent>
-                {SERVICES.map((service) => (
+                {SERVICES.map(service => (
                   <SelectItem key={service.title} value={service.title}>
                     {service.title}
                   </SelectItem>
@@ -412,15 +516,20 @@ export default function AutoServiceDetail() {
               </SelectContent>
             </Select>
 
-            <div className="form-row" style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "1rem",
-            }}>
+            <div
+              className="form-row"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "1rem",
+              }}
+            >
               <Input
                 type="date"
                 value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                onChange={e =>
+                  setFormData({ ...formData, date: e.target.value })
+                }
                 style={{
                   background: "rgba(255,255,255,0.02)",
                   border: "1px solid rgba(255,255,255,0.05)",
@@ -432,7 +541,9 @@ export default function AutoServiceDetail() {
               <Input
                 type="time"
                 value={formData.time}
-                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                onChange={e =>
+                  setFormData({ ...formData, time: e.target.value })
+                }
                 style={{
                   background: "rgba(255,255,255,0.02)",
                   border: "1px solid rgba(255,255,255,0.05)",
@@ -446,7 +557,9 @@ export default function AutoServiceDetail() {
             <Textarea
               placeholder="Описание на проблема"
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={e =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               style={{
                 background: "rgba(255,255,255,0.02)",
                 border: "1px solid rgba(255,255,255,0.05)",
@@ -458,7 +571,7 @@ export default function AutoServiceDetail() {
               }}
             />
 
-            <Button 
+            <Button
               type="submit"
               style={{
                 background: "#2563eb",
@@ -480,79 +593,105 @@ export default function AutoServiceDetail() {
       </div>
 
       {/* Advantages Section */}
-      <div style={{
-        background: "#0d0e10",
-        padding: "4rem 0",
-      }}>
-        <div className="service-advantages-container" style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "0 1rem",
-        }}>
-          <h2 className="service-section-heading" style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 800,
-            fontSize: "clamp(1.75rem, 5vw, 2.5rem)",
-            color: "#f0f0ee",
-            marginBottom: "3rem",
-            textAlign: "center",
-          }}>
+      <div
+        style={{
+          background: "#0d0e10",
+          padding: "clamp(2.5rem, 7vw, 4rem) 0",
+        }}
+      >
+        <div
+          className="service-advantages-container"
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "0 1rem",
+          }}
+        >
+          <h2
+            className="service-section-heading"
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 800,
+              fontSize: "clamp(1.55rem, 5vw, 2.5rem)",
+              color: "#f0f0ee",
+              marginBottom: "clamp(1.75rem, 5vw, 3rem)",
+              textAlign: "center",
+            }}
+          >
             Защо да изберете нас
           </h2>
 
-          <div className="advantages-grid" style={{
-            display: "grid",
-            gap: "2rem",
-          }}>
+          <div
+            className="advantages-grid"
+            style={{
+              display: "grid",
+              gap: "2rem",
+            }}
+          >
             <div>
-              <ul style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
-              }}>
-                {ADVANTAGES.map((advantage) => (
-                  <li key={advantage} style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "1rem",
-                    fontFamily: "'Plus Jakarta Sans', sans-serif",
-                    fontSize: "1rem",
-                    color: "#9ca3af",
-                  }}>
-                    <Star size={20} style={{
-                      color: "#2563eb",
-                      flexShrink: 0,
-                    }} />
+              <ul
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                {ADVANTAGES.map(advantage => (
+                  <li
+                    key={advantage}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                      fontFamily: "'Plus Jakarta Sans', sans-serif",
+                      fontSize: "1rem",
+                      color: "#9ca3af",
+                    }}
+                  >
+                    <Star
+                      size={20}
+                      style={{
+                        color: "#2563eb",
+                        flexShrink: 0,
+                      }}
+                    />
                     <span>{advantage}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div style={{
-              background: "rgba(255,255,255,0.02)",
-              border: "1px solid rgba(255,255,255,0.05)",
-              borderRadius: "12px",
-              padding: "2rem",
-            }}>
-              <p style={{
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                fontSize: "1rem",
-                color: "#9ca3af",
-                lineHeight: 1.8,
-                marginBottom: "1.5rem",
-                fontStyle: "italic",
-              }}>
-                "Разполагаме със собствен склад за нови и употребявани авточасти, което позволява по-бърз и по-евтин ремонт."
+            <div
+              style={{
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.05)",
+                borderRadius: "12px",
+                padding: "clamp(1.25rem, 4vw, 2rem)",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "1rem",
+                  color: "#9ca3af",
+                  lineHeight: 1.8,
+                  marginBottom: "1.5rem",
+                  fontStyle: "italic",
+                }}
+              >
+                "Разполагаме със собствен склад за нови и употребявани
+                авточасти, което позволява по-бърз и по-евтин ремонт."
               </p>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.75rem",
-                color: "#2563eb",
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                fontWeight: 600,
-              }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  color: "#2563eb",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontWeight: 600,
+                }}
+              >
                 <Clock size={20} />
                 <span>Бързо обслужване</span>
               </div>
@@ -562,32 +701,41 @@ export default function AutoServiceDetail() {
       </div>
 
       {/* Gallery Section */}
-      <div style={{
-        background: "linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(37,99,235,0.02) 100%)",
-        borderTop: "1px solid rgba(37,99,235,0.1)",
-        padding: "4rem 0",
-      }}>
-        <div style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "0 2rem",
-        }}>
-          <h2 style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 800,
-            fontSize: "2.5rem",
-            color: "#f0f0ee",
-            marginBottom: "3rem",
-            textAlign: "center",
-          }}>
+      <div
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(37,99,235,0.02) 100%)",
+          borderTop: "1px solid rgba(37,99,235,0.1)",
+          padding: "clamp(2.5rem, 7vw, 4rem) 0",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "0 2rem",
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 800,
+              fontSize: "clamp(1.55rem, 5vw, 2.5rem)",
+              color: "#f0f0ee",
+              marginBottom: "clamp(1.75rem, 5vw, 3rem)",
+              textAlign: "center",
+            }}
+          >
             Галерия
           </h2>
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "1.5rem",
-          }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: "1.5rem",
+            }}
+          >
             {[
               { icon: "🏢", label: "Сервиза" },
               { icon: "🔧", label: "Подемниците" },
@@ -595,7 +743,7 @@ export default function AutoServiceDetail() {
               { icon: "🔨", label: "Ремонти" },
               { icon: "👷", label: "Работния процес" },
               { icon: "✅", label: "Готови автомобили" },
-            ].map((item) => (
+            ].map(item => (
               <div
                 key={item.label}
                 style={{
@@ -609,29 +757,35 @@ export default function AutoServiceDetail() {
                   transition: "all 0.3s ease",
                   cursor: "pointer",
                 }}
-                onMouseEnter={(e) => {
+                onMouseEnter={e => {
                   e.currentTarget.style.borderColor = "rgba(37,99,235,0.5)";
                   e.currentTarget.style.background = "rgba(255,255,255,0.03)";
                 }}
-                onMouseLeave={(e) => {
+                onMouseLeave={e => {
                   e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
                   e.currentTarget.style.background = "rgba(255,255,255,0.02)";
                 }}
               >
-                <div style={{
-                  textAlign: "center",
-                }}>
-                  <div style={{
-                    fontSize: "3rem",
-                    marginBottom: "0.75rem",
-                  }}>
+                <div
+                  style={{
+                    textAlign: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "3rem",
+                      marginBottom: "0.75rem",
+                    }}
+                  >
                     {item.icon}
                   </div>
-                  <p style={{
-                    fontFamily: "'Plus Jakarta Sans', sans-serif",
-                    color: "#9ca3af",
-                    fontSize: "0.95rem",
-                  }}>
+                  <p
+                    style={{
+                      fontFamily: "'Plus Jakarta Sans', sans-serif",
+                      color: "#9ca3af",
+                      fontSize: "0.95rem",
+                    }}
+                  >
                     {item.label}
                   </p>
                 </div>
@@ -642,106 +796,154 @@ export default function AutoServiceDetail() {
       </div>
 
       {/* Contact Section */}
-      <div style={{
-        background: "#0d0e10",
-        padding: "4rem 0",
-      }}>
-        <div style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "0 2rem",
-        }}>
-          <h2 style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 800,
-            fontSize: "2.5rem",
-            color: "#f0f0ee",
-            marginBottom: "3rem",
-            textAlign: "center",
-          }}>
+      <div
+        style={{
+          background: "#0d0e10",
+          padding: "clamp(2.5rem, 7vw, 4rem) 0",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "0 2rem",
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 800,
+              fontSize: "clamp(1.55rem, 5vw, 2.5rem)",
+              color: "#f0f0ee",
+              marginBottom: "clamp(1.75rem, 5vw, 3rem)",
+              textAlign: "center",
+            }}
+          >
             Контактна информация
           </h2>
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-            gap: "2rem",
-          }}>
-            <div style={{
-              textAlign: "center",
-            }}>
-              <Phone size={32} style={{
-                color: "#2563eb",
-                margin: "0 auto 1rem",
-              }} />
-              <h3 style={{
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 700,
-                fontSize: "1.1rem",
-                color: "#f0f0ee",
-                marginBottom: "0.5rem",
-              }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 250px), 1fr))",
+              gap: "2rem",
+            }}
+          >
+            <div
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <Phone
+                size={32}
+                style={{
+                  color: "#2563eb",
+                  margin: "0 auto 1rem",
+                }}
+              />
+              <h3
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 700,
+                  fontSize: "1.1rem",
+                  color: "#f0f0ee",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 Телефон
               </h3>
-              <p style={{
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                color: "#9ca3af",
-              }}>
-                <a href="tel:+359898606626" style={{ color: "#2563eb", textDecoration: "none" }}>+359 898 606 626</a>
+              <p
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  color: "#9ca3af",
+                }}
+              >
+                <a
+                  href="tel:+359898606626"
+                  style={{ color: "#2563eb", textDecoration: "none" }}
+                >
+                  +359 898 606 626
+                </a>
               </p>
-              <p style={{
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                color: "#9ca3af",
-                marginTop: "0.5rem",
-              }}>
-                <a href="tel:+359896811902" style={{ color: "#2563eb", textDecoration: "none" }}>+359 896 811 902</a>
+              <p
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  color: "#9ca3af",
+                  marginTop: "0.5rem",
+                }}
+              >
+                <a
+                  href="tel:+359896811902"
+                  style={{ color: "#2563eb", textDecoration: "none" }}
+                >
+                  +359 896 811 902
+                </a>
               </p>
             </div>
 
-            <div style={{
-              textAlign: "center",
-            }}>
-              <MapPin size={32} style={{
-                color: "#2563eb",
-                margin: "0 auto 1rem",
-              }} />
-              <h3 style={{
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 700,
-                fontSize: "1.1rem",
-                color: "#f0f0ee",
-                marginBottom: "0.5rem",
-              }}>
+            <div
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <MapPin
+                size={32}
+                style={{
+                  color: "#2563eb",
+                  margin: "0 auto 1rem",
+                }}
+              />
+              <h3
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 700,
+                  fontSize: "1.1rem",
+                  color: "#f0f0ee",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 Адрес
               </h3>
-              <p style={{
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                color: "#9ca3af",
-              }}>
+              <p
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  color: "#9ca3af",
+                }}
+              >
                 Варна, България
               </p>
             </div>
 
-            <div style={{
-              textAlign: "center",
-            }}>
-              <Clock size={32} style={{
-                color: "#2563eb",
-                margin: "0 auto 1rem",
-              }} />
-              <h3 style={{
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 700,
-                fontSize: "1.1rem",
-                color: "#f0f0ee",
-                marginBottom: "0.5rem",
-              }}>
+            <div
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <Clock
+                size={32}
+                style={{
+                  color: "#2563eb",
+                  margin: "0 auto 1rem",
+                }}
+              />
+              <h3
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 700,
+                  fontSize: "1.1rem",
+                  color: "#f0f0ee",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 Работно време
               </h3>
-              <p style={{
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                color: "#9ca3af",
-              }}>
+              <p
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  color: "#9ca3af",
+                }}
+              >
                 Пн-Пт: 08:00-18:00
               </p>
             </div>

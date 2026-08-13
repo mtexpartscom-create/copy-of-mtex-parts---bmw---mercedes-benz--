@@ -123,8 +123,8 @@ export default function HeroSection() {
         margin: "0 auto",
         padding: "0 1rem",
         width: "100%",
-        paddingTop: "clamp(2rem, 8vh, 5rem)",
-        paddingBottom: "clamp(2rem, 8vh, 5rem)",
+        paddingTop: "clamp(1.5rem, 7vh, 5rem)",
+        paddingBottom: "clamp(1.5rem, 6vh, 5rem)",
       }}>
         <div style={{ maxWidth: 680 }}>
           {/* Badge */}
@@ -166,11 +166,11 @@ export default function HeroSection() {
           <h1 style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: 'clamp(1.5rem, 4.5vw, 3.5rem)',
+            fontSize: 'clamp(1.65rem, 8vw, 3.5rem)',
             lineHeight: 1.08,
             letterSpacing: "-0.03em",
             color: "#f0f0ee",
-            marginBottom: "1.5rem",
+            marginBottom: "clamp(1rem, 4vw, 1.5rem)",
           }}>
             Качествени<br />
             <span style={{
@@ -190,7 +190,7 @@ export default function HeroSection() {
             fontSize: "clamp(0.9rem, 2.5vw, 1.1rem)",
             color: "#9ca3af",
             lineHeight: 1.7,
-            marginBottom: "2.5rem",
+            marginBottom: "clamp(1.75rem, 6vw, 2.5rem)",
             maxWidth: 520,
           }}>
             Автоморга за употребявани OEM авточасти и автомобили на части.
@@ -202,7 +202,7 @@ export default function HeroSection() {
           <div style={{
             display: "flex",
             gap: "clamp(1.5rem, 4vw, 2.5rem)",
-            marginBottom: "2.5rem",
+            marginBottom: "clamp(1.75rem, 6vw, 2.5rem)",
             flexWrap: "wrap",
           }}>
             {STATS.map((stat, i) => (

@@ -25,7 +25,10 @@ export const users = mysqlTable("users", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
-});
+}, (table) => ({
+  b2bApprovalIdx: index("users_b2b_approval_idx").on(table.userType, table.b2bApprovalStatus),
+  emailIdx: index("users_email_idx").on(table.email),
+}));
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
@@ -45,7 +48,10 @@ export const customers = mysqlTable("customers", {
   notes: text("notes"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  phoneIdx: index("customers_phone_idx").on(table.phone),
+  emailIdx: index("customers_email_idx").on(table.email),
+}));
 
 export type Customer = typeof customers.$inferSelect;
 export type InsertCustomer = typeof customers.$inferInsert;
@@ -65,7 +71,10 @@ export const vehicles = mysqlTable("vehicles", {
   notes: text("notes"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  customerIdx: index("vehicles_customer_idx").on(table.customerId),
+  makeModelIdx: index("vehicles_make_model_idx").on(table.make, table.model),
+}));
 
 export type Vehicle = typeof vehicles.$inferSelect;
 export type InsertVehicle = typeof vehicles.$inferInsert;
@@ -84,7 +93,11 @@ export const serviceHistory = mysqlTable("serviceHistory", {
   cost: varchar("cost", { length: 20 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  vehicleIdx: index("service_history_vehicle_idx").on(table.vehicleId),
+  customerIdx: index("service_history_customer_idx").on(table.customerId),
+  serviceDateIdx: index("service_history_date_idx").on(table.serviceDate),
+}));
 
 export type ServiceHistory = typeof serviceHistory.$inferSelect;
 export type InsertServiceHistory = typeof serviceHistory.$inferInsert;
@@ -103,7 +116,10 @@ export const partsInquiries = mysqlTable("partsInquiries", {
   quotedPrice: varchar("quotedPrice", { length: 20 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  customerStatusIdx: index("parts_inquiries_customer_status_idx").on(table.customerId, table.status),
+  vehicleIdx: index("parts_inquiries_vehicle_idx").on(table.vehicleId),
+}));
 
 export type PartsInquiry = typeof partsInquiries.$inferSelect;
 export type InsertPartsInquiry = typeof partsInquiries.$inferInsert;
@@ -122,7 +138,10 @@ export const bookings = mysqlTable("bookings", {
   notes: text("notes"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  customerStatusIdx: index("bookings_customer_status_idx").on(table.customerId, table.status),
+  bookingDateIdx: index("bookings_date_idx").on(table.bookingDate),
+}));
 
 export type Booking = typeof bookings.$inferSelect;
 export type InsertBooking = typeof bookings.$inferInsert;
@@ -139,7 +158,9 @@ export const facebookPosts = mysqlTable("facebookPosts", {
   status: mysqlEnum("status", ["draft", "published", "failed"]).default("draft").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   publishedAt: timestamp("publishedAt"),
-});
+}, (table) => ({
+  vehicleStatusIdx: index("facebook_posts_vehicle_status_idx").on(table.vehicleId, table.status),
+}));
 
 export type FacebookPost = typeof facebookPosts.$inferSelect;
 export type InsertFacebookPost = typeof facebookPosts.$inferInsert;
@@ -163,7 +184,10 @@ export const vehicleListings = mysqlTable("vehicleListings", {
   status: mysqlEnum("status", ["active", "sold", "archived"]).default("active").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  statusIdx: index("vehicle_listings_status_idx").on(table.status),
+  makeModelIdx: index("vehicle_listings_make_model_idx").on(table.make, table.model),
+}));
 
 export type VehicleListing = typeof vehicleListings.$inferSelect;
 export type InsertVehicleListing = typeof vehicleListings.$inferInsert;
@@ -178,7 +202,9 @@ export const listingImages = mysqlTable("listingImages", {
   displayOrder: int("displayOrder").default(0).notNull(), // Order for image carousel
   isPrimary: int("isPrimary").default(0).notNull(), // 1 if this is the primary image
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+}, (table) => ({
+  listingOrderIdx: index("listing_images_listing_order_idx").on(table.listingId, table.displayOrder),
+}));
 
 export type ListingImage = typeof listingImages.$inferSelect;
 export type InsertListingImage = typeof listingImages.$inferInsert;
@@ -196,7 +222,9 @@ export const productCategories = mysqlTable("productCategories", {
   description: text("description"),
   parentCategoryId: int("parentCategoryId"), // For subcategories
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+}, (table) => ({
+  parentIdx: index("product_categories_parent_idx").on(table.parentCategoryId),
+}));
 
 export type ProductCategory = typeof productCategories.$inferSelect;
 export type InsertProductCategory = typeof productCategories.$inferInsert;
@@ -218,7 +246,10 @@ export const products = mysqlTable("products", {
   status: mysqlEnum("status", ["active", "inactive"]).default("active").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  categoryStatusIdx: index("products_category_status_idx").on(table.categoryId, table.status),
+  brandsIdx: index("products_brands_idx").on(table.compatibleBrands),
+}));
 
 export type Product = typeof products.$inferSelect;
 export type InsertProduct = typeof products.$inferInsert;
@@ -232,7 +263,9 @@ export const productImages = mysqlTable("productImages", {
   imageUrl: text("imageUrl").notNull(),
   displayOrder: int("displayOrder").default(0).notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+}, (table) => ({
+  productOrderIdx: index("product_images_product_order_idx").on(table.productId, table.displayOrder),
+}));
 
 export type ProductImage = typeof productImages.$inferSelect;
 export type InsertProductImage = typeof productImages.$inferInsert;
@@ -252,7 +285,10 @@ export const orders = mysqlTable("orders", {
   notes: text("notes"),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+}, (table) => ({
+  statusCreatedIdx: index("orders_status_created_idx").on(table.status, table.createdAt),
+  phoneIdx: index("orders_phone_idx").on(table.customerPhone),
+}));
 
 export type Order = typeof orders.$inferSelect;
 export type InsertOrder = typeof orders.$inferInsert;
@@ -266,7 +302,9 @@ export const cartItems = mysqlTable("cartItems", {
   productId: int("productId").notNull(), // Link to products table
   quantity: int("quantity").default(1).notNull(),
   addedAt: timestamp("addedAt").defaultNow().notNull(),
-});
+}, (table) => ({
+  userProductIdx: index("cart_items_user_product_idx").on(table.userId, table.productId),
+}));
 
 export type CartItem = typeof cartItems.$inferSelect;
 export type InsertCartItem = typeof cartItems.$inferInsert;
@@ -299,7 +337,10 @@ export const notifications = mysqlTable("notifications", {
   isRead: int("isRead").default(0).notNull(), // 0 = unread, 1 = read
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   readAt: timestamp("readAt"),
-});
+}, (table) => ({
+  unreadCreatedIdx: index("notifications_unread_created_idx").on(table.isRead, table.createdAt),
+  orderIdx: index("notifications_order_idx").on(table.orderId),
+}));
 
 export type Notification = typeof notifications.$inferSelect;
 export type InsertNotification = typeof notifications.$inferInsert;

@@ -4,7 +4,7 @@
 
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { publicProcedure, router } from "../_core/trpc";
+import { adminProcedure, publicProcedure, router } from "../_core/trpc";
 import * as db from "../db";
 import { decodeVin, validateVinChecksum } from "../services/vinDecoder";
 import { postToFacebook, generateFacebookCaption } from "../services/facebookService";
@@ -781,7 +781,80 @@ export const crmRouter = router({
         return generateFacebookCaption(input);
       }),
 
-    postVehicle: publicProcedure
+    list: adminProcedure.query(async () => {
+      return db.listFacebookPosts();
+    }),
+
+    createDraft: adminProcedure
+      .input(
+        z.object({
+          vehicleId: z.number(),
+          vehicleModel: z.string().min(1),
+          engine: z.string().min(1),
+          availableParts: z.array(z.string()),
+          contactPhone: z.string().min(1),
+          imageUrl: z.string().url().optional(),
+          customCaption: z.string().trim().min(1).optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const caption = input.customCaption || generateFacebookCaption(input);
+        return db.createFacebookPost({
+          vehicleId: input.vehicleId,
+          imageUrl: input.imageUrl,
+          caption,
+          status: "draft",
+        });
+      }),
+
+    updateDraft: adminProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          caption: z.string().trim().min(1),
+          imageUrl: z.string().url().nullable().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const updated = await db.updateFacebookPostRecord(input.id, {
+          caption: input.caption,
+          imageUrl: input.imageUrl,
+          status: "draft",
+        });
+        if (!updated) throw new TRPCError({ code: "NOT_FOUND", message: "Facebook draft not found" });
+        return updated;
+      }),
+
+    publish: adminProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          vehicleModel: z.string().min(1),
+          engine: z.string().min(1),
+          availableParts: z.array(z.string()),
+          contactPhone: z.string().min(1),
+          imageUrl: z.string().url().optional(),
+          customCaption: z.string().trim().min(1),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const result = await postToFacebook(input);
+        if (!result.success) {
+          await db.updateFacebookPostRecord(input.id, { status: "failed" });
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: result.error || "Failed to post to Facebook" });
+        }
+        const updated = await db.updateFacebookPostRecord(input.id, {
+          imageUrl: input.imageUrl,
+          caption: input.customCaption,
+          status: "published",
+          postId: result.postId,
+          publishedAt: new Date(),
+        });
+        if (!updated) throw new TRPCError({ code: "NOT_FOUND", message: "Facebook draft not found" });
+        return updated;
+      }),
+
+    postVehicle: adminProcedure
       .input(
         z.object({
           vehicleModel: z.string(),
@@ -794,8 +867,7 @@ export const crmRouter = router({
       )
       .mutation(async ({ input }) => {
         try {
-          const result = await postToFacebook(input);
-          return result;
+          return await postToFacebook(input);
         } catch (error) {
           console.error("[CRM] Error posting to Facebook:", error);
           throw new TRPCError({

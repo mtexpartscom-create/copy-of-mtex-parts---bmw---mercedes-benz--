@@ -41,7 +41,12 @@ export default function SellCar() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.ownerName || !formData.phone || !formData.brand || !formData.model) {
+    if (
+      !formData.ownerName ||
+      !formData.phone ||
+      !formData.brand ||
+      !formData.model
+    ) {
       toast.error("Моля, попълнете всички задължителни полета");
       return;
     }
@@ -72,24 +77,26 @@ export default function SellCar() {
   return (
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
       <GlobalNavigation />
-      <Breadcrumb items={[
-        { label: "Начало", href: "/" },
-        { label: "Услуги", href: "#" },
-        { label: "Продай автомобила" },
-      ]} />
+      <Breadcrumb
+        items={[
+          { label: "Начало", href: "/" },
+          { label: "Услуги", href: "#" },
+          { label: "Продай автомобила" },
+        ]}
+      />
 
       {/* Hero */}
       <div
         style={{
           background: "linear-gradient(135deg, #1a1d22 0%, #15171a 100%)",
-          padding: "6rem 1rem 4rem",
+          padding: "clamp(4.5rem, 10vw, 6rem) 1rem clamp(2.5rem, 7vw, 4rem)",
           textAlign: "center",
           marginTop: 70,
         }}
       >
         <h1
           style={{
-            fontSize: "clamp(2rem, 5vw, 3.5rem)",
+            fontSize: "clamp(1.7rem, 5vw, 3.5rem)",
             fontWeight: 800,
             color: "#f0f0ee",
             marginBottom: "1rem",
@@ -106,14 +113,15 @@ export default function SellCar() {
             margin: "0 auto",
           }}
         >
-          Бързо и лесно продай своя BMW или Mercedes-Benz. Ние ти дадим справедлива оценка.
+          Бързо и лесно продай своя BMW или Mercedes-Benz. Ние ти дадим
+          справедлива оценка.
         </p>
       </div>
 
       {/* Benefits */}
       <section
         style={{
-          padding: "4rem 1rem",
+          padding: "clamp(2.5rem, 7vw, 4rem) 1rem",
           background: "rgba(255,255,255,0.02)",
           borderTop: "1px solid rgba(255,255,255,0.06)",
         }}
@@ -121,7 +129,7 @@ export default function SellCar() {
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <h2
             style={{
-              fontSize: "1.8rem",
+              fontSize: "clamp(1.55rem, 4vw, 1.8rem)",
               fontWeight: 700,
               color: "#f0f0ee",
               marginBottom: "2rem",
@@ -135,18 +143,39 @@ export default function SellCar() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 250px), 1fr))",
               gap: "2rem",
             }}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {[
               { icon: "⚡", title: "Бързо", desc: "Оценка в 24 часа" },
-              { icon: "💵", title: "Справедлива цена", desc: "Пазарна оценка без скрити намаления" },
-              { icon: "📋", title: "Лесна процедура", desc: "Минимум документи и формалности" },
-              { icon: "🔒", title: "Сигурност", desc: "Защитени финансови трансакции" },
-              { icon: "🚗", title: "Преглед", desc: "Професионален технически преглед" },
-              { icon: "✅", title: "Гарантирана покупка", desc: "Ако одобрим, ние купуваме" },
+              {
+                icon: "💵",
+                title: "Справедлива цена",
+                desc: "Пазарна оценка без скрити намаления",
+              },
+              {
+                icon: "📋",
+                title: "Лесна процедура",
+                desc: "Минимум документи и формалности",
+              },
+              {
+                icon: "🔒",
+                title: "Сигурност",
+                desc: "Защитени финансови трансакции",
+              },
+              {
+                icon: "🚗",
+                title: "Преглед",
+                desc: "Професионален технически преглед",
+              },
+              {
+                icon: "✅",
+                title: "Гарантирана покупка",
+                desc: "Ако одобрим, ние купуваме",
+              },
             ].map((benefit, i) => (
               <div
                 key={i}
@@ -154,15 +183,26 @@ export default function SellCar() {
                   background: "rgba(255,255,255,0.02)",
                   border: "1px solid rgba(255,255,255,0.08)",
                   borderRadius: 12,
-                  padding: "2rem",
+                  padding: "clamp(1.25rem, 4vw, 2rem)",
                   textAlign: "center",
                 }}
               >
-                <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{benefit.icon}</div>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#f0f0ee", marginBottom: "0.5rem" }}>
+                <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
+                  {benefit.icon}
+                </div>
+                <h3
+                  style={{
+                    fontSize: "1.1rem",
+                    fontWeight: 600,
+                    color: "#f0f0ee",
+                    marginBottom: "0.5rem",
+                  }}
+                >
                   {benefit.title}
                 </h3>
-                <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>{benefit.desc}</p>
+                <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>
+                  {benefit.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -170,10 +210,16 @@ export default function SellCar() {
       </section>
 
       {/* Form */}
-      <section style={{ padding: "4rem 1rem", maxWidth: 900, margin: "0 auto" }}>
+      <section
+        style={{
+          padding: "clamp(2.5rem, 7vw, 4rem) 1rem",
+          maxWidth: 900,
+          margin: "0 auto",
+        }}
+      >
         <h2
           style={{
-            fontSize: "2rem",
+            fontSize: "clamp(1.55rem, 4vw, 2rem)",
             fontWeight: 700,
             color: "#f0f0ee",
             marginBottom: "2rem",
@@ -190,28 +236,52 @@ export default function SellCar() {
             background: "rgba(255,255,255,0.02)",
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: 16,
-            padding: "2rem",
+            padding: "clamp(1.25rem, 4vw, 2rem)",
             display: "flex",
             flexDirection: "column",
             gap: "1.5rem",
           }}
         >
           {/* Owner Info */}
-          <div style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: "1.5rem" }}>
-            <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#60a5fa", marginBottom: "1rem" }}>
+          <div
+            style={{
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              paddingBottom: "1.5rem",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "1rem",
+                fontWeight: 600,
+                color: "#60a5fa",
+                marginBottom: "1rem",
+              }}
+            >
               ИНФОРМАЦИЯ ЗА СОБСТВЕНИКА
             </h3>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div
+              className="sell-car-form-row"
+              style={{ display: "grid", gap: "1rem" }}
+            >
               <div>
-                <label style={{ color: "#9ca3af", fontSize: "0.9rem", marginBottom: "0.5rem", display: "block" }}>
+                <label
+                  style={{
+                    color: "#9ca3af",
+                    fontSize: "0.9rem",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
                   Име *
                 </label>
                 <input
                   type="text"
                   required
                   value={formData.ownerName}
-                  onChange={(e) => setFormData({ ...formData, ownerName: e.target.value })}
+                  onChange={e =>
+                    setFormData({ ...formData, ownerName: e.target.value })
+                  }
                   style={{
                     width: "100%",
                     padding: "0.75rem",
@@ -225,14 +295,23 @@ export default function SellCar() {
               </div>
 
               <div>
-                <label style={{ color: "#9ca3af", fontSize: "0.9rem", marginBottom: "0.5rem", display: "block" }}>
+                <label
+                  style={{
+                    color: "#9ca3af",
+                    fontSize: "0.9rem",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
                   Телефон *
                 </label>
                 <input
                   type="tel"
                   required
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={e =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
                   style={{
                     width: "100%",
                     padding: "0.75rem",
@@ -247,13 +326,22 @@ export default function SellCar() {
             </div>
 
             <div style={{ marginTop: "1rem" }}>
-              <label style={{ color: "#9ca3af", fontSize: "0.9rem", marginBottom: "0.5rem", display: "block" }}>
+              <label
+                style={{
+                  color: "#9ca3af",
+                  fontSize: "0.9rem",
+                  marginBottom: "0.5rem",
+                  display: "block",
+                }}
+              >
                 Имейл
               </label>
               <input
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={e =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 style={{
                   width: "100%",
                   padding: "0.75rem",
@@ -268,21 +356,45 @@ export default function SellCar() {
           </div>
 
           {/* Car Info */}
-          <div style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: "1.5rem" }}>
-            <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#60a5fa", marginBottom: "1rem" }}>
+          <div
+            style={{
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              paddingBottom: "1.5rem",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "1rem",
+                fontWeight: 600,
+                color: "#60a5fa",
+                marginBottom: "1rem",
+              }}
+            >
               ИНФОРМАЦИЯ ЗА АВТОМОБИЛА
             </h3>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div
+              className="sell-car-form-row"
+              style={{ display: "grid", gap: "1rem" }}
+            >
               <div>
-                <label style={{ color: "#9ca3af", fontSize: "0.9rem", marginBottom: "0.5rem", display: "block" }}>
+                <label
+                  style={{
+                    color: "#9ca3af",
+                    fontSize: "0.9rem",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
                   Марка *
                 </label>
                 <input
                   type="text"
                   required
                   value={formData.brand}
-                  onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
+                  onChange={e =>
+                    setFormData({ ...formData, brand: e.target.value })
+                  }
                   placeholder="BMW, Mercedes-Benz..."
                   style={{
                     width: "100%",
@@ -297,14 +409,23 @@ export default function SellCar() {
               </div>
 
               <div>
-                <label style={{ color: "#9ca3af", fontSize: "0.9rem", marginBottom: "0.5rem", display: "block" }}>
+                <label
+                  style={{
+                    color: "#9ca3af",
+                    fontSize: "0.9rem",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
                   Модел *
                 </label>
                 <input
                   type="text"
                   required
                   value={formData.model}
-                  onChange={(e) => setFormData({ ...formData, model: e.target.value })}
+                  onChange={e =>
+                    setFormData({ ...formData, model: e.target.value })
+                  }
                   placeholder="E90, C-Class..."
                   style={{
                     width: "100%",
@@ -319,13 +440,22 @@ export default function SellCar() {
               </div>
 
               <div>
-                <label style={{ color: "#9ca3af", fontSize: "0.9rem", marginBottom: "0.5rem", display: "block" }}>
+                <label
+                  style={{
+                    color: "#9ca3af",
+                    fontSize: "0.9rem",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
                   Година
                 </label>
                 <input
                   type="number"
                   value={formData.year}
-                  onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                  onChange={e =>
+                    setFormData({ ...formData, year: e.target.value })
+                  }
                   placeholder="2020"
                   style={{
                     width: "100%",
@@ -340,13 +470,22 @@ export default function SellCar() {
               </div>
 
               <div>
-                <label style={{ color: "#9ca3af", fontSize: "0.9rem", marginBottom: "0.5rem", display: "block" }}>
+                <label
+                  style={{
+                    color: "#9ca3af",
+                    fontSize: "0.9rem",
+                    marginBottom: "0.5rem",
+                    display: "block",
+                  }}
+                >
                   Пробег (км)
                 </label>
                 <input
                   type="number"
                   value={formData.mileage}
-                  onChange={(e) => setFormData({ ...formData, mileage: e.target.value })}
+                  onChange={e =>
+                    setFormData({ ...formData, mileage: e.target.value })
+                  }
                   placeholder="150000"
                   style={{
                     width: "100%",
@@ -362,12 +501,21 @@ export default function SellCar() {
             </div>
 
             <div style={{ marginTop: "1rem" }}>
-              <label style={{ color: "#9ca3af", fontSize: "0.9rem", marginBottom: "0.5rem", display: "block" }}>
+              <label
+                style={{
+                  color: "#9ca3af",
+                  fontSize: "0.9rem",
+                  marginBottom: "0.5rem",
+                  display: "block",
+                }}
+              >
                 Състояние
               </label>
               <select
                 value={formData.condition}
-                onChange={(e) => setFormData({ ...formData, condition: e.target.value })}
+                onChange={e =>
+                  setFormData({ ...formData, condition: e.target.value })
+                }
                 style={{
                   width: "100%",
                   padding: "0.75rem",
@@ -379,7 +527,7 @@ export default function SellCar() {
                 }}
               >
                 <option value="">Изберете състояние</option>
-                {CAR_CONDITIONS.map((c) => (
+                {CAR_CONDITIONS.map(c => (
                   <option key={c} value={c}>
                     {c}
                   </option>
@@ -390,12 +538,21 @@ export default function SellCar() {
 
           {/* Description */}
           <div>
-            <label style={{ color: "#9ca3af", fontSize: "0.9rem", marginBottom: "0.5rem", display: "block" }}>
+            <label
+              style={{
+                color: "#9ca3af",
+                fontSize: "0.9rem",
+                marginBottom: "0.5rem",
+                display: "block",
+              }}
+            >
               Допълнително описание
             </label>
             <textarea
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={e =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               placeholder="Опишете състоянието, историята на ремонти, специални характеристики..."
               style={{
                 width: "100%",
@@ -425,10 +582,10 @@ export default function SellCar() {
               cursor: "pointer",
               transition: "all 0.3s ease",
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               (e.currentTarget as HTMLElement).style.background = "#3b82f6";
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               (e.currentTarget as HTMLElement).style.background = "#60a5fa";
             }}
           >

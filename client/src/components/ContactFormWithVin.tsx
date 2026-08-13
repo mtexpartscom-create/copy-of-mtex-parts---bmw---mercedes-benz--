@@ -156,7 +156,7 @@ export default function ContactFormWithVin() {
         <VinDecoderInput onVinDecoded={handleVinDecoded} />
 
         {/* Auto-filled fields */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
           <div>
             <Label htmlFor="make">Производител</Label>
             <Input

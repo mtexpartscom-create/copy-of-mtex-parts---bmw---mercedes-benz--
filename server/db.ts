@@ -430,6 +430,25 @@ export async function createFacebookPost(
   }
 }
 
+export async function listFacebookPosts(): Promise<FacebookPost[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db.select().from(facebookPosts).orderBy(desc(facebookPosts.createdAt));
+}
+
+export async function updateFacebookPostRecord(
+  id: number,
+  data: Partial<Pick<FacebookPost, "imageUrl" | "caption" | "status" | "postId" | "publishedAt">>
+): Promise<FacebookPost | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  await db.update(facebookPosts).set(data).where(eq(facebookPosts.id, id));
+  const rows = await db.select().from(facebookPosts).where(eq(facebookPosts.id, id)).limit(1);
+  return rows[0] ?? null;
+}
+
 export async function getFacebookPostsByVehicleId(
   vehicleId: number
 ): Promise<FacebookPost[]> {

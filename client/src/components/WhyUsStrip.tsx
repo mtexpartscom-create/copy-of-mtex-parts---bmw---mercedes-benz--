@@ -51,15 +51,15 @@ export default function WhyUsStrip() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) entry.target.classList.add("visible");
         });
       },
       { threshold: 0.2 }
     );
     const els = ref.current?.querySelectorAll(".fade-up");
-    els?.forEach((el) => observer.observe(el));
+    els?.forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
@@ -70,16 +70,17 @@ export default function WhyUsStrip() {
         background: "#15171a",
         borderTop: "1px solid rgba(255,255,255,0.05)",
         borderBottom: "1px solid rgba(255,255,255,0.05)",
-        padding: "3rem 0", display: 'inline',
+        padding: "clamp(2rem, 6vw, 3rem) 0",
       }}
     >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 2rem", paddingLeft: '3px' }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1rem" }}>
         <div
-          className="fade-up"
+          className="fade-up why-us-features-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-            gap: "1.5rem", height: '85px', width: '1280px',
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(100%, 160px), 1fr))",
+            gap: "clamp(1rem, 3vw, 1.5rem)",
           }}
         >
           {FEATURES.map((feat, i) => (
@@ -91,40 +92,51 @@ export default function WhyUsStrip() {
                 gap: "0.85rem",
                 padding: "0.75rem",
                 borderRadius: 12,
-                transition: "background 0.2s ease", marginTop: 'px',
+                transition: "background 0.2s ease",
+                marginTop: "px",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.03)")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              onMouseEnter={e =>
+                (e.currentTarget.style.background = "rgba(255,255,255,0.03)")
+              }
+              onMouseLeave={e =>
+                (e.currentTarget.style.background = "transparent")
+              }
             >
-              <div style={{
-                width: 44,
-                height: 44,
-                borderRadius: 10,
-                background: `${feat.color}12`,
-                border: `1px solid ${feat.color}25`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: feat.color,
-                flexShrink: 0,
-              }}>
+              <div
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 10,
+                  background: `${feat.color}12`,
+                  border: `1px solid ${feat.color}25`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: feat.color,
+                  flexShrink: 0,
+                }}
+              >
                 {feat.icon}
               </div>
               <div>
-                <div style={{
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontWeight: '700',
-                  fontSize: '13px',
-                  color: '#ffffff',
-                  lineHeight: 1.2,
-                }}>
+                <div
+                  style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontWeight: "700",
+                    fontSize: "13px",
+                    color: "#ffffff",
+                    lineHeight: 1.2,
+                  }}
+                >
                   {feat.label}
                 </div>
-                <div style={{
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontSize: '11px',
-                  color: "#6b7280",
-                }}>
+                <div
+                  style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "11px",
+                    color: "#6b7280",
+                  }}
+                >
                   {feat.desc}
                 </div>
               </div>

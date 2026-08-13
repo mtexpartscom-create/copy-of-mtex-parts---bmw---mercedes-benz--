@@ -27,24 +27,26 @@ export default function RoadAssistance() {
   return (
     <div style={{ background: "#0d0e10", minHeight: "100vh" }}>
       <GlobalNavigation />
-      <Breadcrumb items={[
-        { label: "Начало", href: "/" },
-        { label: "Услуги", href: "#" },
-        { label: "Пътна помощ" },
-      ]} />
+      <Breadcrumb
+        items={[
+          { label: "Начало", href: "/" },
+          { label: "Услуги", href: "#" },
+          { label: "Пътна помощ" },
+        ]}
+      />
 
       {/* Hero */}
       <div
         style={{
           background: "linear-gradient(135deg, #1a1d22 0%, #15171a 100%)",
-          padding: "6rem 1rem 4rem",
+          padding: "clamp(4.5rem, 10vw, 6rem) 1rem clamp(2.5rem, 7vw, 4rem)",
           textAlign: "center",
           marginTop: 70,
         }}
       >
         <h1
           style={{
-            fontSize: "clamp(2rem, 5vw, 3.5rem)",
+            fontSize: "clamp(1.7rem, 5vw, 3.5rem)",
             fontWeight: 800,
             color: "#f0f0ee",
             marginBottom: "1rem",
@@ -68,7 +70,7 @@ export default function RoadAssistance() {
       {/* Emergency Call Section */}
       <section
         style={{
-          padding: "4rem 1rem",
+          padding: "clamp(2.5rem, 7vw, 4rem) 1rem",
           background: "rgba(239, 68, 68, 0.1)",
           borderTop: "2px solid rgba(239, 68, 68, 0.3)",
           borderBottom: "2px solid rgba(239, 68, 68, 0.3)",
@@ -98,7 +100,7 @@ export default function RoadAssistance() {
             href="tel:+359898606626"
             style={{
               display: "inline-block",
-              padding: "1.5rem 3rem",
+              padding: "1rem clamp(1.25rem, 6vw, 3rem)",
               background: "#ef4444",
               color: "#fff",
               fontSize: "1.5rem",
@@ -109,11 +111,11 @@ export default function RoadAssistance() {
               border: "none",
               cursor: "pointer",
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               (e.currentTarget as HTMLElement).style.background = "#dc2626";
               (e.currentTarget as HTMLElement).style.transform = "scale(1.05)";
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               (e.currentTarget as HTMLElement).style.background = "#ef4444";
               (e.currentTarget as HTMLElement).style.transform = "scale(1)";
             }}
@@ -124,10 +126,16 @@ export default function RoadAssistance() {
       </section>
 
       {/* Services Grid */}
-      <section style={{ padding: "4rem 1rem", maxWidth: 1280, margin: "0 auto" }}>
+      <section
+        style={{
+          padding: "clamp(2.5rem, 7vw, 4rem) 1rem",
+          maxWidth: 1280,
+          margin: "0 auto",
+        }}
+      >
         <h2
           style={{
-            fontSize: "2rem",
+            fontSize: "clamp(1.55rem, 4vw, 2rem)",
             fontWeight: 700,
             color: "#f0f0ee",
             marginBottom: "2rem",
@@ -141,7 +149,8 @@ export default function RoadAssistance() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
             gap: "2rem",
           }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -153,24 +162,38 @@ export default function RoadAssistance() {
                 background: "rgba(255,255,255,0.02)",
                 border: "1px solid rgba(255,255,255,0.08)",
                 borderRadius: 12,
-                padding: "2rem",
+                padding: "clamp(1.25rem, 4vw, 2rem)",
                 textAlign: "center",
                 transition: "all 0.3s ease",
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(239, 68, 68, 0.1)";
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.background =
+                  "rgba(239, 68, 68, 0.1)";
                 (e.currentTarget as HTMLElement).style.borderColor = "#ef4444";
               }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)";
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.background =
+                  "rgba(255,255,255,0.02)";
+                (e.currentTarget as HTMLElement).style.borderColor =
+                  "rgba(255,255,255,0.08)";
               }}
             >
-              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>{service.icon}</div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#f0f0ee", marginBottom: "0.5rem" }}>
+              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>
+                {service.icon}
+              </div>
+              <h3
+                style={{
+                  fontSize: "1.1rem",
+                  fontWeight: 600,
+                  color: "#f0f0ee",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 {service.title}
               </h3>
-              <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>{service.desc}</p>
+              <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>
+                {service.desc}
+              </p>
             </div>
           ))}
         </div>
@@ -179,7 +202,7 @@ export default function RoadAssistance() {
       {/* Info Section */}
       <section
         style={{
-          padding: "4rem 1rem",
+          padding: "clamp(2.5rem, 7vw, 4rem) 1rem",
           background: "rgba(255,255,255,0.02)",
           borderTop: "1px solid rgba(255,255,255,0.06)",
         }}
@@ -187,7 +210,7 @@ export default function RoadAssistance() {
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <h2
             style={{
-              fontSize: "2rem",
+              fontSize: "clamp(1.55rem, 4vw, 2rem)",
               fontWeight: 700,
               color: "#f0f0ee",
               marginBottom: "2rem",
@@ -201,7 +224,8 @@ export default function RoadAssistance() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 250px), 1fr))",
               gap: "2rem",
             }}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -222,10 +246,19 @@ export default function RoadAssistance() {
               >
                 1️⃣
               </div>
-              <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#f0f0ee", marginBottom: "0.5rem" }}>
+              <h3
+                style={{
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  color: "#f0f0ee",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 Обадете се
               </h3>
-              <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>Позвънете на номера за спешна помощ</p>
+              <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>
+                Позвънете на номера за спешна помощ
+              </p>
             </div>
 
             <div style={{ textAlign: "center" }}>
@@ -244,10 +277,19 @@ export default function RoadAssistance() {
               >
                 2️⃣
               </div>
-              <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#f0f0ee", marginBottom: "0.5rem" }}>
+              <h3
+                style={{
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  color: "#f0f0ee",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 Дайте локация
               </h3>
-              <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>Съобщете точното си местоположение</p>
+              <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>
+                Съобщете точното си местоположение
+              </p>
             </div>
 
             <div style={{ textAlign: "center" }}>
@@ -266,20 +308,35 @@ export default function RoadAssistance() {
               >
                 3️⃣
               </div>
-              <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#f0f0ee", marginBottom: "0.5rem" }}>
+              <h3
+                style={{
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  color: "#f0f0ee",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 Пристигаме
               </h3>
-              <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>Екипажът ни пристига в 15-30 минути</p>
+              <p style={{ fontSize: "0.9rem", color: "#9ca3af" }}>
+                Екипажът ни пристига в 15-30 минути
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing */}
-      <section style={{ padding: "4rem 1rem", maxWidth: 1000, margin: "0 auto" }}>
+      <section
+        style={{
+          padding: "clamp(2.5rem, 7vw, 4rem) 1rem",
+          maxWidth: 1000,
+          margin: "0 auto",
+        }}
+      >
         <h2
           style={{
-            fontSize: "2rem",
+            fontSize: "clamp(1.55rem, 4vw, 2rem)",
             fontWeight: 700,
             color: "#f0f0ee",
             marginBottom: "2rem",
@@ -295,22 +352,49 @@ export default function RoadAssistance() {
             background: "rgba(255,255,255,0.02)",
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: 12,
-            padding: "2rem",
+            padding: "clamp(1.25rem, 4vw, 2rem)",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
             <span style={{ color: "#9ca3af" }}>Техническа помощ</span>
             <span style={{ color: "#10b981", fontWeight: 600 }}>49 лв.</span>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
             <span style={{ color: "#9ca3af" }}>Буксиране (до 50км)</span>
             <span style={{ color: "#10b981", fontWeight: 600 }}>99 лв.</span>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
             <span style={{ color: "#9ca3af" }}>Смяна на гума</span>
             <span style={{ color: "#10b981", fontWeight: 600 }}>39 лв.</span>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <span style={{ color: "#9ca3af" }}>Доставка на гориво</span>
             <span style={{ color: "#10b981", fontWeight: 600 }}>29 лв.</span>
           </div>

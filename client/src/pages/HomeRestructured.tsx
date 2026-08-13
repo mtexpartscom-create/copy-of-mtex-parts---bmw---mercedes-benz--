@@ -77,7 +77,7 @@ export default function HomeRestructured() {
       <section
         id="services"
         style={{
-          padding: "4rem 1rem",
+          padding: "clamp(2.5rem, 7vw, 4rem) 1rem",
           maxWidth: 1280,
           margin: "0 auto",
         }}
@@ -85,7 +85,7 @@ export default function HomeRestructured() {
         <div style={{ marginBottom: "3rem", textAlign: "center" }}>
           <h2
             style={{
-              fontSize: "clamp(1.8rem, 5vw, 2.5rem)",
+              fontSize: "clamp(1.6rem, 5vw, 2.5rem)",
               fontWeight: 800,
               color: "#f0f0ee",
               marginBottom: "1rem",
@@ -110,12 +110,13 @@ export default function HomeRestructured() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
             gap: "2rem",
           }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {SERVICE_CARDS.map((card) => (
+          {SERVICE_CARDS.map(card => (
             <a
               key={card.id}
               href={card.href}
@@ -131,14 +132,14 @@ export default function HomeRestructured() {
                 position: "relative",
                 overflow: "hidden",
               }}
-              onMouseEnter={(e) => {
+              onMouseEnter={e => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.background = "rgba(255,255,255,0.04)";
                 el.style.borderColor = card.color;
                 el.style.transform = "translateY(-8px)";
                 el.style.boxShadow = `0 20px 40px ${card.color}20`;
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={e => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.background = "rgba(255,255,255,0.02)";
                 el.style.borderColor = "rgba(255,255,255,0.08)";
@@ -220,7 +221,7 @@ export default function HomeRestructured() {
       <section
         id="about"
         style={{
-          padding: "4rem 1rem",
+          padding: "clamp(2.5rem, 7vw, 4rem) 1rem",
           background: "rgba(255,255,255,0.02)",
           borderTop: "1px solid rgba(255,255,255,0.06)",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
@@ -229,7 +230,7 @@ export default function HomeRestructured() {
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <h2
             style={{
-              fontSize: "clamp(1.8rem, 5vw, 2.5rem)",
+              fontSize: "clamp(1.6rem, 5vw, 2.5rem)",
               fontWeight: 800,
               color: "#f0f0ee",
               marginBottom: "2rem",
@@ -243,15 +244,25 @@ export default function HomeRestructured() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 250px), 1fr))",
               gap: "2rem",
             }}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {[
-              { title: "Оригинални части", desc: "Само оригинални BMW и Mercedes-Benz части" },
-              { title: "Експертна поддръжка", desc: "Професионален екип с години опит" },
-              { title: "Бърза доставка", desc: "Доставка в рамките на 24-48 часа" },
+              {
+                title: "Оригинални части",
+                desc: "Само оригинални BMW и Mercedes-Benz части",
+              },
+              {
+                title: "Експертна поддръжка",
+                desc: "Професионален екип с години опит",
+              },
+              {
+                title: "Бърза доставка",
+                desc: "Доставка в рамките на 24-48 часа",
+              },
               { title: "Конкурентни цени", desc: "Най-добрите цени на пазара" },
               { title: "24/7 Поддръжка", desc: "Винаги готови да помогнем" },
               { title: "Гаранция", desc: "Гаранция на всички услуги и части" },
@@ -294,14 +305,14 @@ export default function HomeRestructured() {
       <section
         id="contact"
         style={{
-          padding: "4rem 1rem",
+          padding: "clamp(2.5rem, 7vw, 4rem) 1rem",
           textAlign: "center",
         }}
       >
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <h2
             style={{
-              fontSize: "clamp(1.8rem, 5vw, 2.5rem)",
+              fontSize: "clamp(1.6rem, 5vw, 2.5rem)",
               fontWeight: 800,
               color: "#f0f0ee",
               marginBottom: "1rem",
@@ -318,7 +329,8 @@ export default function HomeRestructured() {
               lineHeight: 1.8,
             }}
           >
-            Свържете се с нас днес и получете професионална консултация за вашия автомобил
+            Свържете се с нас днес и получете професионална консултация за вашия
+            автомобил
           </p>
           <div
             style={{
@@ -339,11 +351,12 @@ export default function HomeRestructured() {
                 fontWeight: 600,
                 transition: "all 0.3s ease",
               }}
-              onMouseEnter={(e) => {
+              onMouseEnter={e => {
                 (e.currentTarget as HTMLElement).style.background = "#3b82f6";
-                (e.currentTarget as HTMLElement).style.transform = "scale(1.05)";
+                (e.currentTarget as HTMLElement).style.transform =
+                  "scale(1.05)";
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={e => {
                 (e.currentTarget as HTMLElement).style.background = "#60a5fa";
                 (e.currentTarget as HTMLElement).style.transform = "scale(1)";
               }}
@@ -362,12 +375,15 @@ export default function HomeRestructured() {
                 border: "1px solid rgba(255,255,255,0.2)",
                 transition: "all 0.3s ease",
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.15)";
-                (e.currentTarget as HTMLElement).style.transform = "scale(1.05)";
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.background =
+                  "rgba(255,255,255,0.15)";
+                (e.currentTarget as HTMLElement).style.transform =
+                  "scale(1.05)";
               }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.1)";
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.background =
+                  "rgba(255,255,255,0.1)";
                 (e.currentTarget as HTMLElement).style.transform = "scale(1)";
               }}
             >

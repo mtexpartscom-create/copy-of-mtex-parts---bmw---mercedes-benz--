@@ -22,7 +22,10 @@ interface VinDecoderInputProps {
   disabled?: boolean;
 }
 
-export default function VinDecoderInput({ onVinDecoded, disabled }: VinDecoderInputProps) {
+export default function VinDecoderInput({
+  onVinDecoded,
+  disabled,
+}: VinDecoderInputProps) {
   const [vin, setVin] = useState("");
   const [decodedData, setDecodedData] = useState<any>(null);
   const [isDecoding, setIsDecoding] = useState(false);
@@ -40,7 +43,7 @@ export default function VinDecoderInput({ onVinDecoded, disabled }: VinDecoderIn
     setIsDecoding(true);
     try {
       const result = await decodeVinMutation.refetch();
-      if (result.data?.success && 'make' in result.data) {
+      if (result.data?.success && "make" in result.data) {
         setDecodedData(result.data);
         toast.success("VIN декодиран успешно");
         onVinDecoded?.({
@@ -69,7 +72,7 @@ export default function VinDecoderInput({ onVinDecoded, disabled }: VinDecoderIn
             id="vin-input"
             placeholder="Въведете VIN (17 символа)"
             value={vin}
-            onChange={(e) => {
+            onChange={e => {
               setVin(e.target.value.toUpperCase());
               setDecodedData(null);
             }}
@@ -94,14 +97,14 @@ export default function VinDecoderInput({ onVinDecoded, disabled }: VinDecoderIn
         </div>
       </div>
 
-      {decodedData && decodedData.success && 'make' in decodedData && (
+      {decodedData && decodedData.success && "make" in decodedData && (
         <div className="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg p-4 space-y-3">
           <div className="flex items-center gap-2 text-green-700 dark:text-green-300">
             <Check className="w-5 h-5" />
             <span className="font-semibold">Успешно декодиран VIN</span>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
             <div>
               <p className="text-muted-foreground">Производител</p>
               <p className="font-semibold">{(decodedData as any).make}</p>
@@ -125,7 +128,9 @@ export default function VinDecoderInput({ onVinDecoded, disabled }: VinDecoderIn
       {decodedData && !decodedData.success && (
         <div className="bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-center gap-2">
           <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
-          <p className="text-sm text-red-700 dark:text-red-300">{decodedData.error}</p>
+          <p className="text-sm text-red-700 dark:text-red-300">
+            {decodedData.error}
+          </p>
         </div>
       )}
     </div>

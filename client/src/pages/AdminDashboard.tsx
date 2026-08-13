@@ -22,6 +22,7 @@ import ProductManagement from "@/components/ProductManagement";
 import OrderManagement from "@/components/OrderManagement";
 import PartsListingManagement from "@/components/PartsListingManagement";
 import B2BUsersManagement from "@/components/B2BUsersManagement";
+import FacebookPostReview from "@/components/FacebookPostReview";
 
 export default function AdminDashboard() {
   const { user, isAuthenticated } = useAuth();
@@ -366,23 +367,7 @@ export default function AdminDashboard() {
 
           {/* Facebook Tab */}
           <TabsContent value="facebook" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Facebook className="w-5 h-5 text-blue-600" />
-                  Facebook Публикации
-                </CardTitle>
-                <CardDescription>Автоматично публикуване на автомобили</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">
-                  Функцията за автоматично публикуване на Facebook е в разработка.
-                </p>
-                <Button variant="outline" disabled>
-                  Публикуване на автомобил
-                </Button>
-              </CardContent>
-            </Card>
+            <FacebookPostReview />
           </TabsContent>
 
           {/* Listings Tab */}

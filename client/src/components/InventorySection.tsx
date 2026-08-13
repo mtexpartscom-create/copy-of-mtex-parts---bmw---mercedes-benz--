@@ -124,7 +124,7 @@ export default function InventorySection() {
       ref={sectionRef}
       style={{
         background: "#15171a",
-        padding: "3rem 0",
+        padding: "clamp(2.5rem, 7vw, 3rem) 0",
         position: "relative",
       }}
     >
@@ -140,7 +140,7 @@ export default function InventorySection() {
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1rem" }}>
         {/* Header */}
-        <div className="fade-up" style={{ marginBottom: "3rem" }}>
+        <div className="fade-up" style={{ marginBottom: "clamp(2rem, 6vw, 3rem)" }}>
           <div className="section-tag" style={{ marginBottom: "1.25rem" }}>Налични Автомобили</div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "1rem" }}>
             <div>
@@ -235,7 +235,7 @@ export default function InventorySection() {
         </div>
 
         {/* New Listings Gallery */}
-        <div className="fade-up" style={{ marginBottom: "3rem" }}>
+        <div className="fade-up" style={{ marginBottom: "clamp(2rem, 6vw, 3rem)" }}>
           <h3 style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 700,

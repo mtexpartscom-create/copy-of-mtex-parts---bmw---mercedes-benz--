@@ -5,7 +5,16 @@
 */
 
 import { useEffect, useRef } from "react";
-import { Settings, Wrench, Truck, ArrowRight, CheckCircle2, Zap, Cog, Shield } from "lucide-react";
+import {
+  Settings,
+  Wrench,
+  Truck,
+  ArrowRight,
+  CheckCircle2,
+  Zap,
+  Cog,
+  Shield,
+} from "lucide-react";
 
 const SERVICES = [
   {
@@ -16,7 +25,8 @@ const SERVICES = [
     title: "АВТОМОРГА",
     subtitle: "OEM Употребявани Части",
     image: "/manus-storage/DTC_JPG_WEB_FORMAAT_Tweede_Keuze00064_4da18195.jpg",
-    description: "Широк асортимент от употребявани OEM авточасти за BMW и Mercedes-Benz. Двигатели, скоростни кутии, ходова, електроника и каросерия.",
+    description:
+      "Широк асортимент от употребявани OEM авточасти за BMW и Mercedes-Benz. Двигатели, скоростни кутии, ходова, електроника и каросерия.",
     features: [
       "Двигатели и агрегати",
       "Скоростни кутии",
@@ -36,7 +46,8 @@ const SERVICES = [
     title: "АВТОСЕРВИЗ",
     subtitle: "Професионален Ремонт",
     image: "/manus-storage/service_workshop_25e9dd1a.png",
-    description: "Професионален сервиз за BMW и Mercedes-Benz. Диагностика, ремонт и поддръжка от опитни техници с богат опит.",
+    description:
+      "Професионален сервиз за BMW и Mercedes-Benz. Диагностика, ремонт и поддръжка от опитни техници с богат опит.",
     features: [
       "Компютърна диагностика",
       "Ремонт на двигатели",
@@ -56,7 +67,8 @@ const SERVICES = [
     title: "ПЪТНА ПОМОЩ",
     subtitle: "24/7 При Нужда",
     image: "/manus-storage/post_bmw_drive_da575e6f.webp",
-    description: "Бърза и надеждна пътна помощ при нужда. Налични 24/7 за спешни случаи в Варна и региона.",
+    description:
+      "Бърза и надеждна пътна помощ при нужда. Налични 24/7 за спешни случаи в Варна и региона.",
     features: [
       "Пътна помощ 24/7",
       "Теглене на автомобил",
@@ -75,8 +87,8 @@ export default function ServicesSection() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
           }
@@ -86,7 +98,7 @@ export default function ServicesSection() {
     );
 
     const els = sectionRef.current?.querySelectorAll(".fade-up");
-    els?.forEach((el) => observer.observe(el));
+    els?.forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
@@ -96,51 +108,72 @@ export default function ServicesSection() {
       ref={sectionRef}
       style={{
         background: "#0d0e10",
-        padding: "7rem 0",
+        padding: "clamp(3.5rem, 9vw, 7rem) 0",
         position: "relative",
         overflow: "hidden",
       }}
     >
       {/* Subtle background texture */}
-      <div style={{
-        position: "absolute",
-        inset: 0,
-        backgroundImage: `radial-gradient(circle at 80% 20%, rgba(28,105,212,0.04) 0%, transparent 50%)`,
-        pointerEvents: "none",
-      }} />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `radial-gradient(circle at 80% 20%, rgba(28,105,212,0.04) 0%, transparent 50%)`,
+          pointerEvents: "none",
+        }}
+      />
 
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1rem", position: "relative" }}>
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: "0 auto",
+          padding: "0 1rem",
+          position: "relative",
+        }}
+      >
         {/* Section header */}
-        <div className="fade-up" style={{ marginBottom: "4rem", maxWidth: 600 }}>
-          <div className="section-tag" style={{ marginBottom: "1.25rem" }}>Нашите Услуги</div>
-          <h2 style={{
-            fontFamily: "'Syne', sans-serif",
-            fontWeight: 800,
-            fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)",
-            color: "#f0f0ee",
-            letterSpacing: "-0.03em",
-            marginBottom: "1rem",
-            lineHeight: 1.1,
-          }}>
-            Всичко за Вашия BMW<br />и Mercedes-Benz
+        <div
+          className="fade-up"
+          style={{ marginBottom: "clamp(2.5rem, 6vw, 4rem)", maxWidth: 600 }}
+        >
+          <div className="section-tag" style={{ marginBottom: "1.25rem" }}>
+            Нашите Услуги
+          </div>
+          <h2
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 800,
+              fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)",
+              color: "#f0f0ee",
+              letterSpacing: "-0.03em",
+              marginBottom: "1rem",
+              lineHeight: 1.1,
+            }}
+          >
+            Всичко за Вашия BMW
+            <br />и Mercedes-Benz
           </h2>
-          <p style={{
-            fontFamily: "'Plus Jakarta Sans', sans-serif",
-            fontSize: "1.05rem",
-            color: "#9ca3af",
-            lineHeight: 1.7,
-          }}>
-            Предлагаме пълен набор от услуги – от продажба на авточасти до пътна помощ.
-            Специализирани изключително в BMW и Mercedes-Benz.
+          <p
+            style={{
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              fontSize: "1.05rem",
+              color: "#9ca3af",
+              lineHeight: 1.7,
+            }}
+          >
+            Предлагаме пълен набор от услуги – от продажба на авточасти до пътна
+            помощ. Специализирани изключително в BMW и Mercedes-Benz.
           </p>
         </div>
 
         {/* Services grid */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "1.5rem",
-        }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "1.5rem",
+          }}
+        >
           {SERVICES.map((service, i) => (
             <div
               key={service.id}
@@ -154,9 +187,11 @@ export default function ServicesSection() {
                 overflow: "hidden",
                 transition: "all 0.35s cubic-bezier(0.4,0,0.2,1)",
                 position: "relative",
-                boxShadow: service.featured ? "0 0 40px rgba(28,105,212,0.08)" : "none",
+                boxShadow: service.featured
+                  ? "0 0 40px rgba(28,105,212,0.08)"
+                  : "none",
               }}
-              onMouseEnter={(e) => {
+              onMouseEnter={e => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.transform = "translateY(-6px)";
                 el.style.boxShadow = service.featured
@@ -166,10 +201,12 @@ export default function ServicesSection() {
                   ? "rgba(28,105,212,0.5)"
                   : "rgba(255,255,255,0.12)";
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={e => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.transform = "none";
-                el.style.boxShadow = service.featured ? "0 0 40px rgba(28,105,212,0.08)" : "none";
+                el.style.boxShadow = service.featured
+                  ? "0 0 40px rgba(28,105,212,0.08)"
+                  : "none";
                 el.style.borderColor = service.featured
                   ? "rgba(28,105,212,0.3)"
                   : "rgba(255,255,255,0.06)";
@@ -177,27 +214,35 @@ export default function ServicesSection() {
             >
               {/* Featured badge */}
               {service.featured && (
-                <div style={{
-                  position: "absolute",
-                  top: 16,
-                  right: 16,
-                  zIndex: 2,
-                  padding: "0.25rem 0.75rem",
-                  background: "#1c69d4",
-                  color: "#fff",
-                  borderRadius: 9999,
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontSize: "0.7rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 16,
+                    right: 16,
+                    zIndex: 2,
+                    padding: "0.25rem 0.75rem",
+                    background: "#1c69d4",
+                    color: "#fff",
+                    borderRadius: 9999,
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.06em",
+                    textTransform: "uppercase",
+                  }}
+                >
                   Популярно
                 </div>
               )}
 
               {/* Service image */}
-              <div style={{ position: "relative", height: 200, overflow: "hidden" }}>
+              <div
+                style={{
+                  position: "relative",
+                  height: 200,
+                  overflow: "hidden",
+                }}
+              >
                 <img
                   src={service.image}
                   alt={service.title}
@@ -205,31 +250,39 @@ export default function ServicesSection() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    objectPosition: service.id === "service" ? "center bottom" : "center center",
+                    objectPosition:
+                      service.id === "service"
+                        ? "center bottom"
+                        : "center center",
                     transition: "transform 0.5s ease",
                   }}
                 />
-                <div style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "linear-gradient(to top, rgba(21,23,26,0.9) 0%, rgba(21,23,26,0.2) 60%, transparent 100%)",
-                }} />
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(to top, rgba(21,23,26,0.9) 0%, rgba(21,23,26,0.2) 60%, transparent 100%)",
+                  }}
+                />
                 {/* Icon overlay */}
-                <div style={{
-                  position: "absolute",
-                  bottom: 16,
-                  left: 16,
-                  width: 48,
-                  height: 48,
-                  borderRadius: 12,
-                  background: service.iconBg,
-                  border: `1px solid ${service.iconColor}40`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: service.iconColor,
-                  backdropFilter: "blur(8px)",
-                }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: 16,
+                    left: 16,
+                    width: 48,
+                    height: 48,
+                    borderRadius: 12,
+                    background: service.iconBg,
+                    border: `1px solid ${service.iconColor}40`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: service.iconColor,
+                    backdropFilter: "blur(8px)",
+                  }}
+                >
                   {service.icon}
                 </div>
               </div>
@@ -237,57 +290,73 @@ export default function ServicesSection() {
               {/* Content */}
               <div style={{ padding: "1.5rem" }}>
                 <div style={{ marginBottom: "0.5rem" }}>
-                  <span style={{
-                    fontFamily: "'Plus Jakarta Sans', sans-serif",
-                    fontSize: "0.72rem",
-                    fontWeight: 600,
-                    color: service.iconColor,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                  }}>
+                  <span
+                    style={{
+                      fontFamily: "'Plus Jakarta Sans', sans-serif",
+                      fontSize: "0.72rem",
+                      fontWeight: 600,
+                      color: service.iconColor,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                    }}
+                  >
                     {service.subtitle}
                   </span>
                 </div>
-                <h3 style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontWeight: 700,
-                  fontSize: '35px',
-                  color: "#f0f0ee",
-                  letterSpacing: "-0.02em",
-                  marginBottom: "0.75rem",
-                }}>
+                <h3
+                  style={{
+                    fontFamily: "'Syne', sans-serif",
+                    fontWeight: 700,
+                    fontSize: "clamp(1.25rem, 4vw, 2.1875rem)",
+                    color: "#f0f0ee",
+                    letterSpacing: "-0.02em",
+                    marginBottom: "0.75rem",
+                  }}
+                >
                   {service.title}
                 </h3>
-                <p style={{
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  fontSize: "0.9rem",
-                  color: "#9ca3af",
-                  lineHeight: 1.65,
-                  marginBottom: "1.25rem",
-                }}>
+                <p
+                  style={{
+                    fontFamily: "'Plus Jakarta Sans', sans-serif",
+                    fontSize: "0.9rem",
+                    color: "#9ca3af",
+                    lineHeight: 1.65,
+                    marginBottom: "1.25rem",
+                  }}
+                >
                   {service.description}
                 </p>
 
                 {/* Feature list */}
-                <ul style={{
-                  listStyle: "none",
-                  margin: 0,
-                  padding: 0,
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "0.4rem",
-                  marginBottom: "1.5rem",
-                }}>
+                <ul
+                  className="service-feature-grid"
+                  style={{
+                    listStyle: "none",
+                    margin: 0,
+                    padding: 0,
+                    display: "grid",
+                    gap: "0.4rem",
+                    marginBottom: "1.5rem",
+                  }}
+                >
                   {service.features.map((feat, j) => (
-                    <li key={j} style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.4rem",
-                      fontFamily: "'Plus Jakarta Sans', sans-serif",
-                      fontSize: "0.8rem",
-                      color: "#9ca3af",
-                    }}>
-                      <CheckCircle2 size={13} color={service.iconColor} strokeWidth={2} style={{ flexShrink: 0 }} />
+                    <li
+                      key={j}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.4rem",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
+                        fontSize: "0.8rem",
+                        color: "#9ca3af",
+                      }}
+                    >
+                      <CheckCircle2
+                        size={13}
+                        color={service.iconColor}
+                        strokeWidth={2}
+                        style={{ flexShrink: 0 }}
+                      />
                       {feat}
                     </li>
                   ))}
@@ -296,24 +365,35 @@ export default function ServicesSection() {
                 {/* CTA */}
                 <a
                   href={service.cta.href}
-                  onClick={service.cta.href.startsWith("#") ? (e) => {
-                    e.preventDefault();
-                    const el = document.querySelector(service.cta.href);
-                    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
-                  } : undefined}
+                  onClick={
+                    service.cta.href.startsWith("#")
+                      ? e => {
+                          e.preventDefault();
+                          const el = document.querySelector(service.cta.href);
+                          if (el)
+                            window.scrollTo({
+                              top:
+                                el.getBoundingClientRect().top +
+                                window.scrollY -
+                                80,
+                              behavior: "smooth",
+                            });
+                        }
+                      : undefined
+                  }
                   style={{
-                    display: 'flex',
+                    display: "flex",
                     alignItems: "center",
                     gap: "0.4rem",
                     fontFamily: "'Plus Jakarta Sans', sans-serif",
                     fontWeight: 600,
-                    fontSize: '18px',
+                    fontSize: "18px",
                     color: service.iconColor,
                     textDecoration: "none",
                     transition: "gap 0.2s ease",
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.gap = "0.65rem")}
-                  onMouseLeave={(e) => (e.currentTarget.style.gap = "0.4rem")}
+                  onMouseEnter={e => (e.currentTarget.style.gap = "0.65rem")}
+                  onMouseLeave={e => (e.currentTarget.style.gap = "0.4rem")}
                 >
                   {service.cta.label}
                   <ArrowRight size={15} />

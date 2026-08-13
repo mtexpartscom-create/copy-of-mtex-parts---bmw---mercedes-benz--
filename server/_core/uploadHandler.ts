@@ -40,7 +40,10 @@ export function registerUploadRoutes(app: Express) {
         return res.status(400).json({ error: "Invalid filename" });
       }
 
-      const fileName = `listings/${Date.now()}_${file.originalname}`;
+      const requestedFolder = typeof req.body?.folder === "string" ? req.body.folder : "listings";
+      const folder = /^[a-z0-9_-]{1,32}$/i.test(requestedFolder) ? requestedFolder : "listings";
+      const safeName = file.originalname.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const fileName = `${folder}/${Date.now()}_${safeName}`;
 
       // Upload to S3
       const { url } = await storagePut(fileName, file.buffer, file.mimetype);

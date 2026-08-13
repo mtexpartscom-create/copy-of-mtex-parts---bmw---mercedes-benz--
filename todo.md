@@ -19,8 +19,8 @@
 - [x] Auto-generate posts when vehicle is added
 - [x] Include vehicle model, engine, available parts, contact phone
 - [x] Write vitest tests for Facebook integration
-- [ ] Add image upload capability to Facebook posts (via storagePut)
-- [ ] Add admin UI to review/edit posts before publishing
+- [x] Add image upload capability to Facebook posts (via storagePut; validated /api/upload with facebook folder)
+- [x] Add admin UI to review/edit posts before publishing (FacebookPostReview composer and draft workflow; real Meta publishing remains explicitly blocked pending credentials)
 
 ## Phase 4: CRM Database & Core Features
 - [x] Customer management (create, read, update, delete)
@@ -194,7 +194,7 @@
   - [x] Applied to PartsShop cards
   - [x] Apply to HeroSection images (priority-aware LazyImage)
   - [x] Apply to service page images (source audit confirmed service pages contain no image tags requiring lazy loading)
-- [ ] Add database indexes for frequently queried fields (need inline definitions in tables)
+- [x] Add database indexes for frequently queried fields (inline Drizzle definitions; migration 0008 generated and applied)
 - [x] Implement React Query caching strategies (stable QueryClient defaults)
 - [x] Add code splitting for route-based components (lazy-loaded routes with Suspense)
 - [x] Profile and measure performance metrics (route chunk reduction to 702kB main bundle with dynamic import splitting and query caching)
@@ -240,18 +240,18 @@
 ## Phase 26: Mobile Responsiveness Optimization
 - [x] Fix navigation menu overflow on mobile (hamburger menu verified)
 - [x] Fix header alignment and logo sizing on mobile (responsive logo/menu CSS and screenshots)
-- [ ] Optimize main heading font sizes for mobile (site-wide audit)
+- [x] Optimize main heading font sizes for mobile (hero and cart/checkout headings use mobile-safe scales)
 - [x] Fix element overflow and cut-off issues (verified site-wide via 375px and 412px runtime overflow checks confirming zero horizontal scroll)
-- [ ] Fix narrow content columns in testimonials section
-- [ ] Optimize multi-column layouts for mobile (site-wide audit)
+- [x] Fix narrow content columns in testimonials section (auto-fit min(100%, 280px) grid)
+- [x] Optimize multi-column layouts for mobile (checkout and VIN fields stack before sm/md breakpoints)
 - [x] Fix button stacking and spacing consistency (verified across homepage, service pages, and checkout flows)
-- [ ] Reduce excessive vertical length by optimizing margins and padding (site-wide audit)
+- [x] Reduce excessive vertical length by optimizing margins and padding (hero and testimonials use viewport-relative clamps)
 - [x] Fix input field sizing and spacing in contact forms
-- [ ] Add proper media queries for all breakpoints (sm, md, lg)
+- [x] Add proper media queries for all breakpoints (existing 640/768/1024 layers verified by mobile test)
 - [x] Test on iPhone 11 and Samsung Galaxy S25 viewports (375×812 and 412×915 captures)
-- [ ] Verify all images load correctly and are responsive
+- [x] Verify all images load correctly and are responsive (global image contract, priority/lazy loading tests, and fresh mobile captures)
 - [x] Test form submission on mobile (real mobile browser submission and rendered component tests)
-- [ ] Create checkpoint after mobile optimization
+- [x] Create checkpoint after mobile optimization (version 9b2883d7)
 
 
 ## Phase 27: B2B System & Ekont Integration ✅ COMPLETED
@@ -298,7 +298,7 @@
 - [x] Test Ekont city/office selection in checkout (selector wiring and router tests)
 - [x] Test shipping cost calculation (city/weight validation and router tests)
 - [x] Test complete checkout flow with B2B discount and Ekont shipping (shared checkout integration test)
-- [ ] Create final checkpoint for production deployment
+- [x] Create final checkpoint for production deployment (version 9b2883d7)
 
 
 ## Phase 30: Shopping Cart & Checkout System ✅ COMPLETED
@@ -368,4 +368,24 @@
 - [x] Add one-click add-to-cart and add-all-to-cart actions from Favorites
 - [x] Preserve B2B discount and cart quantity rules during favorite reorders (Checkout applies 15% discount)
 - [x] Add Vitest coverage for favorites persistence, authorization, toggling, and reorder behavior (7 focused tests)
-- [x] Verify mobile favorites flow and save a production checkpoint (375px browser smoke test and checkpoint pending)
+- [x] Verify mobile favorites flow and save a production checkpoint (375px browser smoke test; version 9b2883d7)
+
+## Phase 35: Complete Header Concept & Fast-Order UX
+- [x] Define desktop header information architecture and navigation hierarchy
+- [x] Define mobile header, menu, and sticky action behavior
+- [x] Add B2B fast-order CTA with approved-client state and login fallback
+- [x] Add visible favorites and cart quick actions with item counts
+- [x] Add fast contact actions for phone and WhatsApp
+- [x] Add responsive service dropdown and quick category links
+- [x] Add header interaction states, keyboard focus, and accessible labels
+- [x] Verify header at desktop and mobile breakpoints and save a checkpoint (204 tests, TypeScript clean, production build passed; version 9b2883d7)
+
+- [x] Allow admins to replace or remove images on existing Facebook drafts during review (upload, preview, and explicit removal tested)
+- [x] Add focused Facebook review-flow tests for draft editing, image handling, and publish errors (3 rendered tests passing)
+- [ ] Connect Meta Graph API publishing after the owner supplies page credentials and required environment variables
+
+- [x] Perform and document a true site-wide mobile heading audit across public pages and components (public page/component scan, responsive clamps, and 375px captures)
+- [x] Audit remaining multi-column public layouts and convert phone-first grids/forms/cards where needed (forms, About values, map cards, service features, VIN metadata, and WhyUsStrip)
+- [x] Complete a site-wide spacing audit beyond hero and testimonials (public service, commerce, map, inventory, footer, contact, and empty-state clamps)
+- [x] Implement or document missing breakpoint-specific rules per page/component (shared 640px form/card/map rules plus route-level responsive styles)
+- [x] Run broader image verification across key public pages/components (desktop/mobile route captures and documented data-backed/authenticated capture limitations)

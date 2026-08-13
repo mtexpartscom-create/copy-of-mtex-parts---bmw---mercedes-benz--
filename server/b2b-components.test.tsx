@@ -8,6 +8,7 @@ import B2BUsersManagement from "@/components/B2BUsersManagement";
 import EkontSelector from "@/components/EkontSelector";
 import ShoppingCartSidebarB2B from "@/components/ShoppingCartSidebarB2B";
 import GlobalNavigation from "@/components/GlobalNavigation";
+import { CartProvider } from "@/contexts/CartContext";
 
 const mocks = vi.hoisted(() => ({
   auth: {
@@ -104,6 +105,11 @@ vi.mock("@/lib/trpc", () => ({
           useMutation: () => ({ isPending: false, mutateAsync: mocks.order }),
         },
       },
+      favorites: {
+        getIds: {
+          useQuery: () => ({ data: [], isLoading: false, isError: false }),
+        },
+      },
     },
   },
 }));
@@ -157,7 +163,11 @@ afterEach(() => {
 describe("Rendered B2B and Ekont workflows", () => {
   it("opens and closes the mobile navigation menu", async () => {
     const user = userEvent.setup();
-    render(<GlobalNavigation />);
+    render(
+      <CartProvider>
+        <GlobalNavigation />
+      </CartProvider>
+    );
 
     const menuButton = screen.getByRole("button");
     await user.click(menuButton);

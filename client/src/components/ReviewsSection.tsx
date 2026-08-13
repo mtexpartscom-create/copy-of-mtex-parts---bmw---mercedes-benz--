@@ -102,7 +102,7 @@ export default function ReviewsSection() {
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1rem" }}>
         {/* Header */}
-        <div className="fade-up" style={{ textAlign: "center", marginBottom: "4rem" }}>
+        <div className="fade-up" style={{ textAlign: "center", marginBottom: "clamp(2rem, 6vh, 4rem)" }}>
           <div className="section-tag" style={{ marginBottom: "1.25rem", display: "inline-flex" }}>Доволни Клиенти</div>
           <h2 style={{
             fontFamily: "'Syne', sans-serif",
@@ -131,9 +131,9 @@ export default function ReviewsSection() {
         {/* Reviews grid */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
           gap: "1.25rem",
-          marginBottom: "4rem",
+          marginBottom: "clamp(2rem, 6vh, 4rem)",
         }}>
           {REVIEWS.map((review, i) => (
             <div
@@ -145,7 +145,7 @@ export default function ReviewsSection() {
                   ? "1px solid rgba(28,105,212,0.3)"
                   : "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 16,
-                padding: "1.75rem",
+                padding: "clamp(1.25rem, 4vw, 1.75rem)",
                 position: "relative",
                 transition: "all 0.3s ease",
                 boxShadow: review.featured ? "0 0 40px rgba(28,105,212,0.08)" : "none",
@@ -242,8 +242,8 @@ export default function ReviewsSection() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: "3rem",
-          padding: "2.5rem",
+          gap: "clamp(1.5rem, 5vw, 3rem)",
+          padding: "clamp(1.25rem, 5vw, 2.5rem)",
           background: "linear-gradient(135deg, rgba(24,119,242,0.08) 0%, rgba(24,119,242,0.03) 100%)",
           border: "1px solid rgba(24,119,242,0.15)",
           borderRadius: 16,

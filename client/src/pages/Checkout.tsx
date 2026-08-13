@@ -135,7 +135,7 @@ export default function Checkout() {
       <Breadcrumb items={breadcrumbItems} />
 
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">Завършване на Поръчката</h1>
+        <h1 className="text-3xl font-bold mb-8 sm:text-4xl">Завършване на Поръчката</h1>
 
         {/* Progress Steps */}
         <div className="flex gap-4 mb-8">
@@ -176,7 +176,7 @@ export default function Checkout() {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleShippingSubmit} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div>
                         <Label htmlFor="firstName">Име *</Label>
                         <Input
@@ -238,7 +238,7 @@ export default function Checkout() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div>
                         <Label htmlFor="city">Град *</Label>
                         <Input
@@ -314,7 +314,7 @@ export default function Checkout() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div>
                         <Label htmlFor="expiryDate">Дата на Изтичане *</Label>
                         <Input
