@@ -210,7 +210,7 @@ export default function ContactSection() {
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1rem", position: "relative" }}>
         {/* Section header */}
-        <div className="fade-up" style={{ marginBottom: "4rem", maxWidth: 600 }}>
+        <div className="fade-up contact-section-header" style={{ marginBottom: "4rem", maxWidth: 600 }}>
           <div className="section-tag" style={{ marginBottom: "1.25rem" }}>Свържете се с нас</div>
           <h2 style={{
             fontFamily: "'Syne', sans-serif",
@@ -407,11 +407,10 @@ export default function ContactSection() {
 
           {/* Right: Form */}
           <div className="fade-up delay-200">
-            <div style={{
+            <div className="contact-form-card" style={{
               background: "#15171a",
               border: "1px solid rgba(255,255,255,0.07)",
               borderRadius: 20,
-              padding: "2.5rem",
               boxShadow: "0 24px 80px rgba(0,0,0,0.4)",
             }}>
               {!submitted ? (
@@ -436,7 +435,7 @@ export default function ContactSection() {
                   </p>
 
                   <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                    <div className="contact-form-row" style={{ display: "grid", gap: "1rem" }}>
                       <div>
                         <label style={labelStyle}>Вашето Име *</label>
                         <input

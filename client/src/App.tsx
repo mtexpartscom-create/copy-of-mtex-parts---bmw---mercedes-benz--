@@ -1,26 +1,34 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { lazy, Suspense } from "react";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import HomeRestructured from "./pages/HomeRestructured";
-import AdminDashboard from "./pages/AdminDashboard";
-import CustomerDetail from "./pages/CustomerDetail";
-import VehicleDetail from "./pages/VehicleDetail";
-import ProductCatalog from "./pages/ProductCatalog";
-import AutoServiceDetail from "./pages/AutoServiceDetail";
-import ACService from "./pages/ACService";
-import RoadAssistance from "./pages/RoadAssistance";
-import SellCar from "./pages/SellCar";
-import PartsShop from "./pages/PartsShop";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const CustomerDetail = lazy(() => import("./pages/CustomerDetail"));
+const VehicleDetail = lazy(() => import("./pages/VehicleDetail"));
+const ProductCatalog = lazy(() => import("./pages/ProductCatalog"));
+const AutoServiceDetail = lazy(() => import("./pages/AutoServiceDetail"));
+const ACService = lazy(() => import("./pages/ACService"));
+const RoadAssistance = lazy(() => import("./pages/RoadAssistance"));
+const SellCar = lazy(() => import("./pages/SellCar"));
+const PartsShop = lazy(() => import("./pages/PartsShop"));
+const Cart = lazy(() => import("./pages/Cart"));
+const Checkout = lazy(() => import("./pages/Checkout"));
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
-    <Switch>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background text-foreground grid place-items-center">
+          <span className="text-sm text-muted-foreground">Зареждане...</span>
+        </div>
+      }
+    >
+      <Switch>
       <Route path={"/"} component={HomeRestructured} />
       <Route path={"/catalog"} component={ProductCatalog} />
       <Route path={"/auto-service-detail"} component={AutoServiceDetail} />
@@ -34,8 +42,9 @@ function Router() {
       <Route path={"/customer/:id"} component={CustomerDetail} />
       <Route path={"/vehicle/:id"} component={VehicleDetail} />
       <Route path={"/404"} component={NotFound} />
-      <Route component={NotFound} />
-    </Switch>
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 

@@ -252,3 +252,128 @@
     background: #1c69d4;
   }
 }
+
+/* Mobile-first layout refinements for inquiry forms */
+.contact-form-card {
+  padding: 1.25rem;
+}
+
+.contact-form-row {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .contact-form-card {
+    padding: 2.5rem;
+  }
+
+  .contact-form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 639px) {
+  .contact-section-header {
+    margin-bottom: 2rem !important;
+  }
+
+  .contact-form-card input,
+  .contact-form-card textarea,
+  .contact-form-card select {
+    min-height: 2.875rem;
+    width: 100%;
+  }
+}
+
+/* Mobile-first service page refinements */
+.service-tags span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.service-hero-cta > button {
+  width: 100%;
+  justify-content: center;
+}
+
+.advantages-grid {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .service-hero-cta > button {
+    width: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .advantages-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 639px) {
+  .service-booking-section,
+  .service-advantages-container {
+    overflow-x: hidden;
+  }
+
+  .service-booking-container input,
+  .service-booking-container textarea,
+  .service-booking-container [role="combobox"] {
+    min-height: 2.875rem;
+    width: 100%;
+  }
+}
+
+/* Global navigation mobile sizing */
+.global-nav-menu-button {
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 639px) {
+  .global-nav-inner {
+    min-height: 64px;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  .global-nav-logo {
+    gap: 0.5rem !important;
+    min-width: 0;
+  }
+
+  .global-nav-logo-mark {
+    width: 32px !important;
+    height: 32px !important;
+    flex: 0 0 32px;
+  }
+
+  .global-nav-brand {
+    min-width: 0;
+  }
+
+  .global-nav-brand > div:first-child {
+    font-size: 0.9rem !important;
+    white-space: nowrap;
+  }
+
+  .global-nav-brand > div:last-child {
+    font-size: 0.56rem !important;
+    white-space: nowrap;
+  }
+}
+
+/* Keep internal-page breadcrumbs below the fixed global navigation */
+.site-breadcrumb {
+  margin-top: 70px;
+}
+
+@media (max-width: 639px) {
+  .site-breadcrumb {
+    margin-top: 64px;
+  }
+}

@@ -6,6 +6,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Phone, ChevronDown, ArrowRight } from "lucide-react";
+import { LazyImage } from "./LazyImage";
 
 const STATS = [
   { num: 631, suffix: "+", label: "СЕРВИЗНИ РЕМОНТА" },
@@ -76,9 +77,11 @@ export default function HeroSection() {
         inset: 0,
         zIndex: 0,
       }}>
-        <img
+        <LazyImage
           src="/manus-storage/1000007162_35c64632.png"
           alt="BMW M5 MTEX PARTS"
+          priority
+          className="w-full h-full object-cover"
           style={{
             width: "100%",
             height: "100%",

@@ -3,7 +3,7 @@
  * Admin panel for approving/rejecting B2B user registrations
  */
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";

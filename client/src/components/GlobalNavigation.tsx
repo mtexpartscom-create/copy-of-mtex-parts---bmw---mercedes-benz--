@@ -5,7 +5,7 @@
   Used on all public pages
 */
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useLocation } from "wouter";
@@ -84,6 +84,7 @@ export default function GlobalNavigation() {
       }}
     >
       <div
+        className="global-nav-inner"
         style={{
           maxWidth: 1280,
           margin: "0 auto",
@@ -98,14 +99,16 @@ export default function GlobalNavigation() {
         {/* Logo */}
         <a
           href="/"
+          className="global-nav-logo"
           style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}
         >
           <img
             src="/manus-storage/profile_logo_9d43d216.webp"
             alt="MTEX PARTS"
+            className="global-nav-logo-mark"
             style={{ width: 36, height: 36, borderRadius: 6, objectFit: "cover" }}
           />
-          <div style={{ lineHeight: 1.1 }}>
+          <div className="global-nav-brand" style={{ lineHeight: 1.1 }}>
             <div
               style={{
                 fontFamily: "'Syne', sans-serif",
@@ -260,6 +263,7 @@ export default function GlobalNavigation() {
 
         {/* Mobile Menu Button */}
         <button
+          className="global-nav-menu-button md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           style={{
             display: "flex",
@@ -269,7 +273,6 @@ export default function GlobalNavigation() {
             cursor: "pointer",
             padding: "0.5rem",
           }}
-          className="md:hidden"
         >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>

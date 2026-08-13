@@ -8,6 +8,8 @@ interface LazyImageProps {
   width?: number;
   height?: number;
   onLoad?: () => void;
+  style?: React.CSSProperties;
+  priority?: boolean;
 }
 
 /**
@@ -23,12 +25,20 @@ export const LazyImage: React.FC<LazyImageProps> = ({
   width,
   height,
   onLoad,
+  style,
+  priority = false,
 }) => {
-  const [imageSrc, setImageSrc] = useState<string | undefined>(placeholderSrc);
+  const [imageSrc, setImageSrc] = useState<string | undefined>(priority ? src : placeholderSrc);
   const [isLoading, setIsLoading] = useState(true);
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    if (priority) {
+      setImageSrc(src);
+      setIsLoading(false);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -63,7 +73,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({
         observer.unobserve(imgRef.current);
       }
     };
-  }, [src, onLoad]);
+  }, [src, onLoad, priority]);
 
   return (
     <img
@@ -73,7 +83,9 @@ export const LazyImage: React.FC<LazyImageProps> = ({
       className={`${className} ${isLoading ? "blur-sm" : "blur-none"} transition-all duration-300`}
       width={width}
       height={height}
-      loading="lazy"
+      style={style}
+      loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : "auto"}
     />
   );
 };

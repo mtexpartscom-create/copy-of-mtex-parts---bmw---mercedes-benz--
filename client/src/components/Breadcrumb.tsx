@@ -18,6 +18,7 @@ interface BreadcrumbProps {
 export default function Breadcrumb({ items }: BreadcrumbProps) {
   return (
     <nav
+      className="site-breadcrumb"
       style={{
         padding: "1rem",
         background: "rgba(255,255,255,0.02)",

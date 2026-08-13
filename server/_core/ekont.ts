@@ -134,7 +134,17 @@ export async function calculateShippingCost(
     // });
     // return response.json();
 
-    // Mock pricing: 5.99 BGN base + 0.50 BGN per kg
+    const cityExists = BULGARIAN_CITIES.some((city) => city.id === cityId);
+    if (!cityExists) {
+      throw new Error("City not found");
+    }
+
+    if (!Number.isFinite(weight) || weight <= 0) {
+      throw new Error("Invalid shipping weight");
+    }
+
+    // Mock pricing: 5.99 BGN base + 0.50 BGN per kg.
+    // The current tariff is city-independent after city validation.
     const baseCost = 5.99;
     const weightCost = weight * 0.5;
     return baseCost + weightCost;

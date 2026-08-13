@@ -176,7 +176,7 @@ export default function AutoServiceDetail() {
           </p>
           
           {/* Service Tags */}
-          <div style={{
+          <div className="service-tags" style={{
             display: "flex",
             flexWrap: "wrap",
             gap: "0.75rem",
@@ -198,7 +198,7 @@ export default function AutoServiceDetail() {
           </div>
 
           {/* CTA Buttons */}
-          <div style={{
+          <div className="service-hero-cta" style={{
             display: "flex",
             gap: "1rem",
             flexWrap: "wrap",
@@ -328,21 +328,21 @@ export default function AutoServiceDetail() {
       </div>
 
       {/* Booking Form Section */}
-      <div style={{
+      <div className="service-booking-section" style={{
         background: "linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(37,99,235,0.02) 100%)",
         borderTop: "1px solid rgba(37,99,235,0.1)",
         borderBottom: "1px solid rgba(37,99,235,0.1)",
         padding: "4rem 0",
       }}>
-        <div style={{
+        <div className="service-booking-container" style={{
           maxWidth: "600px",
           margin: "0 auto",
-          padding: "0 2rem",
+          padding: "0 1rem",
         }}>
-          <h2 style={{
+          <h2 className="service-section-heading" style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: "2.5rem",
+            fontSize: "clamp(1.75rem, 5vw, 2.5rem)",
             color: "#f0f0ee",
             marginBottom: "2rem",
             textAlign: "center",
@@ -484,15 +484,15 @@ export default function AutoServiceDetail() {
         background: "#0d0e10",
         padding: "4rem 0",
       }}>
-        <div style={{
+        <div className="service-advantages-container" style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 2rem",
+          padding: "0 1rem",
         }}>
-          <h2 style={{
+          <h2 className="service-section-heading" style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 800,
-            fontSize: "2.5rem",
+            fontSize: "clamp(1.75rem, 5vw, 2.5rem)",
             color: "#f0f0ee",
             marginBottom: "3rem",
             textAlign: "center",
@@ -500,9 +500,8 @@ export default function AutoServiceDetail() {
             Защо да изберете нас
           </h2>
 
-          <div style={{
+          <div className="advantages-grid" style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
             gap: "2rem",
           }}>
             <div>

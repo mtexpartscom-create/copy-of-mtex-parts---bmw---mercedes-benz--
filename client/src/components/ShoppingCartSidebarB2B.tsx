@@ -3,7 +3,7 @@
  * Includes 15% discount for approved B2B users
  */
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,6 +19,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { calculateCheckoutTotals, validateCheckoutInput } from "@shared/checkout";
 
 interface CartItem {
   productId: number;
@@ -61,13 +62,11 @@ export default function ShoppingCartSidebarB2B({
     user?.userType === "b2b" && user?.b2bApprovalStatus === "approved";
   const b2bDiscount = isB2BApproved ? 0.15 : 0; // 15% discount
 
-  const subtotal = cart.reduce((sum, item) => {
-    const price = parseFloat(item.price.replace(/[^\d.-]/g, "")) || 0;
-    return sum + price * item.quantity;
-  }, 0);
-
-  const discountAmount = subtotal * b2bDiscount;
-  const totalPrice = subtotal - discountAmount + shippingCost;
+  const { subtotal, discountAmount, totalPrice } = calculateCheckoutTotals(
+    cart,
+    Boolean(b2bDiscount),
+    shippingCost
+  );
 
   const handleUpdateQuantity = (productId: number, change: number) => {
     const updated = cart
@@ -88,28 +87,36 @@ export default function ShoppingCartSidebarB2B({
   };
 
   const handleSubmitOrder = async () => {
-    // Validate form
-    if (!formData.customerName.trim()) {
+    const validationError = validateCheckoutInput({
+      customerName: formData.customerName,
+      customerPhone: formData.customerPhone,
+      econtOffice: formData.econtOffice,
+      cartLength: cart.length,
+      selectedCity,
+      shippingCost,
+    });
+
+    if (validationError === "customerName") {
       toast.error("Моля, въведете вашето име");
       return;
     }
-    if (!formData.customerPhone.trim()) {
+    if (validationError === "customerPhone") {
       toast.error("Моля, въведете телефонния номер");
       return;
     }
-    if (!formData.econtOffice.trim()) {
+    if (validationError === "econtOffice") {
       toast.error("Моля, изберете офис на Еконт");
       return;
     }
-    if (cart.length === 0) {
+    if (validationError === "cart") {
       toast.error("Кошницата е празна");
       return;
     }
-    if (!selectedCity) {
+    if (validationError === "city") {
       toast.error("Моля, изберете град");
       return;
     }
-    if (shippingCost === 0) {
+    if (validationError === "shippingCost") {
       toast.error("Моля, изчакайте да се изчисли цената на доставката");
       return;
     }
